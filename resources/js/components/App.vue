@@ -1,33 +1,27 @@
+<script>
+    import Navbar from "./navbar/Navbar.vue"
+
+    import Clients from "./clients/Clients.vue"
+    import Buttons from "./clients/Buttons.vue"
+    import Statistics from "./clients/Statistics.vue"
+    export default {
+        components: { Navbar, Clients, Buttons, Statistics },
+    }
+</script>
+
 <template>
-    <div class="bg-white py-24 sm:py-32">
-      <div class="mx-auto grid max-w-7xl gap-y-20 gap-x-8 px-6 lg:px-8 xl:grid-cols-3">
-        <div class="max-w-2xl">
-          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Meet our leadership</h2>
-          <p class="mt-6 text-lg leading-8 text-gray-600">Libero fames augue nisl porttitor nisi, quis. Id ac elit odio vitae elementum enim vitae ullamcorper suspendisse.</p>
-        </div>
-        <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
-          <li v-for="person in people" :key="person.name">
-            <div class="flex items-center gap-x-6">
-              <img class="h-16 w-16 rounded-full" :src="person.imageUrl" alt="" />
-              <div>
-                <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">{{ person.name }}</h3>
-                <p class="text-sm font-semibold leading-6 text-indigo-600">{{ person.role }}</p>
-              </div>
+    <Navbar />
+    <main class="flex bg-gradient-to-br from-indigo-100 via-transparent to-indigo-50 min-h-screen w-full p-5">
+        <section class="md:w-1/4">
+            <Buttons />
+        </section>
+        <section class="md:w-3/4">
+            <div class="w-full pl-4">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <Statistics />
+                    <Clients />
+                </div>
             </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
-  const people = [
-    {
-      name: 'Leslie Alexander',
-      role: 'Co-Founder / CEO',
-      imageUrl:
-        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    },
-    // More people...
-  ]
-  </script>
+        </section>
+    </main>
+</template>

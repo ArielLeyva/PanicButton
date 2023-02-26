@@ -13,6 +13,9 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^4.0.0",
+        "bootstrap": "^5.2.3",
+        "bootstrap-icons": "^1.10.3",
+        "chart.js": "^4.2.1",
         "jspdf": "^2.5.1",
         "jspdf-autotable": "^3.5.28",
         "mitt": "^3.0.0",
