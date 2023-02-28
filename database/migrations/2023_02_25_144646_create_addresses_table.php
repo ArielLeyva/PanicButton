@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('street', 50);
             $table->string('number', 8);
-            $table->string('apartment', 30);
+            $table->string('apartment', 30)->default('');
             $table->string('city', 60);
             $table->string('state', 60);
             $table->string('postal_code', 15);
-            $table->string('coordinates', 20);
+            $table->string('coordinates', 20)->nullable()->default(null);
             $table->timestamps();
         });
     }

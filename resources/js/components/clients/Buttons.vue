@@ -1,29 +1,29 @@
 <script>
     import Dropdown from "bootstrap/js/dist/dropdown"
 
-export default {
-    data() {
-        return {
-            buttons: [
-                { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/1.jpg", state: "Connected" },
-                { name: "Maurine Johns", avatar: "http://127.0.0.1:8000/src/2.jpg", state: "Connected" },
-                { name: "Prof. Mervin Bergnaum", avatar: "http://127.0.0.1:8000/src/3.jpg", state: "Disconnected" },
-                { name: "Mr. Hal Gerlach", avatar: "http://127.0.0.1:8000/src/4.jpg", state: "Connected" },
-                { name: "Murray Homenick", avatar: "http://127.0.0.1:8000/src/5.jpg", state: "Connected" },
-                { name: "Roman Renner", avatar: "http://127.0.0.1:8000/src/6.jpeg", state: "Disconnected" },
-                { name: "Mr. Ike Grimes DVM", avatar: "http://127.0.0.1:8000/src/7.jpeg", state: "Connected" },
-                { name: "Greyson Hammes", avatar: "http://127.0.0.1:8000/src/8.jpeg", state: "Connected" },
-                { name: "Mr. Jamie Kshlerin", avatar: "http://127.0.0.1:8000/src/9.jpg", state: "Disconnected" },
-                { name: "Dr. Dillon Kilback", avatar: "http://127.0.0.1:8000/src/10.jpg", state: "Connected" },
-                { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/11.jpg", state: "Connected" },
-                { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/12.jpg", state: "Disconnected" },
-                { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/13.jpg", state: "Disconnected" },
-                { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/14.jpg", state: "Connected" },
-                { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/15.jpg", state: "Disconnected" },
-            ],
-        }
-    },
-}
+    export default {
+        data() {
+            return {
+                buttons: [
+                    { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/1.jpg", state: "Connected" },
+                    { name: "Maurine Johns", avatar: "http://127.0.0.1:8000/src/2.jpg", state: "Connected" },
+                    { name: "Prof. Mervin Bergnaum", avatar: "http://127.0.0.1:8000/src/3.jpg", state: "Disconnected" },
+                    { name: "Mr. Hal Gerlach", avatar: "http://127.0.0.1:8000/src/4.jpg", state: "Connected" },
+                    { name: "Murray Homenick", avatar: "http://127.0.0.1:8000/src/5.jpg", state: "Connected" },
+                    { name: "Roman Renner", avatar: "http://127.0.0.1:8000/src/6.jpeg", state: "Disconnected" },
+                    { name: "Mr. Ike Grimes DVM", avatar: "http://127.0.0.1:8000/src/7.jpeg", state: "Connected" },
+                    { name: "Greyson Hammes", avatar: "http://127.0.0.1:8000/src/8.jpeg", state: "Connected" },
+                    { name: "Mr. Jamie Kshlerin", avatar: "http://127.0.0.1:8000/src/9.jpg", state: "Disconnected" },
+                    { name: "Dr. Dillon Kilback", avatar: "http://127.0.0.1:8000/src/10.jpg", state: "Connected" },
+                    { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/11.jpg", state: "Connected" },
+                    { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/12.jpg", state: "Disconnected" },
+                    { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/13.jpg", state: "Disconnected" },
+                    { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/14.jpg", state: "Connected" },
+                    { name: "Dr. Stefanie Gibson", avatar: "http://127.0.0.1:8000/src/15.jpg", state: "Disconnected" },
+                ],
+            }
+        },
+    }
 </script>
 
 <template>
@@ -33,13 +33,13 @@ export default {
                 <button class="dropdown-toggle font-bold" data-bs-toggle="dropdown">Todos</button>
                 <ul class="dropdown-menu" id="save-as">
                     <li>
-                        <button class="dropdown-item"><i class="bi bi-filetype-pdf"></i> Todos los clientes</button>
+                        <button class="dropdown-item"><i class="bi bi-filetype-pdf"></i> Todos los dispositivos</button>
                     </li>
                     <li>
-                        <button class="dropdown-item"><i class="bi bi-filetype-xlsx"></i> Clientes conectados</button>
+                        <button class="dropdown-item"><i class="bi bi-filetype-xlsx"></i> Dispositivos conectados</button>
                     </li>
                     <li>
-                        <button class="dropdown-item"><i class="bi bi-filetype-csv"></i> Clientes desconectados</button>
+                        <button class="dropdown-item"><i class="bi bi-filetype-csv"></i> Dispositivos desconectados</button>
                     </li>
                     <li>
                         <hr class="dropdown-divider" />

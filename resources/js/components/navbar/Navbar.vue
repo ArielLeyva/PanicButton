@@ -6,9 +6,18 @@
     }
 </script>
 <template>
-    <nav class="w-full h-12 bg-white flex items-center p-2 text-black">
+    <nav class="w-full h-16 bg-white flex items-center p-2 text-black shadow">
         <div>
-            <h4 class="text-indigo-500 whitespace-nowrap font-bold">Name here...</h4>
+            <h4 class="text-indigo-500 whitespace-nowrap flex">
+                <img src="http://127.0.0.1:8000/src/1.jpg" class="rounded-full w-10 h-10" />
+                <div class="px-2">
+                    <h4 class="whitespace-nowrap font-bold text-ellipsis w-full overflow-hidden">Ayrton López</h4>
+                    <p class="text-sm flex items-center text-gray-500">
+                        <i class="bi bi-person-fill-check mr-1" style="font-size: 0.7em"></i>
+                        Administrador
+                    </p>
+                </div>
+            </h4>
         </div>
         <div class="w-full flex justify-end pr-2">
             <div class="dropdown">

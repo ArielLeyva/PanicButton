@@ -32,17 +32,4 @@
         background-position: center;
         background-size: cover;
     }
-    input:-internal-autofill-selected {
-        background-color: transparent !important;
-        color: white;
-    }
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus {
-        -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-        background-color: transparent !important;
-    }
-    input:-webkit-autofill {
-        -webkit-text-fill-color: #000;
-    }
 </style>
