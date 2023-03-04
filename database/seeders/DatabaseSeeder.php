@@ -364,5 +364,15 @@ class DatabaseSeeder extends Seeder
             ['number' => '+57 58964300', 'client_id' => 11],
             ['number' => '+57 58940564', 'client_id' => 15],
         ]);
+
+        DB::table('alerts')->insert([
+            ['client_id' => 2, 'type' => 'Health'],
+            ['client_id' => 4, 'type' => 'Health'],
+            ['client_id' => 5, 'type' => 'Police'],
+            ['client_id' => 7, 'type' => 'Health'],
+            ['client_id' => 8, 'type' => 'Police'],
+            ['client_id' => 3, 'type' => 'Police'],
+            ['client_id' => 1, 'type' => 'Police'],
+        ]);
     }
 }

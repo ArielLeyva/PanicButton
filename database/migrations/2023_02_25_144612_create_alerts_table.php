@@ -18,6 +18,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->enum('type', ['Police', 'Health']);
+            $table->enum('state', ['Vista', 'Pendiente'])->default('Pendiente');
             $table->timestamps();
         });
     }

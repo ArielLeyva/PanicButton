@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlertController;
 use App\Http\Controllers\ButtonController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
@@ -25,5 +26,8 @@ Route::resource('/buttons', ButtonController::class)->only([
     'store', 'index', 'update'
 ]);
 Route::resource('/clients', ClientController::class)->only([
+    'store', 'index', 'update'
+]);
+Route::resource('/alerts', AlertController::class)->only([
     'store', 'index', 'update'
 ]);
