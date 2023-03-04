@@ -19,6 +19,13 @@
         methods: {
             filter(params) {
                 this.display = []
+                const items = []
+                if (this.buttons.Connected !== undefined) {
+                    items.push(...this.buttons.Connected)
+                }
+                if (this.buttons.Disconnected !== undefined) {
+                    items.push(...this.buttons.Disconnected)
+                }
                 for (let key in params) {
                     switch (key) {
                         case "state":
@@ -28,13 +35,6 @@
                             break
                         case "desvinculated":
                             if (params[key]) {
-                                const items = []
-                                if (this.buttons.Connected !== undefined) {
-                                    items.push(...this.buttons.Connected)
-                                }
-                                if (this.buttons.Disconnected !== undefined) {
-                                    items.push(...this.buttons.Disconnected)
-                                }
                                 for (let button of items) {
                                     if (button.client.name == "Sin asignar") {
                                         this.display.push(button)
@@ -43,8 +43,38 @@
                             }
                             break
                         case "all":
-                            this.display.push(...this.buttons.Connected)
-                            this.display.push(...this.buttons.Disconnected)
+                            this.display.push(...items)
+                            break
+                        case "number":
+                            for (let button of items) {
+                                if (params[key] == null || button.number.toString().includes(params[key])) {
+                                    this.display.push(button)
+                                }
+                            }
+                            break
+                        case "client":
+                            const client = params.client
+                            this.display = items.filter((button) => {
+                                for (let key in client) {
+                                    if (client[key] !== "") {
+                                        switch (key) {
+                                            case "name":
+                                            case "dni":
+                                                if (button.client[key] == undefined || !button.client[key].toString().toLowerCase().includes(client[key].toString().toLowerCase())) {
+                                                    return false
+                                                }
+                                                break
+                                            case "state":
+                                            case "gender":
+                                                if (button.client[key] !== client[key]) {
+                                                    return false
+                                                }
+                                                break
+                                        }
+                                    }
+                                }
+                                return true
+                            })
                             break
                     }
                 }

@@ -9,11 +9,11 @@
 <template>
     <CustomModal :config="config" @accept="accept" @cancel="cancel">
         <div>
-            <p><i class="bi bi-joystick"></i> <strong class="text-gray-500">Número de indetificación:</strong> {{ button.number }}</p>
-            <p class="text-sm flex items-center" :class="{ 'text-green-600': button.state == 'Connected', 'text-red-600': button.state == 'Disconnected' }">
+            <p class="text-sm flex items-center float-right" :class="{ 'text-green-600': button.state == 'Connected', 'text-red-600': button.state == 'Disconnected' }">
                 <i class="bi bi-circle-fill mr-1" style="font-size: 0.7em"></i>
                 {{ button.state }}
             </p>
+            <p><i class="bi bi-joystick"></i> <strong class="text-gray-500">Número de indetificación:</strong> {{ button.number }}</p>
             <p class="text-center text-indigo-500 font-bold mt-4">Detalles del cliente</p>
             <div v-if="button.client.name !== 'Sin asignar'">
                 <div class="w-full flex items-center">
