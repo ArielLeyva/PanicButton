@@ -34,3 +34,7 @@
     border-radius: .5rem;
     display: none;
 }
+.form-check-input:checked {
+    background-color: #6366f1;
+    border-color: #6366f1;
+}

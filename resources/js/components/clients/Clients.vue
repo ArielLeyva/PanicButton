@@ -2,12 +2,13 @@
     import Request from "../../Request.js"
 
     import Navbar from "./Navbar.vue"
+    import NotFound from "./NotFound.vue"
     import ClientInfo from "./ClientInfo.vue"
     import Pagination from "../Pagination.vue"
 
     export default {
         emits: ["load"],
-        components: { Navbar, ClientInfo, Pagination },
+        components: { Navbar, NotFound, ClientInfo, Pagination },
         data() {
             return {
                 backup: [],
@@ -57,8 +58,10 @@
                 <div class="w-3/12 text-indigo-500 font-bold text-center">Teléfonos</div>
                 <div class="w-5/12 text-indigo-500 font-bold text-center">Dirección</div>
             </div>
-            <ClientInfo v-for="client in display" :client="client" />
+            <ClientInfo v-if="display.length > 0" v-for="client in display" :client="client" />
+            <NotFound v-else />
         </div>
+
         <Pagination v-if="display.length !== 0" @paginate="paginate" ref="paginate" :rows="rows" :alerts="clients" />
     </div>
 </template>
