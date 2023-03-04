@@ -79,6 +79,22 @@
                     }
                 }
             },
+            remove(index) {
+                const button = this.display[index]
+                this.display.splice(index, 1)
+                this.splice(this.buttons.Connected, button)
+                this.splice(this.buttons.Disconnected, button)
+            },
+            splice(items, button) {
+                if (items !== undefined) {
+                    for (let i in items) {
+                        if (items[i].id == button.id) {
+                            items.splice(i, 1)
+                            break
+                        }
+                    }
+                }
+            },
         },
         mounted() {
             Request.get("api/buttons").then((response) => {
@@ -100,7 +116,7 @@
         <Navbar @filter="filter" />
         <div class="buttons-list">
             <NotFound v-if="display.length == 0" />
-            <ButtonInfo v-for="button in display" :button="button" :clients="clients" />
+            <ButtonInfo v-for="(button, index) in display" @remove="remove" :button="button" :index="index" :clients="clients" />
         </div>
     </div>
 </template>

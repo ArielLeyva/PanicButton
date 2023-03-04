@@ -74,7 +74,7 @@
         </div>
         <div class="flex justify-end w-full">
             <form @change="filter()" @input="filter()" @reset="reset" class="dropdown">
-                <button data-bs-toggle="dropdown" v-if="!isSearching" class="mx-1 rounded-xl w-8">
+                <button data-bs-toggle="dropdown" v-if="!isSearching" class="mx-1 rounded-xl w-8 focus-visible:outline-indigo-500">
                     <i class="bi bi-filter"></i>
                 </button>
                 <ul class="dropdown-menu p-2">

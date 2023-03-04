@@ -13,12 +13,6 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('button_id')
-                ->nullable()
-                ->default(null)
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
             $table->string('name', 80);
             $table->string('avatar', 30);
             $table->string('dni', 20);

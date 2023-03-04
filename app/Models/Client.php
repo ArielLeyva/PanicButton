@@ -31,7 +31,7 @@ class Client extends BaseModel
      */
     public function button()
     {
-        return $this->belongsTo(Button::class);
+        return $this->hasOne(Button::class);
     }
 
     /**

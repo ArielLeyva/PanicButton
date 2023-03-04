@@ -22,7 +22,13 @@
                         <img :src="client.avatar" class="rounded-full w-8" />
                         <div class="w-10/12 pl-2">
                             <h4 class="w-full text-ellipsis whitespace-nowrap overflow-hidden text-gray-500 font-bold">{{ client.name }}</h4>
-                            <p class="text-gray-400"><i class="bi bi-joystick"></i> {{ client.button }}</p>
+                            <p class="badge" :class="{ 'bg-success': client.button !== null, 'bg-danger': client.button == null }">
+                                <i class="bi bi-joystick mr-1"></i>
+                                <template v-if="client.button == null"> Sin asignar </template>
+                                <template v-else>
+                                    {{ client.button }}
+                                </template>
+                            </p>
                         </div>
                     </div>
                     <div class="w-2/12 m-auto flex justify-end">

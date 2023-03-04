@@ -1,5 +1,7 @@
 <script>
     import Dropdown from "bootstrap/js/dist/dropdown"
+    import Request from "../../Request.js"
+
     import Modal from "../modal/Modal.js"
     import ModalButton from "../modal/ModalButton.js"
     import SelectClientModal from "./SelectClientModal.vue"
@@ -8,6 +10,7 @@
     export default {
         props: {
             button: Object,
+            index: Number,
             clients: Array,
         },
         methods: {
@@ -26,13 +29,17 @@
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
                         const id = result.data.get("client_id")
-                        //TODO (Vincular)
+                        const data = new FormData()
+                        data.append("_method", "put")
+                        Request.post(`api/buttons/asign/${this.button.id}/${id}`, data).then((button) => {
+                            this.button.client_id = button.client_id
+                            this.button.client = button.client
+                        })
                     }
                 })
             },
             unasign() {
                 const modal = new Modal({
-                    // window: "Confirmar operación",
                     title: "¿Seguro que desea desvincular este dispositivo del cliente?",
                     description: "Esta operación es irreversible",
                     icon: "bi bi-exclamation-triangle",
@@ -42,14 +49,19 @@
                     }),
                 })
                 modal.fire().then((result) => {
+                    const data = new FormData()
+                    data.append("_method", "put")
                     if (result.status == "accept") {
-                        //TODO (Desvincular)
+                        Request.post(`api/buttons/unasign/${this.button.id}`, data).then((result) => {
+                            this.button.client_id = null
+                            this.button.client.name = "Sin asignar"
+                            this.button.client.avatar = "src/blank-profile.svg"
+                        })
                     }
                 })
             },
             remove() {
                 const modal = new Modal({
-                    // window: "Confirmar operación",
                     title: "¿Seguro que desea eliminar este dispositivo?",
                     description: "Esta operación es irreversible",
                     icon: "bi bi-exclamation-triangle",
@@ -60,7 +72,9 @@
                 })
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
-                        //TODO (Eliminar)
+                        Request.delete(`api/buttons/${this.button.id}`, new FormData()).then(() => {
+                            this.$emit("remove", this.index)
+                        })
                     }
                 })
             },

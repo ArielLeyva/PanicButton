@@ -37,25 +37,6 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
-        DB::table('buttons')->insert([
-            ['number' => '123245', 'state' => 'Connected'],
-            ['number' => '345365', 'state' => 'Connected'],
-            ['number' => '678852', 'state' => 'Disconnected'],
-            ['number' => '912365', 'state' => 'Connected'],
-            ['number' => '365458', 'state' => 'Connected'],
-            ['number' => '235235', 'state' => 'Disconnected'],
-            ['number' => '654157', 'state' => 'Disconnected'],
-            ['number' => '032953', 'state' => 'Connected'],
-            ['number' => '951423', 'state' => 'Connected'],
-            ['number' => '852905', 'state' => 'Connected'],
-            ['number' => '258147', 'state' => 'Connected'],
-            ['number' => '753124', 'state' => 'Connected'],
-            ['number' => '159435', 'state' => 'Connected'],
-            ['number' => '754087', 'state' => 'Disconnected'],
-            ['number' => '359325', 'state' => 'Connected'],
-            ['number' => '851126', 'state' => 'Disconnected'],
-        ]);
-
         DB::table('addresses')->insert([
             [
                 'number' => '1639',
@@ -181,7 +162,6 @@ class DatabaseSeeder extends Seeder
 
         DB::table('clients')->insert([
             [
-                'button_id' => 1,
                 'name' => 'Ana Maris López Gallardo',
                 'avatar' => '1.jpg',
                 'email' => 'anamaris@gmail.com',
@@ -192,7 +172,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '05-02-1986',
             ],
             [
-                'button_id' => 2,
                 'name' => 'Prof. Mervin Bergnaum',
                 'avatar' => '2.jpg',
                 'email' => 'mervinberganum@gmail.com',
@@ -203,7 +182,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '04-05-1758',
             ],
             [
-                'button_id' => 3,
                 'name' => 'Mr. Hal Gerlach',
                 'avatar' => '3.jpg',
                 'email' => 'hal.gerlach@htomail.com',
@@ -214,7 +192,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '03-11-1998',
             ],
             [
-                'button_id' => 4,
                 'name' => 'Murray Homenick',
                 'avatar' => '4.jpg',
                 'email' => 'homenickmurray@htomail.com',
@@ -225,7 +202,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '03-11-1998',
             ],
             [
-                'button_id' => 5,
                 'name' => 'Roman Renner',
                 'avatar' => '5.jpg',
                 'email' => 'romanreckner@gmail.com',
@@ -236,7 +212,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '23-12-1965',
             ],
             [
-                'button_id' => 6,
                 'name' => 'Mr. Ike Grimes DVM',
                 'avatar' => '6.jpeg',
                 'email' => 'ikegrimes@harvard.com',
@@ -247,7 +222,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '30-05-1955',
             ],
             [
-                'button_id' => 7,
                 'name' => 'Greyson Hammes',
                 'avatar' => '7.jpeg',
                 'email' => 'hammes.greyson@gmail.com',
@@ -258,7 +232,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '10-05-1985',
             ],
             [
-                'button_id' => 8,
                 'name' => 'Mr. Jamie Kshlerin',
                 'avatar' => '8.jpeg',
                 'email' => 'jamie@msonmium.com',
@@ -269,7 +242,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '01-01-1993',
             ],
             [
-                'button_id' => 9,
                 'name' => 'Dr. Stefanie Gibson',
                 'avatar' => '9.jpg',
                 'email' => 'stefanie.gibson@medicalsupport.com',
@@ -280,7 +252,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '02-03-1975',
             ],
             [
-                'button_id' => 10,
                 'name' => 'Dr. Dillon Kilback',
                 'avatar' => '10.jpg',
                 'email' => 'kilback.dillon@medicalsupport.com',
@@ -291,7 +262,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '03-03-1976',
             ],
             [
-                'button_id' => 11,
                 'name' => 'Alfonso Zarza Izalde',
                 'avatar' => '11.jpg',
                 'email' => 'alfonsozarza@gmail.com',
@@ -302,7 +272,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '23-09-1965',
             ],
             [
-                'button_id' => 12,
                 'name' => 'Reinaldo Tamayo Álvarez',
                 'avatar' => '12.jpg',
                 'email' => 'reinaldotamayo@gmail.com',
@@ -313,7 +282,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '22-10-1984',
             ],
             [
-                'button_id' => 13,
                 'name' => 'Fernanda María Hernández López',
                 'avatar' => '13.jpg',
                 'email' => 'fernandamariahernandez@hotmail.com',
@@ -324,7 +292,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '23-09-1965',
             ],
             [
-                'button_id' => 14,
                 'name' => 'Pedro Armando Matute Rodríguez',
                 'avatar' => '14.jpg',
                 'email' => 'pedromatute@hotmail.com',
@@ -335,7 +302,6 @@ class DatabaseSeeder extends Seeder
                 'birthdate' => '02-09-1978',
             ],
             [
-                'button_id' => 15,
                 'name' => 'Elena Quevent Godinez',
                 'avatar' => '15.jpg',
                 'email' => 'elenagodinez00@gmail.com',
@@ -372,6 +338,25 @@ class DatabaseSeeder extends Seeder
             ['number' => '+57 57946836', 'client_id' => 10],
             ['number' => '+57 58964300', 'client_id' => 11],
             ['number' => '+57 58940564', 'client_id' => 15],
+        ]);
+
+        DB::table('buttons')->insert([
+            ['number' => '123245', 'state' => 'Connected', 'client_id' => 1],
+            ['number' => '345365', 'state' => 'Connected', 'client_id' => 2],
+            ['number' => '678852', 'state' => 'Disconnected', 'client_id' => 3],
+            ['number' => '912365', 'state' => 'Connected', 'client_id' => 4],
+            ['number' => '365458', 'state' => 'Connected', 'client_id' => 5],
+            ['number' => '235235', 'state' => 'Disconnected', 'client_id' => 6],
+            ['number' => '654157', 'state' => 'Disconnected', 'client_id' => 7],
+            ['number' => '032953', 'state' => 'Connected', 'client_id' => 8],
+            ['number' => '951423', 'state' => 'Connected', 'client_id' => 9],
+            ['number' => '852905', 'state' => 'Connected', 'client_id' => 10],
+            ['number' => '258147', 'state' => 'Connected', 'client_id' => 11],
+            ['number' => '753124', 'state' => 'Connected', 'client_id' => 12],
+            ['number' => '159435', 'state' => 'Connected', 'client_id' => 13],
+            ['number' => '754087', 'state' => 'Disconnected', 'client_id' => 14],
+            ['number' => '359325', 'state' => 'Connected', 'client_id' => 15],
+            ['number' => '851126', 'state' => 'Disconnected', 'client_id' => null],
         ]);
 
         DB::table('alerts')->insert([

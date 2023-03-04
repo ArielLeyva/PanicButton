@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('number', 10);
             $table->enum('state', ['Connected', 'Disconnected'])->default('Connected');
+            $table->foreignId('client_id')
+                ->nullable()
+                ->default(null)
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
             $table->timestamps();
         });
     }

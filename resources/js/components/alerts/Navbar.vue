@@ -82,7 +82,7 @@
     <div>
         <div class="float-right flex mb-1">
             <form @change="filter()" @input="filter()" @reset="filter({ date: 30 * 86400000 })" class="dropdown">
-                <button data-bs-toggle="dropdown" class="mx-1 rounded-xl w-8 mt-1">
+                <button data-bs-toggle="dropdown" class="mx-1 rounded-xl w-8 mt-1 focus-visible:outline-indigo-500">
                     <i class="bi bi-filter"></i>
                 </button>
                 <ul class="dropdown-menu p-2">
