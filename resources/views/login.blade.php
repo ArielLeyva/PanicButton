@@ -6,10 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Iniciar sesión</title>
+    <style>
+        main {
+            background-image: url(src/login_background.svg);
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 
 <body class="antialiased">
-    <div id="app"></div>
+    <main class="w-screen h-screen flex items-center justify-center">
+        <div>
+            <h1 class="text-3xl text-white mb-5 text-center">Iniciar sesión</h1>
+            <form autocomplete="off" class="w-72" method="POST" action="login">
+                @csrf
+                <div class="bg-white bg-opacity-40 p-3 rounded-md">
+                    <i class="bi bi-envelope text-white mr-2"></i>
+                    <input class="bg-transparent appearance-none text-white placeholder-white focus-visible:outline-none focus:outline-none" name="email" placeholder="Correo electrónico" type="email" />
+                </div>
+                <div class="bg-white bg-opacity-40 p-3 rounded-md mt-4">
+                    <i class="bi bi-key text-white mr-2"></i>
+                    <input class="fill-transparent bg-transparent appearance-none text-white placeholder-white focus-visible:outline-none focus:outline-none" name="password" placeholder="Contraseña" type="password" />
+                </div>
+                <div class="mt-4">
+                    <input type="checkbox" name="remember" class="mr-2" />
+                    <label class="text-white">Recordar credenciales</label>
+                </div>
+                <div class="toast align-items-center text-bg-danger invalid-login
+                    @if (count($errors) > 0) show @endif" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div style="display: flex;">
+                        <div class="toast-body">
+                            Usuario o contraseña incorrectos
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center mt-10">
+                    <button type="submit" class="bg-white bg-opacity-40 py-2 rounded-full text-white px-10">Iniciar sesión</button>
+                </p>
+                <p class="text-center mt-5">
+                    <a class="text-white text-center underline" href="#">He olvidado mi contraseña</a>
+                </p>
+
+            </form>
+        </div>
+    </main>
     @vite('resources/js/login.js')
 </body>
 

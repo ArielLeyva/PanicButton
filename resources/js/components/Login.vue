@@ -2,7 +2,7 @@
     <main class="w-screen h-screen flex items-center justify-center">
         <div>
             <h1 class="text-3xl text-white mb-5 text-center">Iniciar sesión</h1>
-            <form autocomplete="off" class="w-72">
+            <form autocomplete="off" class="w-72" method="POST" action="login">
                 <div class="bg-white bg-opacity-40 p-3 rounded-md">
                     <i class="bi bi-envelope text-white mr-2"></i>
                     <input class="bg-transparent appearance-none text-white placeholder-white focus-visible:outline-none focus:outline-none" name="email" placeholder="Correo electrónico" type="email" />

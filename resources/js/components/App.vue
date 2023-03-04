@@ -24,7 +24,7 @@
         </section>
         <section class="md:w-3/4 main scroll">
             <div class="w-full pl-4">
-                <div class="bg-white rounded-lg shadow-sm">
+                <div class="bg-white rounded-lg shadow-sm pb-1">
                     <div class="flex">
                         <Statistics :buttons="buttons" />
                         <AlertsList />
@@ -37,7 +37,7 @@
 </template>
 <style>
     .main {
-        max-height: calc(100vh - 6rem);
+        max-height: calc(100vh - 5.5rem);
         overflow: auto;
     }
 </style>
