@@ -1,17 +1,32 @@
 <script>
     import Dropdown from "bootstrap/js/dist/dropdown"
+    import Request from "../../Request.js"
     import Notifications from "./Notifications.vue"
+
     export default {
         components: { Notifications },
+        data() {
+            return {
+                user: null,
+            }
+        },
+        created() {
+            Request.get("api/user").then((response) => (this.user = response.data))
+        },
     }
 </script>
 <template>
     <nav class="w-full h-16 bg-white flex items-center p-2 text-black shadow">
         <div>
             <h4 class="text-indigo-500 whitespace-nowrap flex">
-                <img src="http://127.0.0.1:8000/src/1.jpg" class="rounded-full w-10 h-10" />
+                <img :src="user == null ? 'src/blank-profile.svg' : user.avatar" class="rounded-full w-10 h-10" />
                 <div class="px-2">
-                    <h4 class="whitespace-nowrap font-bold text-ellipsis w-full overflow-hidden">Ayrton López</h4>
+                    <h4 class="whitespace-nowrap font-bold text-ellipsis w-full overflow-hidden">
+                        <template v-if="user == null">
+                            <span class="placeholder w-40"></span>
+                        </template>
+                        <template v-else>{{ user.name }}</template>
+                    </h4>
                     <p class="text-sm flex items-center text-gray-500">
                         <i class="bi bi-person-fill-check mr-1" style="font-size: 0.7em"></i>
                         Administrador

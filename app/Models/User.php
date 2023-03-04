@@ -41,4 +41,23 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getAvatarPathAttribute()
+    {
+        if ($this->avatar !== null) {
+            return asset("src/$this->avatar");
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Incluir la dirección y el botón del cliente en el array de salida del modelo
+     */
+    public function toArray()
+    {
+        $data = parent::toArray();
+        $data['avatar'] = $this->avatarPath;
+        return $data;
+    }
 }

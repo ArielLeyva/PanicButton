@@ -6,6 +6,10 @@
              * Alertas de la página
              */
             alerts: Array,
+            rows: {
+                type: Number,
+                default: 4,
+            },
         },
         data() {
             return {
@@ -18,12 +22,12 @@
                  */
                 ellipsisButtons: [],
                 page: 0,
-                pages: Math.ceil(this.alerts.length / 4),
+                pages: Math.ceil(this.alerts.length / this.rows),
             }
         },
         watch: {
             alerts(p, l) {
-                this.pages = Math.ceil(p.length / 4)
+                this.pages = Math.ceil(p.length / this.rows)
                 setTimeout(() => {
                     this.resize()
                 }, 100)

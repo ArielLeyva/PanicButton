@@ -29,9 +29,9 @@ class Client extends BaseModel
      * 
      * @return Button El modelo de la dirección del producto
      */
-    public function button()
+    public function buttons()
     {
-        return $this->hasOne(Button::class);
+        return $this->hasMany(Button::class);
     }
 
     /**
@@ -55,10 +55,13 @@ class Client extends BaseModel
         } else {
             $data['address'] = null;
         }
-        if ($this->button) {
-            $data['button'] = $this->button->number;
+        if ($this->buttons) {
+            $data['buttons'] = [];
+            foreach ($this->buttons as $button) {
+                array_push($data['buttons'], $button->number);
+            }
         } else {
-            $data['button'] = null;
+            $data['buttons'] = [];
         }
         if ($this->telephone_numbers) {
             $data['telephone_numbers'] = $this->telephone_numbers;
