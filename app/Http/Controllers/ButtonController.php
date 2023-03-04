@@ -13,6 +13,20 @@ class ButtonController extends Controller
         return response()->json(Button::all()->groupBy('state'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            //TODO (Mejorar esta validación)
+            'number' => ['required', 'integer'],
+            'state' => ['filled', 'in:Connected,Disconnected']
+        ]);
+        //Crear la instancia del modelo en la base de datos
+        $data = $request->all();
+        $item = Button::create($data);
+        //Retornar el nuevo modelo
+        return response()->json($item);
+    }
+
     /**
      * Eliminar registros de la base de datos a partir del id pasado en la petición
      *

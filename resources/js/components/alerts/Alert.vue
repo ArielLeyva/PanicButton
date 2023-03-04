@@ -1,4 +1,6 @@
 <script>
+    import Request from "../../Request.js"
+
     import Modal from "../modal/Modal.js"
     import ModalButton from "../modal/ModalButton.js"
     import DetailsModal from "./DetailsModal.vue"
@@ -6,6 +8,7 @@
     export default {
         props: {
             alert: Object,
+            index: Number,
         },
         methods: {
             getDatetime(datetime) {
@@ -31,7 +34,9 @@
                 })
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
-                        //TODO (Eliminar)
+                        Request.delete(`api/alerts/${this.alert.id}`, new FormData()).then(() => {
+                            this.$emit("remove", this.index)
+                        })
                     }
                 })
             },
@@ -47,12 +52,7 @@
                     DetailsModal,
                     [{ alert: this.alert }]
                 )
-                modal.fire().then((result) => {
-                    if (result.status == "accept") {
-                        const id = result.data.get("client_id")
-                        //TODO (Vincular)
-                    }
-                })
+                modal.fire()
             },
             read() {
                 const modal = new Modal({
@@ -66,7 +66,13 @@
                 })
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
-                        //TODO (Eliminar)
+                        const data = new FormData()
+                        data.append("_method", "put")
+                        if (result.status == "accept") {
+                            Request.post(`api/alerts/readed/${this.alert.id}`, data).then((result) => {
+                                this.alert.state = "Vista"
+                            })
+                        }
                     }
                 })
             },
@@ -75,13 +81,13 @@
 </script>
 <template>
     <div class="rounded bg-white shadow-md flex items-center my-2 p-2 first:mt-0 last:mb-0">
-        <img :src="alert.client.avatar" class="rounded-full w-10 h-10" />
-        <div class="px-2 w-5/12">
+        <img @click="details" :src="alert.client.avatar" class="rounded-full w-10 h-10 cursor-pointer" />
+        <div @click="details" class="px-2 w-5/12 cursor-pointer">
             <h4 class="whitespace-nowrap text-gray-500 font-bold text-ellipsis w-full overflow-hidden">{{ alert.client.name }}</h4>
             <p v-if="alert.type == 'Health'" class="text-sm flex items-center text-sky-600">🚑 Alerta médica</p>
             <p v-else class="text-sm flex items-center text-red-600">🚓 Alerta penal</p>
         </div>
-        <div class="w-5/12 text-center">
+        <div @click="details" class="w-5/12 text-center cursor-pointer">
             <p>{{ getDatetime(alert.created_at) }}</p>
             <span class="badge" :class="{ 'bg-success': alert.state == 'Vista', 'bg-danger': alert.state == 'Pendiente' }">{{ alert.state }}</span>
         </div>

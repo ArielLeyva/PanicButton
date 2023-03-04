@@ -8,7 +8,7 @@
         },
         data() {
             return {
-                active: "Últimos 30 días",
+                active: "Todas",
             }
         },
         methods: {

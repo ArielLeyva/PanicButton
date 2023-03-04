@@ -1,5 +1,11 @@
 <script>
     import Dropdown from "bootstrap/js/dist/dropdown"
+    import Request from "../../Request.js"
+
+    import Modal from "../modal/Modal.js"
+    import ModalButton from "../modal/ModalButton.js"
+    import AddButtonModal from "./AddButtonModal.vue"
+
     export default {
         emits: ["filter"],
         data() {
@@ -43,6 +49,29 @@
                     this.$emit("filter", { number: this.number })
                     this.active = "Todos"
                 }
+            },
+            add() {
+                const modal = new Modal(
+                    {
+                        // window: "Detalles del dispositivo",
+                        title: "Registrar un nuevo dispositivo",
+                        // description: "Esta operación es irreversible",
+                        icon: "bi bi-joystick",
+                        background: "#157347",
+                        accept: new ModalButton({
+                            classes: "btn-success text-success hover:text-white",
+                            text: "Registrar",
+                        }),
+                    },
+                    AddButtonModal
+                )
+                modal.fire().then((result) => {
+                    if (result.status == "accept") {
+                        Request.post("api/buttons", result.data).then((data) => {
+                            this.$emit("added", data)
+                        })
+                    }
+                })
             },
         },
     }
@@ -127,7 +156,7 @@
             <button class="mx-1 rounded-xl w-8" @click="search">
                 <i class="bi bi-search" :class="{ 'bi-search': !isSearching, 'bi-x': isSearching }"></i>
             </button>
-            <button class="mx-1 rounded-xl w-8 bg-indigo-500 text-white">
+            <button @click="add" class="mx-1 rounded-xl w-8 bg-indigo-500 text-white">
                 <i class="bi bi-plus"></i>
             </button>
         </div>

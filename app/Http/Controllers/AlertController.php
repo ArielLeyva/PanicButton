@@ -9,6 +9,28 @@ class AlertController extends Controller
 {
     public function index()
     {
-        return response()->json(Alert::all());
+        return response()->json(Alert::all()->sortByDesc('created_at'));
+    }
+
+    public function readed($id)
+    {
+        Alert::find($id)->update(['state' => 'Vista']);
+        return response('');
+    }
+
+    /**
+     * Eliminar registros de la base de datos a partir del id pasado en la petición
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $result = Alert::destroy($id);
+        if ($result) {
+            return response('');
+        } else {
+            return response('No se pudo eliminar la alerta', 422);
+        }
     }
 }

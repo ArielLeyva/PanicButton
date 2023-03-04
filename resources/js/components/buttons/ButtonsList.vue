@@ -20,11 +20,11 @@
             filter(params) {
                 this.display = []
                 const items = []
-                if (this.buttons.Connected !== undefined) {
-                    items.push(...this.buttons.Connected)
-                }
                 if (this.buttons.Disconnected !== undefined) {
                     items.push(...this.buttons.Disconnected)
+                }
+                if (this.buttons.Connected !== undefined) {
+                    items.push(...this.buttons.Connected)
                 }
                 for (let key in params) {
                     switch (key) {
@@ -95,6 +95,16 @@
                     }
                 }
             },
+            add(button) {
+                if ((button.state == "Connected")) {
+                    if (this.buttons.Connected == undefined) this.buttons.Connected = []
+                    this.buttons.Connected.unshift(button)
+                } else {
+                    if (this.buttons.Disconnected == undefined) this.buttons.Disconnected = []
+                    this.buttons.Disconnected.unshift(button)
+                }
+                this.display.unshift(button)
+            },
         },
         mounted() {
             Request.get("api/buttons").then((response) => {
@@ -113,7 +123,7 @@
 
 <template>
     <div class="main scroll">
-        <Navbar @filter="filter" />
+        <Navbar @added="add" @filter="filter" />
         <div class="buttons-list">
             <NotFound v-if="display.length == 0" />
             <ButtonInfo v-for="(button, index) in display" @remove="remove" :button="button" :index="index" :clients="clients" />

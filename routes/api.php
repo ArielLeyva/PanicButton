@@ -27,11 +27,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     ]);
     Route::put("/buttons/unasign/{id}", [ButtonController::class, 'unasign']);
     Route::put("/buttons/asign/{id}/{client}", [ButtonController::class, 'asign']);
-    
+
     Route::resource('/clients', ClientController::class)->only([
         'store', 'index', 'update'
     ]);
     Route::resource('/alerts', AlertController::class)->only([
-        'store', 'index', 'update'
+        'store', 'index', 'destroy'
     ]);
+    Route::put("/alerts/readed/{id}", [AlertController::class, 'readed']);
 });

@@ -90,12 +90,7 @@
                     DetailsModal,
                     [{ button: this.button }]
                 )
-                modal.fire().then((result) => {
-                    if (result.status == "accept") {
-                        const id = result.data.get("client_id")
-                        //TODO (Vincular)
-                    }
-                })
+                modal.fire()
             },
         },
     }

@@ -54,12 +54,12 @@
             </div>
             <div class="collapse mt-2" :id="'info_' + client.id">
                 <div class="card card-body">
-                    <p><i class="bi bi-calendar-day"></i> Fecha de nacimiento: {{ client.birthdate }}</p>
-                    <p><i class="bi bi-gender-ambiguous"></i> Sexo: {{ client.gender }}</p>
-                    <p><i class="bi bi-person-vcard"></i> DNI: {{ client.dni }}</p>
+                    <p><i class="bi bi-calendar-day"></i> <strong class="text-gray-500 font-bold">Fecha de nacimiento:</strong> {{ client.birthdate }}</p>
+                    <p><i class="bi bi-gender-ambiguous"></i> <strong class="text-gray-500 font-bold">Sexo:</strong> {{ client.gender }}</p>
+                    <p><i class="bi bi-person-vcard"></i> <strong class="text-gray-500 font-bold">DNI:</strong> {{ client.dni }}</p>
                     <p>
-                        <i class="bi bi-toggle2-off"></i> Estado:
-                        <span class="badge" :class="{ 'bg-success': client.state == 'Activo', 'bg-danger': client.state == 'Bloqueado' }">{{ client.state }}</span>
+                        <i class="bi bi-toggle2-off"></i> <strong class="text-gray-500 font-bold">Estado:</strong>
+                        <span class="badge ml-1" :class="{ 'bg-success': client.state == 'Activo', 'bg-danger': client.state == 'Bloqueado' }">{{ client.state }}</span>
                     </p>
                 </div>
             </div>
