@@ -21,30 +21,39 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         DB::table('users')->insert([
-            'name' => 'Ariel Eliezer Leyva Gutiérrez',
-            'avatar' => '1.jpg',
-            'email' => 'arieleliezer@gmail.com',
-            'password' => bcrypt('gWCXR3Y8'),
-            'state' => 'Activa'
+            [
+                'name' => 'Ariel Eliezer Leyva Gutiérrez',
+                'avatar' => '1.jpg',
+                'email' => 'arieleliezer@gmail.com',
+                'password' => bcrypt('gWCXR3Y8'),
+                'state' => 'Activa'
+            ],
+            [
+                'name' => 'Ayrton López',
+                'avatar' => '2.jpg',
+                'email' => 'ayrtonlopez@gmail.com',
+                'password' => bcrypt('gWCXR3Y8'),
+                'state' => 'Activa'
+            ]
         ]);
 
         DB::table('buttons')->insert([
-            ['number' => '123245'],
-            ['number' => '345365'],
-            ['number' => '678852'],
-            ['number' => '912365'],
-            ['number' => '365458'],
-            ['number' => '235235'],
-            ['number' => '654157'],
-            ['number' => '032953'],
-            ['number' => '951423'],
-            ['number' => '852905'],
-            ['number' => '258147'],
-            ['number' => '753124'],
-            ['number' => '159435'],
-            ['number' => '754087'],
-            ['number' => '359325'],
-            ['number' => '851126'],
+            ['number' => '123245', 'state' => 'Connected'],
+            ['number' => '345365', 'state' => 'Connected'],
+            ['number' => '678852', 'state' => 'Disconnected'],
+            ['number' => '912365', 'state' => 'Connected'],
+            ['number' => '365458', 'state' => 'Connected'],
+            ['number' => '235235', 'state' => 'Disconnected'],
+            ['number' => '654157', 'state' => 'Disconnected'],
+            ['number' => '032953', 'state' => 'Connected'],
+            ['number' => '951423', 'state' => 'Connected'],
+            ['number' => '852905', 'state' => 'Connected'],
+            ['number' => '258147', 'state' => 'Connected'],
+            ['number' => '753124', 'state' => 'Connected'],
+            ['number' => '159435', 'state' => 'Connected'],
+            ['number' => '754087', 'state' => 'Disconnected'],
+            ['number' => '359325', 'state' => 'Connected'],
+            ['number' => '851126', 'state' => 'Disconnected'],
         ]);
 
         DB::table('addresses')->insert([
@@ -366,13 +375,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('alerts')->insert([
-            ['client_id' => 2, 'type' => 'Health'],
-            ['client_id' => 4, 'type' => 'Health'],
-            ['client_id' => 5, 'type' => 'Police'],
-            ['client_id' => 7, 'type' => 'Health'],
-            ['client_id' => 8, 'type' => 'Police'],
-            ['client_id' => 3, 'type' => 'Police'],
-            ['client_id' => 1, 'type' => 'Police'],
+            ['client_id' => 2, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '4-03-2023 12:40'],
+            ['client_id' => 4, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '4-03-2023 10:17'],
+            ['client_id' => 5, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '3-03-2023 01:24'],
+            ['client_id' => 7, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2-03-2023 16:10'],
+            ['client_id' => 8, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2-03-2023 14:11'],
+            ['client_id' => 3, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '1-03-2023 08:32'],
+            ['client_id' => 1, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '28-02-2023 07:10'],
         ]);
     }
 }

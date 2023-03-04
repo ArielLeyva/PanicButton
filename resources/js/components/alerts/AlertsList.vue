@@ -1,15 +1,23 @@
 <script>
+    import Dropdown from "bootstrap/js/dist/dropdown"
     import Request from "../../Request.js"
     import Alert from "./Alert.vue"
     import Pagination from "../Pagination.vue"
+    import Navbar from "./Navbar.vue"
 
     export default {
-        components: { Alert, Pagination },
+        components: { Alert, Pagination, Navbar },
         data() {
             return {
+                backup: [],
                 alerts: [],
                 display: [],
             }
+        },
+        watch: {
+            alerts() {
+                this.paginate(0)
+            },
         },
         methods: {
             paginate(page) {
@@ -30,9 +38,8 @@
         },
         created() {
             Request.get("api/alerts").then((response) => {
-                // console.log(response)
-                this.alerts = response.data
-                // this.display = this.alerts
+                this.backup = response.data
+                this.alerts = [...this.backup]
                 this.paginate(0)
             })
         },
@@ -40,7 +47,7 @@
 </script>
 <template>
     <div class="w-2/3 px-4">
-        <p class="text-indigo-500 mb-2 font-bold text-center mt-2">Alertas</p>
+        <Navbar :backup="backup" @filter="(matched) => (alerts = matched)" />
         <div class="bg-gray-100 p-2 rounded-lg mt-1">
             <Alert v-for="alert in display" :alert="alert" />
         </div>

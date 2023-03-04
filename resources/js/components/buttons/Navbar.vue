@@ -79,7 +79,7 @@
                 </button>
                 <ul class="dropdown-menu p-2">
                     <li>
-                        <p class="text-center text-indigo-500">Datos del cliente</p>
+                        <p class="text-center text-gray-500 font-bold">Datos del cliente</p>
                     </li>
                     <li class="flex items-center px-2 relative border-b-gray-200 border-b py-2">
                         <i class="bi bi-person absolute top-3 left-4 text-gray-500"></i>
@@ -120,7 +120,7 @@
                         </div>
                     </li>
                     <li class="mt-1">
-                        <button type="reset" class="btn btn-sm btn-secondary w-full text-secondary hover:text-white">Limpiar filtro</button>
+                        <button type="reset" class="btn btn-sm border border-indigo-500 w-full text-indigo-500 hover:text-white hover:bg-indigo-500">Limpiar filtro</button>
                     </li>
                 </ul>
             </form>
