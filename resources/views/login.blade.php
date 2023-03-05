@@ -21,13 +21,13 @@
             <h1 class="text-3xl text-white mb-5 text-center">Iniciar sesión</h1>
             <form autocomplete="off" class="w-72" method="POST" action="login">
                 @csrf
-                <div class="bg-white bg-opacity-40 p-3 rounded-md">
-                    <i class="bi bi-envelope text-white mr-2"></i>
-                    <input class="bg-transparent appearance-none text-white placeholder-white focus-visible:outline-none focus:outline-none" name="email" placeholder="Correo electrónico" type="email" />
+                <div class="bg-white bg-opacity-40 rounded-md relative">
+                    <i class="bi bi-envelope text-white absolute top-3 left-3"></i>
+                    <input class="bg-transparent appearance-none text-white placeholder-white focus-visible:outline-none focus:outline-none pl-9 py-3 w-full rounded-md" name="email" placeholder="Correo electrónico" type="email" />
                 </div>
-                <div class="bg-white bg-opacity-40 p-3 rounded-md mt-4">
-                    <i class="bi bi-key text-white mr-2"></i>
-                    <input class="fill-transparent bg-transparent appearance-none text-white placeholder-white focus-visible:outline-none focus:outline-none" name="password" placeholder="Contraseña" type="password" />
+                <div class="bg-white bg-opacity-40 rounded-md mt-4 relative">
+                    <i class="bi bi-key text-white absolute top-3 left-3"></i>
+                    <input class="fill-transparent bg-transparent appearance-none text-white placeholder-white focus-visible:outline-none focus:outline-none pl-9 py-3 w-full rounded-md" name="password" placeholder="Contraseña" type="password" />
                 </div>
                 <div class="mt-4">
                     <input type="checkbox" name="remember" class="mr-2" />

@@ -62,7 +62,7 @@
     }
 </script>
 <template>
-    <div class="w-2/3 px-4">
+    <div class="w-full lg:w-2/3 px-4">
         <Navbar :backup="backup" @filter="(matched) => (alerts = matched)" />
         <div v-if="display.length > 0" class="bg-gray-100 p-2 rounded-lg mt-1">
             <Alert v-for="(alert, index) in display" @remove="remove" :index="index" :alert="alert" />
