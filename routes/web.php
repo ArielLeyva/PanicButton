@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,10 +22,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('welcome');
     });
+    Route::get('logout', [AuthController::class, 'logout']);
 });
 
 Route::get('/login', function () {
     return view('login');
 })->name('login');
+
+
 
 Route::post('/login', [AuthController::class, 'authenticate']);

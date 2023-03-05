@@ -25,6 +25,9 @@
                     document.documentElement.classList.add("dark")
                 }
             },
+            logout() {
+                window.location.href = "logout"
+            },
         },
         created() {
             Request.get("api/user").then((response) => (this.user = response.data))
@@ -63,7 +66,7 @@
             <button @click="changeTheme" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3">
                 <i class="bi" :class="{ 'bi-sun-fill': theme == 'light', 'bi-moon-fill': theme == undefined || theme == 'dark' }"></i>
             </button>
-            <button class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3">
+            <button @click="logout" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3">
                 <i class="bi bi-box-arrow-left"></i>
             </button>
         </div>

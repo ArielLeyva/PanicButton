@@ -133,6 +133,6 @@
                 </ul>
             </div>
         </div>
-        <button class="btn btn-sm ml-5 text-indigo-500 border border-indigo-500 dark:border-indigo-300 dark:text-indigo-300 hover:text-white hover:bg-indigo-500">Registrar nuevo cliente</button>
+        <button class="btn btn-sm ml-5 text-indigo-500 border border-indigo-500 dark:border-indigo-300 dark:text-indigo-300 hover:text-white hover:bg-indigo-500 dark:hover:text-white">Registrar nuevo cliente</button>
     </div>
 </template>

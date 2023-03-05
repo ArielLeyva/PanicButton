@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -35,5 +36,16 @@ class AuthController extends Controller
         return back()->withErrors([
             'username' => 'El nombre de usuario o contraseña es incorrecto',
         ])->onlyInput('username');
+    }
+
+    public function logout(Request $request)
+    {
+        // // $request->session()->();
+        // $request->user()->tokens()->delete();
+        // return redirect()->intended('login');
+        $request->user()->tokens()->delete();
+        Session::flush();
+        Auth::logout();
+        return redirect('login');
     }
 }
