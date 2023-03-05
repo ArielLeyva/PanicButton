@@ -77,7 +77,7 @@
 </script>
 <template>
     <div class="w-1/3 md:w-8/12 lg:w-1/3 m-auto hidden md:block">
-        <p class="text-indigo-500 mb-2 font-bold text-center mt-2">Dispositivos</p>
+        <p class="text-indigo-500 mb-2 font-bold text-center mt-2 dark:text-gray-50">Dispositivos</p>
         <canvas class="chart"></canvas>
     </div>
 </template>

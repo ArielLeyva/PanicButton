@@ -52,11 +52,11 @@
 <template>
     <div class="mt-2">
         <Navbar @filter="(items) => (clients = items)" :backup="backup" />
-        <div class="bg-gray-100 p-2 m-4 rounded-xl">
+        <div class="bg-gray-100 dark:bg-slate-500 p-2 m-4 rounded-xl">
             <div class="flex items-center text-xs">
-                <div class="w-4/12 text-indigo-500 font-bold text-center">Cliente</div>
-                <div class="w-3/12 text-indigo-500 font-bold text-center">Teléfonos</div>
-                <div class="w-5/12 text-indigo-500 font-bold text-center">Dirección</div>
+                <div class="w-4/12 text-indigo-500 dark:text-gray-200 font-bold text-center">Cliente</div>
+                <div class="w-3/12 text-indigo-500 dark:text-gray-200 font-bold text-center">Teléfonos</div>
+                <div class="w-5/12 text-indigo-500 dark:text-gray-200 font-bold text-center">Dirección</div>
             </div>
             <ClientInfo v-if="display.length > 0" v-for="client in display" :client="client" />
             <NotFound v-else />

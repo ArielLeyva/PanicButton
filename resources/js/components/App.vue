@@ -18,13 +18,13 @@
 
 <template>
     <Navbar />
-    <main class="block md:flex bg-gradient-to-br from-indigo-100 to-fuchsia-100 w-full p-3">
+    <main class="block md:flex bg-gradient-to-br from-indigo-100 to-fuchsia-100 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 w-full p-3">
         <section class="md:w-1/3 lg:w-1/4 main scroll">
             <ButtonsList @load="(data) => (buttons = data)" :clients="clients" />
         </section>
         <section class="md:w-2/3 lg:w-3/4 main scroll mt-5 md:mt-0">
             <div class="w-full pl-4">
-                <div class="bg-white rounded-lg shadow-sm pb-1">
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm pb-1">
                     <div class="flex md:block lg:flex">
                         <Statistics :buttons="buttons" />
                         <AlertsList />

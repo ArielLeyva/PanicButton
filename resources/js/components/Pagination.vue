@@ -123,11 +123,11 @@
     <nav class="navigation mt-2 text-sm">
         <ul class="pagination justify-content-center mb-2">
             <li class="page-item">
-                <a class="page-link" :class="{ disabled: page == 0 }" role="button" @click="previousPage"><i class="bi bi-chevron-double-left"></i></a>
+                <a class="page-link dark:bg-slate-500 dark:text-white" :class="{ disabled: page == 0 }" role="button" @click="previousPage"><i class="bi bi-chevron-double-left"></i></a>
             </li>
             <template v-for="(alert, index) in pages">
                 <li v-if="!hiddenButtons.includes(index) || ellipsisButtons.includes(index)" class="page-item">
-                    <a class="page-link" :class="{ active: index == page }" role="button" @click="selectPage(index)">
+                    <a class="page-link dark:bg-slate-500 dark:border-gray-200 dark:text-white" :class="{ active: index == page }" role="button" @click="selectPage(index)">
                         <template v-if="ellipsisButtons.includes(index)"> ... </template>
                         <template v-else>
                             {{ index + 1 }}
@@ -136,7 +136,7 @@
                 </li>
             </template>
             <li class="page-item">
-                <a class="page-link" :class="{ disabled: page >= pages - 1 }" role="button" @click="nextPage"><i class="bi bi-chevron-double-right"></i></a>
+                <a class="page-link dark:bg-slate-500 dark:text-white" :class="{ disabled: page >= pages - 1 }" role="button" @click="nextPage"><i class="bi bi-chevron-double-right"></i></a>
             </li>
         </ul>
     </nav>
@@ -145,7 +145,7 @@
     .page-link.active,
     .active > .page-link {
         z-index: 3;
-        background-color: #6366f1;
+        background-color: #6366f1 !important;
         border-color: #6366f1;
     }
 </style>

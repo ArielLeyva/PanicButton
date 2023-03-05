@@ -7,13 +7,13 @@
     }
 </script>
 <template>
-    <div class="groupr my-2 rounded-lg shadow-sm bg-white p-2">
+    <div class="groupr my-2 rounded-lg shadow-sm bg-white dark:bg-slate-900 p-2">
         <div class="w-full flex items-cente">
             <div class="w-4/12 flex items-center">
                 <img :src="client.avatar" class="rounded-full w-8" />
                 <div class="w-10/12 pl-2">
-                    <h4 class="w-full text-ellipsis whitespace-nowrap overflow-hidden text-gray-500 font-bold">{{ client.name }}</h4>
-                    <p v-if="client.buttons.length > 0" class="text-gray-400">
+                    <h4 class="w-full text-ellipsis whitespace-nowrap overflow-hidden text-gray-500 dark:text-gray-50 font-bold">{{ client.name }}</h4>
+                    <p v-if="client.buttons.length > 0" class="text-gray-400 dark:text-gray-200">
                         <i class="bi bi-joystick"></i>
                         <template v-for="button in client.buttons"> ({{ button }}) </template>
                     </p>
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="w-3/12 m-auto">
-                <p v-for="telephone in client.telephone_numbers" class="text-center">
+                <p v-for="telephone in client.telephone_numbers" class="text-center dark:text-gray-100">
                     <i class="bi" :class="{ 'bi-telephone': telephone.type == 'normal', 'bi-phone': telephone.type == 'mobile' }"></i>
                     {{ telephone.number }}
                 </p>
@@ -36,16 +36,16 @@
                 >
                     <i class="bi bi-chevron-down"></i>
                 </button>
-                <p>{{ client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}</p>
+                <p class="dark:text-gray-100">{{ client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}</p>
             </div>
         </div>
         <div class="collapse mt-2" :id="'info_' + client.id">
-            <div class="card card-body">
-                <p><i class="bi bi-calendar-day"></i> <strong class="text-gray-500 font-bold">Fecha de nacimiento:</strong> {{ client.birthdate }}</p>
-                <p><i class="bi bi-gender-ambiguous"></i> <strong class="text-gray-500 font-bold">Sexo:</strong> {{ client.gender }}</p>
-                <p><i class="bi bi-person-vcard"></i> <strong class="text-gray-500 font-bold">DNI:</strong> {{ client.dni }}</p>
-                <p>
-                    <i class="bi bi-toggle2-off"></i> <strong class="text-gray-500 font-bold">Estado:</strong>
+            <div class="card card-body dark:bg-transparent">
+                <p class="dark:text-white"><i class="bi bi-calendar-day dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Fecha de nacimiento:</strong> {{ client.birthdate }}</p>
+                <p class="dark:text-white"><i class="bi bi-gender-ambiguous dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Sexo:</strong> {{ client.gender }}</p>
+                <p class="dark:text-white"><i class="bi bi-person-vcard dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">DNI:</strong> {{ client.dni }}</p>
+                <p class="dark:text-white">
+                    <i class="bi bi-toggle2-off dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Estado:</strong>
                     <span class="badge ml-1" :class="{ 'bg-success': client.state == 'Activo', 'bg-danger': client.state == 'Bloqueado' }">{{ client.state }}</span>
                 </p>
             </div>

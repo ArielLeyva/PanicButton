@@ -47,17 +47,17 @@
     }
 </script>
 <template>
-    <ul class="dropdown-menu scroll">
+    <ul class="dropdown-menu scroll dark:bg-slate-700">
         <template v-if="notifications.length > 0">
-            <li class="dropdown-item cursor-pointer" v-for="notification in notifications">
+            <li class="dropdown-item cursor-pointer dark:hover:bg-slate-400" v-for="notification in notifications">
                 <div class="flex">
                     <div class="w-1/6 flex justify-center items-center">
                         <img :src="notification.client.avatar" class="rounded-full w-8 h-8" />
                     </div>
                     <div class="w-10/12">
-                        <h4 class="w-80 text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis font-bold">{{ notification.title }}</h4>
-                        <p class="w-64 overflow-hidden text-ellipsis">{{ notification.content }}</p>
-                        <small class="text-gray-500">{{ getTime(notification.created_at) }}</small>
+                        <h4 class="w-80 text-gray-500 dark:text-gray-100 overflow-hidden whitespace-nowrap text-ellipsis font-bold">{{ notification.title }}</h4>
+                        <p class="w-64 overflow-hidden text-ellipsis dark:text-white">{{ notification.content }}</p>
+                        <small class="text-gray-500 dark:text-gray-200">{{ getTime(notification.created_at) }}</small>
                     </div>
                 </div>
             </li>

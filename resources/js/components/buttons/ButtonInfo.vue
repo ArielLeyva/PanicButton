@@ -96,11 +96,11 @@
     }
 </script>
 <template>
-    <div class="flex items-center my-2 bg-white p-3 rounded-lg shadow-sm cursor-pointer">
+    <div class="flex items-center my-2 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm cursor-pointer">
         <div class="w-10/12 flex" @click="details">
             <img :src="button.client.avatar" class="rounded-full w-10 h-10" />
             <div class="px-2 w-11/12">
-                <h4 class="whitespace-nowrap text-gray-500 font-bold text-ellipsis w-full overflow-hidden">{{ button.client.name }}</h4>
+                <h4 class="whitespace-nowrap text-gray-500 dark:text-gray-100 font-bold text-ellipsis w-full overflow-hidden">{{ button.client.name }}</h4>
                 <p class="text-sm flex items-center" :class="{ 'text-green-600': button.state == 'Connected', 'text-red-600': button.state == 'Disconnected' }">
                     <i class="bi bi-circle-fill mr-1" style="font-size: 0.7em"></i>
                     {{ button.state }} ({{ button.number }})
