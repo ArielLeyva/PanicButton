@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\ButtonController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,14 +26,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/buttons', ButtonController::class)->only([
         'store', 'index', 'update', 'destroy'
     ]);
-    Route::put("/buttons/unasign/{id}", [ButtonController::class, 'unasign']);
-    Route::put("/buttons/asign/{id}/{client}", [ButtonController::class, 'asign']);
+    Route::put('/buttons/unasign/{id}', [ButtonController::class, 'unasign']);
+    Route::put('/buttons/asign/{id}/{client}', [ButtonController::class, 'asign']);
 
     Route::resource('/clients', ClientController::class)->only([
         'store', 'index', 'update'
     ]);
+
     Route::resource('/alerts', AlertController::class)->only([
         'store', 'index', 'destroy'
     ]);
-    Route::put("/alerts/readed/{id}", [AlertController::class, 'readed']);
+    Route::put('/alerts/readed/{id}', [AlertController::class, 'readed']);
+
+    Route::get('/notifications', [NotificationController::class, 'index']);
 });

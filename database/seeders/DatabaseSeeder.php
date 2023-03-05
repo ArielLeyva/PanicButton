@@ -368,5 +368,22 @@ class DatabaseSeeder extends Seeder
             ['client_id' => 3, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '1-03-2023 08:32'],
             ['client_id' => 1, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '28-02-2023 07:10'],
         ]);
+
+        DB::table('notifications')->insert([
+            ['client_id' => 2, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '4-03-2023 12:40'],
+            ['client_id' => 2, 'title' => 'Dispositivo desconectado', 'content' => 'El dispositivo de %client% ha perdido la conexión.', 'created_at' => '1-03-2023 8:33'],
+            ['client_id' => 4, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '4-03-2023 10:17'],
+            ['client_id' => 5, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '3-03-2023 01:24'],
+            ['client_id' => 7, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2-03-2023 16:10'],
+            ['client_id' => 10, 'title' => 'Dispositivo conectado', 'content' => 'El dispositivo de %client% ha recuperado la conexión.', 'created_at' => '28-02-2023 18:27'],
+            ['client_id' => 8, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2-03-2023 14:11'],
+            ['client_id' => 8, 'title' => 'Dispositivo asignado', 'content' => 'Se ha asigando un nuevo dispositivo a %client%.', 'created_at' => '1-03-2023 08:10'],
+            ['client_id' => 3, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '1-03-2023 08:32'],
+            ['client_id' => 1, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '28-02-2023 07:10'],
+            ['client_id' => 10, 'title' => 'Dispositivo desconectado', 'content' => 'El dispositivo de %client% ha perdido la conexión.', 'created_at' => '28-02-2023 18:27'],
+            ['client_id' => 11, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '4-02-2023 4:11'],
+            ['client_id' => 12, 'title' => 'Dispositivo asignado', 'content' => 'Se ha asigando un nuevo dispositivo a %client%.', 'created_at' => '05-03-2023 08:10'],
+            ['client_id' => 12, 'title' => 'Dispositivo conectado', 'content' => 'El dispositivo de %client% ha recuperado la conexión.', 'created_at' => '05-03-2023 9:10'],
+        ]);
     }
 }

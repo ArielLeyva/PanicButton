@@ -9,7 +9,9 @@ class AlertController extends Controller
 {
     public function index()
     {
-        return response()->json(Alert::all()->sortByDesc('created_at'));
+        $alerts = Alert::all();
+        $sort = $alerts->sortByDesc('created_at');
+        return response()->json($sort->values()->all());
     }
 
     public function readed($id)
