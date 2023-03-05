@@ -37,7 +37,7 @@ export default class Modal {
                         config: {
                             window: config.window || false,
                             title: config.title || false,
-                            background: config.background || "#fff",
+                            background: config.background,
                             icon: config.icon || false,
                             description: config.description || false,
                             inputs: config.inputs || [],
@@ -50,13 +50,13 @@ export default class Modal {
                                 config.cancel ||
                                 new ModalButton({
                                     text: "Cancelar",
-                                    classes: "btn-secondary text-secondary hover:text-white",
+                                    classes: "btn-secondary dark:text-gray-50 text-secondary hover:text-white",
                                 }),
                             accept:
                                 config.accept ||
                                 new ModalButton({
                                     text: "Aceptar",
-                                    classes: "btn-primary text-primary hover:text-white",
+                                    classes: "btn-primary dark:text-blue-400 hover:text-white",
                                 }),
                         },
                     }

@@ -45,7 +45,7 @@
                     {
                         window: "Detalles de la alerta",
                         accept: new ModalButton({
-                            classes: "btn-success text-success hover:text-white",
+                            classes: "btn-success text-success dark:text-green-400 dark:hover:text-white hover:text-white",
                             text: "Aceptar",
                         }),
                     },

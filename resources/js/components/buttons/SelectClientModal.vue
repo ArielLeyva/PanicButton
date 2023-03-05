@@ -16,17 +16,19 @@
 <template>
     <CustomModal :config="config" @accept="accept" @cancel="cancel">
         <div class="client-list scroll">
-            <div v-for="client in clients" class="group my-2 rounded-lg shadow-sm bg-white p-2 first:mt-0 last:mb-0">
+            <div v-for="client in clients" class="group my-2 rounded-lg shadow-sm bg-white dark:bg-slate-900 p-2 first:mt-0 last:mb-0">
                 <div class="w-full flex items-cente">
                     <div class="w-10/12 flex items-center cursor-pointer" @click="select(client)" data-bs-dismiss="modal">
                         <img :src="client.avatar" class="rounded-full w-8" />
                         <div class="w-10/12 pl-2">
-                            <h4 class="w-full text-ellipsis whitespace-nowrap overflow-hidden text-gray-500 font-bold">{{ client.name }}</h4>
-                            <p class="badge" :class="{ 'bg-success': client.button !== null, 'bg-danger': client.button == null }">
+                            <h4 class="w-full text-ellipsis whitespace-nowrap overflow-hidden text-gray-500 dark:text-gray-50 font-bold">{{ client.name }}</h4>
+                            <p class="badge" :class="{ 'bg-success': client.buttons.length > 0, 'bg-danger': client.buttons.length == 0 }">
                                 <i class="bi bi-joystick mr-1"></i>
-                                <template v-if="client.button == null"> Sin asignar </template>
+                                <template v-if="client.buttons.length == 0"> Sin asignar </template>
                                 <template v-else>
-                                    {{ client.button }}
+                                    <template v-for="button in client.buttons">
+                                        {{ button }}
+                                    </template>
                                 </template>
                             </p>
                         </div>
@@ -44,16 +46,16 @@
                     </div>
                 </div>
                 <div class="collapse mt-2" :id="'modal_info_' + client.id">
-                    <div class="card card-body">
-                        <p><i class="bi bi-calendar-day"></i> Fecha de nacimiento: {{ client.birthdate }}</p>
-                        <p><i class="bi bi-gender-ambiguous"></i> Sexo: {{ client.gender }}</p>
-                        <p><i class="bi bi-person-vcard"></i> DNI: {{ client.dni }}</p>
-                        <p><i class="bi bi-map"></i> Dirección postal: {{ client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}</p>
-                        <p v-for="telephone in client.telephone_numbers">
+                    <div class="card card-body dark:bg-transparent">
+                        <p class="dark:text-gray-50"><i class="bi bi-calendar-day"></i> Fecha de nacimiento: {{ client.birthdate }}</p>
+                        <p class="dark:text-gray-50"><i class="bi bi-gender-ambiguous"></i> Sexo: {{ client.gender }}</p>
+                        <p class="dark:text-gray-50"><i class="bi bi-person-vcard"></i> DNI: {{ client.dni }}</p>
+                        <p class="dark:text-gray-50"><i class="bi bi-map"></i> Dirección postal: {{ client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}</p>
+                        <p class="dark:text-gray-50" v-for="telephone in client.telephone_numbers">
                             <i class="bi" :class="{ 'bi-telephone': telephone.type == 'normal', 'bi-phone': telephone.type == 'mobile' }"></i>
                             {{ telephone.number }}
                         </p>
-                        <p>
+                        <p class="dark:text-gray-50">
                             <i class="bi bi-toggle2-off"></i> Estado:
                             <span class="badge" :class="{ 'bg-success': client.state == 'Activo', 'bg-danger': client.state == 'Bloqueado' }">{{ client.state }}</span>
                         </p>

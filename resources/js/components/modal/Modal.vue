@@ -5,7 +5,7 @@
         /**
          * @emit accept Se llama cuando se presiona el botón de aceptar del modal
          * - @param {FormData} data Datos del formulario del modal
-         * @emit cancel Se llama cuando se presiona el botón de cancelar o se cierra el modal 
+         * @emit cancel Se llama cuando se presiona el botón de cancelar o se cierra el modal
          */
         emits: ["cancel", "accept"],
         props: {
@@ -51,9 +51,9 @@
                     <i class="modal-icon" v-if="config.icon !== false" :class="config.icon"></i>
                     <button v-if="config.close.show" type="button" class="btn-close btn-close-white" :class="config.close.icon" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <h3 v-if="config.title !== false" class="modal-title mb-3">{{ config.title }}</h3>
-                    <h5 v-if="config.description !== false" class="modal-description">{{ config.description }}</h5>
+                <div class="modal-body dark:bg-slate-600">
+                    <h3 v-if="config.title !== false" class="modal-title mb-3 dark:text-gray-100">{{ config.title }}</h3>
+                    <h5 v-if="config.description !== false" class="modal-description dark:text-gray-50">{{ config.description }}</h5>
                     <form v-if="config.inputs.length > 0" class="alert-form mt-3">
                         <template v-for="input in config.inputs">
                             <div v-if="input.type == 'checkbox'" class="form-check m-auto">
@@ -84,9 +84,13 @@
         padding: 1rem;
         border-top-left-radius: calc(2rem - 1px);
         border-top-right-radius: calc(2rem - 1px);
+        background-color: #fff;
         min-height: 45px;
     }
-
+    .dark .modal-header {
+        background-color: #373a41;
+        color: white;
+    }
     .modal-header > i {
         font-size: 6em;
         margin: auto;

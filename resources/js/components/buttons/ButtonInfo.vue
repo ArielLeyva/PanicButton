@@ -19,7 +19,7 @@
                     {
                         window: "Vincular dispositivo a un cliente",
                         accept: new ModalButton({
-                            classes: "btn-success text-success hover:text-white",
+                            classes: "btn-success text-success dark:text-green-400 dark:hover:text-white hover:text-white",
                             text: "Seleccionar",
                         }),
                     },
@@ -45,7 +45,7 @@
                     icon: "bi bi-exclamation-triangle",
                     background: "#dc3545",
                     accept: new ModalButton({
-                        classes: "btn-danger text-danger hover:text-white",
+                        classes: "btn-danger text-danger dark:text-red hover:text-white",
                     }),
                 })
                 modal.fire().then((result) => {
@@ -83,7 +83,7 @@
                     {
                         window: "Detalles del dispositivo",
                         accept: new ModalButton({
-                            classes: "btn-success text-success hover:text-white",
+                            classes: "btn-success text-success dark:text-green-400 dark:hover:text-white hover:text-white",
                             text: "Aceptar",
                         }),
                     },
@@ -108,19 +108,19 @@
             </div>
         </div>
         <div class="flex w-2/12 justify-end dropdown">
-            <button data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical"></i></button>
-            <ul class="dropdown-menu">
+            <button data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical dark:text-white"></i></button>
+            <ul class="dropdown-menu dark:bg-slate-700">
                 <li>
-                    <button class="dropdown-item" @click="details">Ver detalles</button>
+                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="details">Ver detalles</button>
                 </li>
                 <li v-if="button.client.name == 'Sin asignar'">
-                    <button class="dropdown-item" @click="asign">Vincular</button>
+                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="asign">Vincular</button>
                 </li>
                 <li v-else>
-                    <button class="dropdown-item" @click="unasign">Desvincular</button>
+                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="unasign">Desvincular</button>
                 </li>
                 <li>
-                    <button class="dropdown-item" @click="remove">Eliminar</button>
+                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="remove">Eliminar</button>
                 </li>
             </ul>
         </div>
