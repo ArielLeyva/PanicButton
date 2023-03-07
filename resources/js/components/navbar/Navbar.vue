@@ -14,12 +14,10 @@
         methods: {
             changeTheme() {
                 if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-                    console.log("light")
                     localStorage.setItem("theme", "light")
                     this.theme = "light"
                     document.documentElement.classList.remove("dark")
                 } else {
-                    console.log("dark")
                     localStorage.setItem("theme", "dark")
                     this.theme = "dark"
                     document.documentElement.classList.add("dark")
@@ -39,22 +37,20 @@
 </script>
 <template>
     <nav class="w-full h-16 bg-white dark:bg-slate-900 flex items-center p-2 text-black dark:text-white shadow">
-        <div>
-            <h4 class="text-indigo-500 dark:text-white whitespace-nowrap flex">
-                <img :src="user == null ? 'src/blank-profile.svg' : user.avatar" class="rounded-full w-10 h-10" />
-                <div class="px-2">
-                    <h4 class="whitespace-nowrap font-bold text-ellipsis w-full overflow-hidden">
-                        <template v-if="user == null">
-                            <span class="placeholder w-40"></span>
-                        </template>
-                        <template v-else>{{ user.name }}</template>
-                    </h4>
-                    <p class="text-sm flex items-center text-gray-500 dark:text-gray-50">
-                        <i class="bi bi-person-fill-check mr-1" style="font-size: 0.7em"></i>
-                        Administrador
-                    </p>
-                </div>
-            </h4>
+        <div class="text-indigo-500 dark:text-white flex">
+            <img :src="user == null ? 'src/blank-profile.svg' : user.avatar" class="rounded-full w-10 h-10" />
+            <div class="px-2">
+                <h4 class="whitespace-nowrap font-bold text-ellipsis w-40 sm:w-full overflow-hidden">
+                    <template v-if="user == null">
+                        <span class="placeholder w-40"></span>
+                    </template>
+                    <template v-else>{{ user.name }}</template>
+                </h4>
+                <p class="text-sm flex items-center text-gray-500 dark:text-gray-50">
+                    <i class="bi bi-person-fill-check mr-1" style="font-size: 0.7em"></i>
+                    Administrador
+                </p>
+            </div>
         </div>
         <div class="w-full flex justify-end pr-2">
             <div class="dropdown">

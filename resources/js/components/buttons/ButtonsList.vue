@@ -96,7 +96,7 @@
                 }
             },
             add(button) {
-                if ((button.state == "Connected")) {
+                if (button.state == "Connected") {
                     if (this.buttons.Connected == undefined) this.buttons.Connected = []
                     this.buttons.Connected.unshift(button)
                 } else {
@@ -122,11 +122,13 @@
 </script>
 
 <template>
-    <div class="main scroll">
-        <Navbar @added="add" @filter="filter" />
-        <div class="buttons-list">
-            <NotFound v-if="display.length == 0" />
-            <ButtonInfo v-for="(button, index) in display" @remove="remove" :button="button" :index="index" :clients="clients" />
+    <div>
+        <div class="main scroll">
+            <Navbar @added="add" @filter="filter" />
+            <div class="buttons-list">
+                <NotFound v-if="display.length == 0" />
+                <ButtonInfo v-for="(button, index) in display" @remove="remove" :button="button" :index="index" :clients="clients" />
+            </div>
         </div>
     </div>
 </template>

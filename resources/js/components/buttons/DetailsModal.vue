@@ -13,7 +13,7 @@
                 <i class="bi bi-circle-fill mr-1" style="font-size: 0.7em"></i>
                 {{ button.state }}
             </p>
-            <p><i class="bi bi-joystick"></i> <strong class="text-gray-500 dark:text-gray-50">Número de indetificación:</strong> {{ button.number }}</p>
+            <p class="dark:text-gray-50"><i class="bi bi-joystick"></i> <strong class="text-gray-500 dark:text-gray-50">Número de indetificación:</strong> {{ button.number }}</p>
             <p class="text-center text-indigo-500 dark:text-gray-200 font-bold mt-4">Detalles del cliente</p>
             <div v-if="button.client.name !== 'Sin asignar'">
                 <div class="w-full flex items-center">
@@ -37,12 +37,12 @@
                 </p>
                 <p class="mt-1 dark:text-white">
                     <i class="bi bi-toggle2-off"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Estado:</strong>
-                    <span class="badge" :class="{ 'bg-success': button.client.state == 'Activo', 'bg-danger': button.client.state == 'Bloqueado' }">{{ button.client.state }}</span>
+                    <span class="badge ml-1" :class="{ 'bg-success': button.client.state == 'Activo', 'bg-danger': button.client.state == 'Bloqueado' }">{{ button.client.state }}</span>
                 </p>
             </div>
             <div v-else class="text-center">
-                <i class="bi bi-person-x text-5xl text-gray-500"></i>
-                <p class="text-center">No asignado a ningún cliente</p>
+                <i class="bi bi-person-x text-5xl text-gray-500 dark:text-gray-50"></i>
+                <p class="text-center dark:text-gray-50">No asignado a ningún cliente</p>
             </div>
         </div>
     </CustomModal>
