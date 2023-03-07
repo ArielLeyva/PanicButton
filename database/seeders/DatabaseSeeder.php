@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Ariel Eliezer Leyva Gutiérrez',
                 'avatar' => '1.jpg',
                 'email' => 'arieleliezer@gmail.com',
+                'username' => 'ArielEliezer',
                 'password' => bcrypt('gWCXR3Y8'),
                 'state' => 'Activa'
             ],
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Ayrton López',
                 'avatar' => '2.jpg',
                 'email' => 'ayrtonlopez@gmail.com',
+                'username' => 'AyrtonLopez',
                 'password' => bcrypt('gWCXR3Y8'),
                 'state' => 'Activa'
             ]
