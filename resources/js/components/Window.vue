@@ -29,7 +29,7 @@
     }
 </script>
 <template>
-    <footer class="z-50 justify-center flex md:hidden absolute bottom-0 w-full bg-white dark:bg-slate-600 shadow-md p-2 border-slate-800 border-t" style="border-width: 1px;">
+    <footer class="z-50 justify-center flex md:hidden fixed bottom-0 w-full bg-white dark:bg-slate-600 shadow-md p-2 border-slate-600 border-t" style="border-width: 1px;">
         <button @click="change('buttons')" :class="{ 'dark:text-white text-gray-700': window == 'buttons', 'text-gray-400': window !== 'buttons' }" class="w-1/2 btn-sm">
             <i class="bi bi-joystick"></i>
             <br />

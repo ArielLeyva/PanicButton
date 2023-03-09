@@ -5,6 +5,9 @@
     import ModalButton from "../modal/ModalButton.js"
     import DetailsModal from "./DetailsModal.vue"
 
+    import Alert from "../alert/Alert.js"
+    import AlertConfig from "../alert/AlertConfig.js"
+
     export default {
         props: {
             alert: Object,
@@ -36,6 +39,15 @@
                     if (result.status == "accept") {
                         Request.delete(`api/alerts/${this.alert.id}`, new FormData()).then(() => {
                             this.$emit("remove", this.index)
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Se ha eliminado la alerta",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })
@@ -71,6 +83,15 @@
                         if (result.status == "accept") {
                             Request.post(`api/alerts/readed/${this.alert.id}`, data).then((result) => {
                                 this.alert.state = "Vista"
+                                const alert = new Alert(
+                                    new AlertConfig({
+                                        title: "¡Operación satisfactoria!",
+                                        text: "Se ha marcado como leída esta alerta",
+                                        icon: "bi bi-check2-square",
+                                        color: "#198754",
+                                    })
+                                )
+                                alert.fire()
                             })
                         }
                     }

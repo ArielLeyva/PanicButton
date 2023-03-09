@@ -4,7 +4,10 @@
 
     import Modal from "../modal/Modal.js"
     import ModalButton from "../modal/ModalButton.js"
-    import AddClientModal from "./AddClientModal.vue"
+    import ClientModal from "./ClientModal.vue"
+
+    import Alert from "../alert/Alert.js"
+    import AlertConfig from "../alert/AlertConfig.js"
 
     export default {
         emits: ["update"],
@@ -30,6 +33,15 @@
                     if (result.status == "accept") {
                         Request.delete(`api/clients/${this.client.id}`, new FormData()).then(() => {
                             this.$emit("remove", this.index)
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Se ha eliminado este cliente correctamente",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })
@@ -45,7 +57,7 @@
                             text: "Actualizar",
                         }),
                     },
-                    AddClientModal,
+                    ClientModal,
                     [{ client: this.client }]
                 )
                 modal.fire().then((result) => {
@@ -54,6 +66,15 @@
                         data.append("_method", "put")
                         Request.post(`api/clients/${this.client.id}`, data).then((data) => {
                             this.$emit("update", data)
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Se han actualizados los datos del cliente",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })

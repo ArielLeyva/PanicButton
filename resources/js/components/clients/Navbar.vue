@@ -1,8 +1,12 @@
 <script>
     import Request from "../../Request.js"
+    
     import Modal from "../modal/Modal.js"
     import ModalButton from "../modal/ModalButton.js"
     import AddClientModal from "./AddClientModal.vue"
+
+    import Alert from "../alert/Alert.js"
+    import AlertConfig from "../alert/AlertConfig.js"
 
     export default {
         props: {
@@ -31,8 +35,16 @@
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
                         Request.post("api/clients", result.data).then((data) => {
-                            console.log(data)
                             this.$emit("add", data)
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Se ha registrado el cliente correctamente",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })

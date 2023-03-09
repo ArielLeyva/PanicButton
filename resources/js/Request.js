@@ -1,6 +1,6 @@
 import axios from "axios"
-// import Alert from "./components/native/alert/Alert.js"
-// import AlertConfig from "./components/native/alert/AlertConfig.js"
+import Alert from "./components/alert/Alert.js"
+import AlertConfig from "./components/alert/AlertConfig.js"
 
 //Bearer token
 const token = document.cookie.replace(/(?:(?:^|.*;\s*)TOKEN-API\s*\=\s*([^;]*).*$)|^.*$/, "$1")
@@ -27,17 +27,17 @@ class Request {
                 })
                 .catch((error) => {
                     console.log(error)
-                    // switch (error.request.status) {
-                    //     case 401:
-                    //         Request.showInauthorizedError()
-                    //         break
-                    //     case 422:
-                    //         Request.showUnprocessableError(error.response.data)
-                    //         break
-                    //     case 500:
-                    //         Request.showServerError()
-                    //         break
-                    // }
+                    switch (error.request.status) {
+                        case 401:
+                            Request.showInauthorizedError()
+                            break
+                        case 422:
+                            Request.showUnprocessableError(error.response.data)
+                            break
+                        case 500:
+                            Request.showServerError()
+                            break
+                    }
                     throw error
                 })
         })
@@ -61,17 +61,17 @@ class Request {
                 })
                 .catch((error) => {
                     console.log(error)
-                    // switch (error.request.status) {
-                    //     case 401:
-                    //         Request.showInauthorizedError()
-                    //         break
-                    //     case 422:
-                    //         Request.showUnprocessableError(error.response.data)
-                    //         break
-                    //     case 500:
-                    //         Request.showServerError()
-                    //         break
-                    // }
+                    switch (error.request.status) {
+                        case 401:
+                            Request.showInauthorizedError()
+                            break
+                        case 422:
+                            Request.showUnprocessableError(error.response.data)
+                            break
+                        case 500:
+                            Request.showServerError()
+                            break
+                    }
                     throw error
                 })
         })
@@ -96,66 +96,66 @@ class Request {
                 })
                 .catch((error) => {
                     console.log(error)
-                    // switch (error.request.status) {
-                    //     case 401:
-                    //         Request.showInauthorizedError()
-                    //         break
-                    //     case 422:
-                    //         Request.showUnprocessableError(error.response.data)
-                    //         break
-                    //     case 500:
-                    //         Request.showServerError()
-                    //         break
-                    // }
+                    switch (error.request.status) {
+                        case 401:
+                            Request.showInauthorizedError()
+                            break
+                        case 422:
+                            Request.showUnprocessableError(error.response.data)
+                            break
+                        case 500:
+                            Request.showServerError()
+                            break
+                    }
                     throw error
                 })
         })
     }
 
-    // /**
-    //  * Mostrar mensaje de error de autenticación
-    //  */
-    // static showInauthorizedError() {
-    //     const alert = new Alert(
-    //         new AlertConfig({
-    //             title: "¡Error de autenticación!",
-    //             text: "No está autenticado o no tiene permisos para realizar esta acción",
-    //             icon: "bi bi-exclamation-triangle",
-    //             color: "#f55555",
-    //         })
-    //     )
-    //     alert.fire()
-    // }
+    /**
+     * Mostrar mensaje de error de autenticación
+     */
+    static showInauthorizedError() {
+        const alert = new Alert(
+            new AlertConfig({
+                title: "¡Error de autenticación!",
+                text: "No está autenticado o no tiene permisos para realizar esta acción",
+                icon: "bi bi-exclamation-triangle",
+                color: "#f55555",
+            })
+        )
+        alert.fire()
+    }
 
-    // /**
-    //  * Mostrar mensaje de datos inválidos
-    //  */
-    // static showUnprocessableError(errors) {
-    //     const alert = new Alert(
-    //         new AlertConfig({
-    //             title: "¡Datos inválidos!",
-    //             text: errors.message,
-    //             icon: "bi bi-exclamation-triangle",
-    //             color: "#f55555",
-    //         })
-    //     )
-    //     alert.fire()
-    // }
+    /**
+     * Mostrar mensaje de datos inválidos
+     */
+    static showUnprocessableError(errors) {
+        const alert = new Alert(
+            new AlertConfig({
+                title: "¡Datos inválidos!",
+                text: errors.message,
+                icon: "bi bi-exclamation-triangle",
+                color: "#f55555",
+            })
+        )
+        alert.fire()
+    }
 
-    // /**
-    //  * Mostrar mensaje de error interno del servidor
-    //  */
-    // static showServerError() {
-    //     const alert = new Alert(
-    //         new AlertConfig({
-    //             title: "¡Error inesperado!",
-    //             text: "Ocurrió un error inesperado al comunicarse con el servidor",
-    //             icon: "bi bi-exclamation-triangle",
-    //             color: "#f55555",
-    //         })
-    //     )
-    //     alert.fire()
-    // }
+    /**
+     * Mostrar mensaje de error interno del servidor
+     */
+    static showServerError() {
+        const alert = new Alert(
+            new AlertConfig({
+                title: "¡Error inesperado!",
+                text: "Ocurrió un error inesperado al comunicarse con el servidor",
+                icon: "bi bi-exclamation-triangle",
+                color: "#f55555",
+            })
+        )
+        alert.fire()
+    }
 }
 
 export { Request as default }

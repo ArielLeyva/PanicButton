@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Sistema de alerta comunitaria - General Alvear</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -13,8 +13,9 @@
 </head>
 
 <body class="antialiased">
-    <div id="app"></div>
+    <div id="app" class="h-screen w-screen relative"></div>
     <div id="modals"></div>
+    <div id="alerts" class="fixed top-10 right-5"></div>
     @vite('resources/js/app.js')
 </body>
 

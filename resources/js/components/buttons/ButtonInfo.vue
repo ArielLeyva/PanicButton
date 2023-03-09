@@ -7,6 +7,9 @@
     import SelectClientModal from "./SelectClientModal.vue"
     import DetailsModal from "./DetailsModal.vue"
 
+    import Alert from "../alert/Alert.js"
+    import AlertConfig from "../alert/AlertConfig.js"
+
     export default {
         props: {
             button: Object,
@@ -34,6 +37,15 @@
                         Request.post(`api/buttons/asign/${this.button.id}/${id}`, data).then((button) => {
                             this.button.client_id = button.client_id
                             this.button.client = button.client
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Se ha asignado un cliente a este dispositivo",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })
@@ -56,6 +68,15 @@
                             this.button.client_id = null
                             this.button.client.name = "Sin asignar"
                             this.button.client.avatar = "src/blank-profile.svg"
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Este dispositivo ahora no tiene clientes asignados",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })
@@ -74,6 +95,15 @@
                     if (result.status == "accept") {
                         Request.delete(`api/buttons/${this.button.id}`, new FormData()).then(() => {
                             this.$emit("remove", this.index)
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Se ha eliminado el dispositivo correctammente",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })

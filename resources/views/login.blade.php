@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Iniciar sesión</title>
+    <title>Iniciar sesión - Sistema de alerta comunitaria General Alvear</title>
     <style>
         main {
             background-image: url(src/login_background.svg);

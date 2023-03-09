@@ -7,6 +7,9 @@
     import ModalButton from "../modal/ModalButton.js"
     import AddButtonModal from "./AddButtonModal.vue"
 
+    import Alert from "../alert/Alert.js"
+    import AlertConfig from "../alert/AlertConfig.js"
+
     export default {
         emits: ["filter"],
         components: { ClientFilter },
@@ -69,6 +72,15 @@
                     if (result.status == "accept") {
                         Request.post("api/buttons", result.data).then((data) => {
                             this.$emit("added", data)
+                            const alert = new Alert(
+                                new AlertConfig({
+                                    title: "¡Operación satisfactoria!",
+                                    text: "Se ha registrado un nuevo dispositivo",
+                                    icon: "bi bi-check2-square",
+                                    color: "#198754",
+                                })
+                            )
+                            alert.fire()
                         })
                     }
                 })
