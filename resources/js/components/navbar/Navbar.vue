@@ -30,9 +30,6 @@
         created() {
             Request.get("api/user").then((response) => (this.user = response.data))
         },
-        mounted() {
-            console.log(this.theme)
-        },
     }
 </script>
 <template>

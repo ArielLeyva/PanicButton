@@ -10,7 +10,7 @@ class Client extends BaseModel
         if ($this->avatar !== null) {
             return asset("src/$this->avatar");
         } else {
-            return "";
+            return asset("src/blank-profile.svg");
         }
     }
 

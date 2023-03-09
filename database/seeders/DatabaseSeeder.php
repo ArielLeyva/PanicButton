@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+
         // ]);
 
         DB::table('users')->insert([
@@ -165,8 +165,7 @@ class DatabaseSeeder extends Seeder
         DB::table('clients')->insert([
             [
                 'name' => 'Ana Maris López Gallardo',
-                'avatar' => '1.jpg',
-                'email' => 'anamaris@gmail.com',
+                'avatar' => 'users/1.jpg',
                 'address_id' => 1,
                 'dni' => '00110381328',
                 'gender' => 'Femenino',
@@ -175,8 +174,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Prof. Mervin Bergnaum',
-                'avatar' => '2.jpg',
-                'email' => 'mervinberganum@gmail.com',
+                'avatar' => 'users/2.jpg',
                 'address_id' => 2,
                 'dni' => '32589621478',
                 'gender' => 'Masculino',
@@ -185,8 +183,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Mr. Hal Gerlach',
-                'avatar' => '3.jpg',
-                'email' => 'hal.gerlach@htomail.com',
+                'avatar' => 'users/3.jpg',
                 'address_id' => 3,
                 'dni' => '36521478965',
                 'gender' => 'Masculino',
@@ -195,8 +192,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Murray Homenick',
-                'avatar' => '4.jpg',
-                'email' => 'homenickmurray@htomail.com',
+                'avatar' => 'users/4.jpg',
                 'address_id' => 4,
                 'dni' => '36521478963',
                 'gender' => 'Femenino',
@@ -205,8 +201,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Roman Renner',
-                'avatar' => '5.jpg',
-                'email' => 'romanreckner@gmail.com',
+                'avatar' => 'users/5.jpg',
                 'address_id' => 5,
                 'dni' => '25893781963',
                 'gender' => 'Masculino',
@@ -215,8 +210,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Mr. Ike Grimes DVM',
-                'avatar' => '6.jpeg',
-                'email' => 'ikegrimes@harvard.com',
+                'avatar' => 'users/6.jpeg',
                 'address_id' => 6,
                 'dni' => '54193852147',
                 'gender' => 'Masculino',
@@ -225,8 +219,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Greyson Hammes',
-                'avatar' => '7.jpeg',
-                'email' => 'hammes.greyson@gmail.com',
+                'avatar' => 'users/7.jpeg',
                 'address_id' => 7,
                 'dni' => '25893781963',
                 'gender' => 'Femenino',
@@ -235,8 +228,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Mr. Jamie Kshlerin',
-                'avatar' => '8.jpeg',
-                'email' => 'jamie@msonmium.com',
+                'avatar' => 'users/8.jpeg',
                 'address_id' => 8,
                 'dni' => '23658965853',
                 'gender' => 'Femenino',
@@ -245,8 +237,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Dr. Stefanie Gibson',
-                'avatar' => '9.jpg',
-                'email' => 'stefanie.gibson@medicalsupport.com',
+                'avatar' => 'users/9.jpg',
                 'address_id' => 9,
                 'dni' => '23658963257',
                 'gender' => 'Femenino',
@@ -255,8 +246,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Dr. Dillon Kilback',
-                'avatar' => '10.jpg',
-                'email' => 'kilback.dillon@medicalsupport.com',
+                'avatar' => 'users/10.jpg',
                 'address_id' => 10,
                 'dni' => '32589687452',
                 'gender' => 'Masculino',
@@ -265,8 +255,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Alfonso Zarza Izalde',
-                'avatar' => '11.jpg',
-                'email' => 'alfonsozarza@gmail.com',
+                'avatar' => 'users/11.jpg',
                 'address_id' => 11,
                 'dni' => '3256985874',
                 'gender' => 'Masculino',
@@ -275,8 +264,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Reinaldo Tamayo Álvarez',
-                'avatar' => '12.jpg',
-                'email' => 'reinaldotamayo@gmail.com',
+                'avatar' => 'users/12.jpg',
                 'address_id' => 12,
                 'dni' => '23658758961',
                 'gender' => 'Masculino',
@@ -285,8 +273,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Fernanda María Hernández López',
-                'avatar' => '13.jpg',
-                'email' => 'fernandamariahernandez@hotmail.com',
+                'avatar' => 'users/13.jpg',
                 'address_id' => 13,
                 'dni' => '3256985874',
                 'gender' => 'Femenino',
@@ -295,8 +282,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Pedro Armando Matute Rodríguez',
-                'avatar' => '14.jpg',
-                'email' => 'pedromatute@hotmail.com',
+                'avatar' => 'users/14.jpg',
                 'address_id' => 14,
                 'dni' => '365897741',
                 'gender' => 'Masculino',
@@ -305,8 +291,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Elena Quevent Godinez',
-                'avatar' => '15.jpg',
-                'email' => 'elenagodinez00@gmail.com',
+                'avatar' => 'users/15.jpg',
                 'address_id' => 15,
                 'dni' => '32569878852',
                 'gender' => 'Femenino',

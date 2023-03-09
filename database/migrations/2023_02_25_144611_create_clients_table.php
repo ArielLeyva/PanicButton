@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name', 80);
             $table->string('avatar', 30);
             $table->string('dni', 20);
-            $table->string('email');
             $table->enum('gender', ['Femenino', 'Masculino']);
             $table->text('details');
             $table->date('birthdate');

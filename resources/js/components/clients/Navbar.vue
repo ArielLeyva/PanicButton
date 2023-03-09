@@ -1,4 +1,9 @@
 <script>
+    import Request from "../../Request.js"
+    import Modal from "../modal/Modal.js"
+    import ModalButton from "../modal/ModalButton.js"
+    import AddClientModal from "./AddClientModal.vue"
+
     export default {
         props: {
             backup: Array,
@@ -9,6 +14,29 @@
             }
         },
         methods: {
+            add() {
+                const modal = new Modal(
+                    {
+                        window: "Registrar un nuevo cliente",
+                        // icon: "bi bi-person",
+                        // background: "#157347",
+                        accept: new ModalButton({
+                            classes: "btn-success text-success hover:text-white",
+                            text: "Registrar",
+                        }),
+                    },
+                    AddClientModal,
+                    [{ client: { address: {} } }]
+                )
+                modal.fire().then((result) => {
+                    if (result.status == "accept") {
+                        Request.post("api/clients", result.data).then((data) => {
+                            console.log(data)
+                            this.$emit("add", data)
+                        })
+                    }
+                })
+            },
             filter(params) {
                 if (params == undefined) {
                     params = { client: {} }
@@ -133,6 +161,6 @@
                 </ul>
             </div>
         </div>
-        <button class="btn btn-sm ml-5 text-indigo-500 border border-indigo-500 dark:border-indigo-300 dark:text-indigo-300 hover:text-white hover:bg-indigo-500 dark:hover:text-white">Registrar nuevo cliente</button>
+        <button @click="add" class="btn btn-sm ml-5 text-indigo-500 border border-indigo-500 dark:border-indigo-300 dark:text-indigo-300 hover:text-white hover:bg-indigo-500 dark:hover:text-white">Registrar nuevo cliente</button>
     </div>
 </template>

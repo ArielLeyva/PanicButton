@@ -35,6 +35,7 @@
                         {{ telephone.number }}
                     </template>
                 </p>
+                <p class="dark:text-white"><i class="bi bi-book dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Detalles adicionales:</strong> {{ button.client.details }}</p>
                 <p class="mt-1 dark:text-white">
                     <i class="bi bi-toggle2-off"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Estado:</strong>
                     <span class="badge ml-1" :class="{ 'bg-success': button.client.state == 'Activo', 'bg-danger': button.client.state == 'Bloqueado' }">{{ button.client.state }}</span>

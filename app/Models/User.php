@@ -45,7 +45,7 @@ class User extends Authenticatable
     public function getAvatarPathAttribute()
     {
         if ($this->avatar !== null) {
-            return asset("src/$this->avatar");
+            return asset("src/users/$this->avatar");
         } else {
             return "";
         }

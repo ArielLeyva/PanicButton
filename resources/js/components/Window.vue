@@ -29,8 +29,16 @@
     }
 </script>
 <template>
-    <div class="justify-center flex md:hidden mb-1">
-        <button @click="change('buttons')" :class="{ 'bg-indigo-500': window == 'buttons', 'bg-indigo-300': window !== 'buttons' }" class="rounded-lg text-white mx-1 p-2 btn-sm">Dispositivos</button>
-        <button @click="change('clients')" :class="{ 'bg-indigo-500': window == 'clients', 'bg-indigo-300': window !== 'clients' }" class="rounded-lg bg-indigo-300 text-white mx-1 p-2 btn-sm">Alertas y clientes</button>
-    </div>
+    <footer class="z-50 justify-center flex md:hidden absolute bottom-0 w-full bg-white dark:bg-slate-600 shadow-md p-2 border-slate-800 border-t" style="border-width: 1px;">
+        <button @click="change('buttons')" :class="{ 'dark:text-white text-gray-700': window == 'buttons', 'text-gray-400': window !== 'buttons' }" class="w-1/2 btn-sm">
+            <i class="bi bi-joystick"></i>
+            <br />
+            Dispositivos
+        </button>
+        <button @click="change('clients')" :class="{ 'dark:text-white text-gray-700': window == 'clients', 'text-gray-400': window !== 'clients' }" class="w-1/2 btn-sm">
+            <i class="bi bi-person"></i>
+            <br />
+            Alertas y clientes
+        </button>
+    </footer>
 </template>

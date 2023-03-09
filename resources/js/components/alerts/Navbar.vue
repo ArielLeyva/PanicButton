@@ -83,7 +83,7 @@
 </script>
 <template>
     <div>
-        <div class="float-right flex mb-1">
+        <div class="float-right flex items-center mb-1">
             <ClientFilter @filter="filter" @reset="filter({ date: 30 * 86400000 })" />
             
             <div class="dropdown p-1 pr-2">
