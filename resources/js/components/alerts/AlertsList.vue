@@ -64,7 +64,8 @@
             })
             //Canal de chats
             const channel = pusher.subscribe("alert-channel")
-            chatsChannel.bind("AlertPressed", (data) => {
+            channel.bind("AlertPressed", (data) => {
+                console.log(data)
                 const alert = data.alert
                 this.backup.push(alert)
                 this.alerts.push(alert)

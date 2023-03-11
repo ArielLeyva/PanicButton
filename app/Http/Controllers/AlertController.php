@@ -9,6 +9,7 @@ use App\Models\Button;
 use App\Models\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AlertController extends Controller
 {
@@ -37,6 +38,7 @@ class AlertController extends Controller
             'content' => '%client% ha presionado su botón de pánico con una alerta %type%'
         ]);
         AlertPressed::dispatch($alert);
+        Log::alert("Se ejecutó el evento");
     }
 
     public function readed($id)
