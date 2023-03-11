@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AlertPressed;
 use App\Http\Controllers\Controller;
 use App\Models\Alert;
+use App\Models\Button;
+use App\Models\Notification;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class AlertController extends Controller
 {
@@ -12,6 +17,26 @@ class AlertController extends Controller
         $alerts = Alert::all();
         $sort = $alerts->sortByDesc('created_at');
         return response()->json($sort->values()->all());
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $separator = strpos($data['message']['text'], ':');
+        $text = Str::of($data['message']['text']);
+        $number = $text->substr(0, $separator);
+        $type = $text->substr($separator + 1);
+        $button = Button::where('number', $number)->first();
+        $alert = Alert::create([
+            'client_id' => $button->client_id,
+            'type' => $type
+        ]);
+        Notification::create([
+            'client_id' => $alert->client_id,
+            'title' => 'Alerta presionada',
+            'content' => '%client% ha presionado su botón de pánico con una alerta %type%'
+        ]);
+        AlertPressed::dispatch($alert);
     }
 
     public function readed($id)
