@@ -3,7 +3,7 @@
     
     import Modal from "../modal/Modal.js"
     import ModalButton from "../modal/ModalButton.js"
-    import AddClientModal from "./AddClientModal.vue"
+    import ClientModal from "./ClientModal.vue"
 
     import Alert from "../alert/Alert.js"
     import AlertConfig from "../alert/AlertConfig.js"
@@ -29,7 +29,7 @@
                             text: "Registrar",
                         }),
                     },
-                    AddClientModal,
+                    ClientModal,
                     [{ client: { address: {} } }]
                 )
                 modal.fire().then((result) => {

@@ -1,4 +1,5 @@
 <script>
+    import Pusher from "pusher-js"
     import Dropdown from "bootstrap/js/dist/dropdown"
     import Request from "../../Request.js"
 
@@ -56,6 +57,17 @@
             Request.get("api/alerts").then((response) => {
                 this.backup = response.data
                 this.alerts = [...this.backup]
+                this.paginate(0)
+            })
+            const pusher = new Pusher("8caec03daf5228df1fcc", {
+                cluster: "sa1",
+            })
+            //Canal de chats
+            const channel = pusher.subscribe("alert-channel")
+            chatsChannel.bind("AlertPressed", (data) => {
+                const alert = data.alert
+                this.backup.push(alert)
+                this.alerts.push(alert)
                 this.paginate(0)
             })
         },
