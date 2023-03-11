@@ -8,8 +8,11 @@
     import Pagination from "../Pagination.vue"
     import Navbar from "./Navbar.vue"
 
+    import audio from "../../../sounds/notification-sound.mp3"
+
     export default {
         components: { Alert, Pagination, Navbar, NotFound },
+        emits: ["alert"],
         data() {
             return {
                 backup: [],
@@ -56,20 +59,68 @@
         created() {
             Request.get("api/alerts").then((response) => {
                 this.backup = response.data
+                console.log(this.backup)
                 this.alerts = [...this.backup]
                 this.paginate(0)
             })
             const pusher = new Pusher("8caec03daf5228df1fcc", {
                 cluster: "sa1",
             })
+            const sound = new Audio(audio)
             //Canal de chats
             const channel = pusher.subscribe("alert-channel")
+            const _this = this
             channel.bind("AlertPressed", (data) => {
-                console.log(data)
                 const alert = data.alert
-                this.backup.push(alert)
-                this.alerts.push(alert)
-                this.paginate(0)
+                sound.play()
+                this.$emit("alert", alert)
+                _this.backup.unshift(alert)
+                _this.alerts.unshift(alert)
+                _this.paginate(0)
+            })
+            setTimeout(() => {
+                const alert = {
+                    id: 25,
+                    client_id: 12,
+                    type: "Police",
+                    state: "Pendiente",
+                    created_at: "2023-03-11T15:04:17.000000Z",
+                    updated_at: "2023-03-11T15:04:17.000000Z",
+                    client: {
+                        id: 12,
+                        name: "Reinaldo Tamayo Álvarez",
+                        avatar: "https://sac-monitoreo.online/src/users/12.jpg",
+                        dni: "23658758961",
+                        gender: "Masculino",
+                        details: "Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.",
+                        birthdate: "22-10-1984",
+                        address_id: 12,
+                        state: "Activo",
+                        created_at: null,
+                        updated_at: null,
+                        address: {
+                            id: 12,
+                            street: "Hansen Hills",
+                            number: "298",
+                            apartment: "Apt. 325",
+                            city: "Lake Valentine",
+                            state: "Kansas",
+                            postal_code: "69222",
+                            coordinates: null,
+                            created_at: null,
+                            updated_at: null,
+                        },
+                        buttons: ["753124"],
+                        telephone_numbers: [
+                            {
+                                id: 12,
+                                number: "+57 56969658",
+                                client_id: 12,
+                            },
+                        ],
+                    },
+                }
+                this.$emit("alert", alert)
             })
         },
     }

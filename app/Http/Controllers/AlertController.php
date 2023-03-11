@@ -35,10 +35,9 @@ class AlertController extends Controller
         Notification::create([
             'client_id' => $alert->client_id,
             'title' => 'Alerta presionada',
-            'content' => '%client% ha presionado su botón de pánico con una alerta %type%'
+            'content' => '%client% ha presionado su botón de pánico con una alerta ' + $type == "Police" ? "Policial" : "Médica"
         ]);
         AlertPressed::dispatch($alert);
-        Log::alert("Se ejecutó el evento");
     }
 
     public function readed($id)

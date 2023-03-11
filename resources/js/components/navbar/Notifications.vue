@@ -4,6 +4,14 @@
 
     export default {
         components: { NotFound },
+        props: {
+            unreaded: Array,
+        },
+        watch: {
+            unreaded() {
+                this.notifications.unshift(...this.unreaded)
+            },
+        },
         data() {
             return {
                 notifications: [],
