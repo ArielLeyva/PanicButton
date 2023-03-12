@@ -131,9 +131,10 @@
             <img :src="button.client.avatar" class="rounded-full w-10 h-10" />
             <div class="px-2 w-11/12">
                 <h4 class="whitespace-nowrap text-gray-500 dark:text-gray-100 font-bold text-ellipsis w-full overflow-hidden">{{ button.client.name }}</h4>
-                <p class="text-sm flex items-center" :class="{ 'text-green-600': button.state == 'Connected', 'text-red-600': button.state == 'Disconnected' }">
+                <p v-if="button.client.name == 'Sin asignar'" class="text-sm flex items-center text-warning">{{ button.number }}</p>
+                <p v-else class="text-sm flex items-center" :class="{ 'text-green-600': button.client.state == 'Activo', 'text-red-600': button.client.state == 'Bloqueado' }">
                     <i class="bi bi-circle-fill mr-1" style="font-size: 0.7em"></i>
-                    {{ button.state }} ({{ button.number }})
+                    {{ button.number }} ({{ button.client.state }})
                 </p>
             </div>
         </div>

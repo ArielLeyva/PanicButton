@@ -33,8 +33,8 @@
                     if (params.all) {
                         this.active = "Todos"
                     } else if (params.state !== undefined) {
-                        if (params.state == "Connected") this.active = "Conectados"
-                        else this.active = "Desconectados"
+                        if (params.state == "Activo") this.active = "Activos"
+                        else this.active = "Inactivos"
                     } else {
                         this.active = "Sin asignar"
                     }
@@ -97,10 +97,10 @@
                     <button @click="filter({ all: true })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Todos los dispositivos</button>
                 </li>
                 <li>
-                    <button @click="filter({ state: 'Connected' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Dispositivos conectados</button>
+                    <button @click="filter({ state: 'Activo' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes activos</button>
                 </li>
                 <li>
-                    <button @click="filter({ state: 'Disconnected' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Dispositivos desconectados</button>
+                    <button @click="filter({ state: 'Bloqueado' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes bloqueados</button>
                 </li>
                 <li>
                     <hr class="dropdown-divider dark:border-gray-500" />

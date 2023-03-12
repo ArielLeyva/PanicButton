@@ -20,11 +20,14 @@
             filter(params) {
                 this.display = []
                 const items = []
-                if (this.buttons.Disconnected !== undefined) {
-                    items.push(...this.buttons.Disconnected)
+                if (this.buttons[""] !== undefined) {
+                    items.push(...this.buttons[""])
                 }
-                if (this.buttons.Connected !== undefined) {
-                    items.push(...this.buttons.Connected)
+                if (this.buttons.Activo !== undefined) {
+                    items.push(...this.buttons.Activo)
+                }
+                if (this.buttons.Bloqueado !== undefined) {
+                    items.push(...this.buttons.Bloqueado)
                 }
                 for (let key in params) {
                     switch (key) {
@@ -82,8 +85,9 @@
             remove(index) {
                 const button = this.display[index]
                 this.display.splice(index, 1)
-                this.splice(this.buttons.Connected, button)
-                this.splice(this.buttons.Disconnected, button)
+                this.splice(this.buttons[""])
+                this.splice(this.buttons.Activo, button)
+                this.splice(this.buttons.Bloqueado, button)
             },
             splice(items, button) {
                 if (items !== undefined) {
@@ -96,24 +100,29 @@
                 }
             },
             add(button) {
-                if (button.state == "Connected") {
-                    if (this.buttons.Connected == undefined) this.buttons.Connected = []
-                    this.buttons.Connected.unshift(button)
-                } else {
-                    if (this.buttons.Disconnected == undefined) this.buttons.Disconnected = []
-                    this.buttons.Disconnected.unshift(button)
-                }
+                // if (button.state == "Connected") {
+                //     if (this.buttons.Connected == undefined) this.buttons.Connected = []
+                //     this.buttons.Connected.unshift(button)
+                // } else {
+                //     if (this.buttons.Disconnected == undefined) this.buttons.Disconnected = []
+                //     this.buttons.Disconnected.unshift(button)
+                // }
+                this.buttons[""].unshift(button)
                 this.display.unshift(button)
             },
         },
         mounted() {
             Request.get("api/buttons").then((response) => {
+                console.log(response)
                 this.buttons = response.data
-                if (this.buttons.Disconnected !== undefined) {
-                    this.display.push(...this.buttons.Disconnected)
+                if (this.buttons[""] !== undefined) {
+                    this.display.push(...this.buttons[""])
                 }
-                if (this.buttons.Connected !== undefined) {
-                    this.display.push(...this.buttons.Connected)
+                if (this.buttons.Activo !== undefined) {
+                    this.display.push(...this.buttons.Activo)
+                }
+                if (this.buttons.Bloqueado !== undefined) {
+                    this.display.push(...this.buttons.Bloqueado)
                 }
                 this.$emit("load", this.buttons)
             })

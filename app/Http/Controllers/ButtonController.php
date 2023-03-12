@@ -10,7 +10,7 @@ class ButtonController extends Controller
 {
     public function index()
     {
-        return response()->json(Button::all()->groupBy('state'));
+        return response()->json(Button::all()->groupBy('client.state'));
     }
 
     public function store(Request $request)
