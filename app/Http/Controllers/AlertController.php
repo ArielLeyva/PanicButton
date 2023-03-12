@@ -9,7 +9,6 @@ use App\Models\Button;
 use App\Models\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class AlertController extends Controller
 {
@@ -32,10 +31,11 @@ class AlertController extends Controller
             'client_id' => $button->client_id,
             'type' => $type
         ]);
+        $type = $type == "Police" ? "Policial" : "Médica";
         Notification::create([
             'client_id' => $alert->client_id,
             'title' => 'Alerta presionada',
-            'content' => '%client% ha presionado su botón de pánico con una alerta ' + $type == "Police" ? "Policial" : "Médica"
+            'content' => "%client% ha presionado su botón de pánico con una alerta $type" 
         ]);
         AlertPressed::dispatch($alert);
     }
