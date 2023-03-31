@@ -5,6 +5,9 @@
     export default {
         components: { NotFound },
         props: {
+            /**
+             * Lista de notificaciones no leídas
+             */
             unreaded: Array,
         },
         watch: {
@@ -14,37 +17,18 @@
         },
         data() {
             return {
+                /**
+                 * Lista de notificaciones de la base de datos
+                 */
                 notifications: [],
             }
         },
-        methods: {
-            getTime(time) {
-                const today = new Date()
-                const date = new Date(time)
-                const diff = today - date
-                if (diff <= 3600000) {
-                    return `Hace ${Math.floor(diff / 60000)} minutos`
-                } else if (diff <= 86400000) {
-                    return `Hace ${Math.floor(diff / 3600000)} horas`
-                } else if (diff <= 604800000) {
-                    return `Hace ${Math.floor(diff / 86400000)} días`
-                } else if (diff <= 2592000000) {
-                    return `Hace ${Math.floor(diff / 604800000)} semanas`
-                } else {
-                    return date.toLocaleDateString("es", {
-                        day: "numeric",
-                        weekday: "short",
-                        month: "short",
-                        year: "numeric",
-                    })
-                }
-            },
-        },
         created() {
+            //Obtener las notificaciones de la base de datos
             Request.get("api/notifications").then((response) => {
-                // this.notifications = response.data
                 for (let i in response.data) {
                     const notification = response.data[i]
+                    //Agregar nombre del cliente a la notificación
                     if (notification.client !== null && notification.client !== undefined) {
                         notification.content = notification.content.replace("%client%", notification.client.name)
                     }
@@ -65,7 +49,7 @@
                     <div class="w-10/12">
                         <h4 class="w-80 text-gray-500 dark:text-gray-100 overflow-hidden whitespace-nowrap text-ellipsis font-bold">{{ notification.title }}</h4>
                         <p class="w-64 overflow-hidden text-ellipsis dark:text-white">{{ notification.content }}</p>
-                        <small class="text-gray-500 dark:text-gray-200">{{ getTime(notification.created_at) }}</small>
+                        <small class="text-gray-500 dark:text-gray-200">{{ Utils.elapsedtime(notification.created_at) }}</small>
                     </div>
                 </div>
             </li>

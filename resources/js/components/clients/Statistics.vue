@@ -3,47 +3,67 @@
 
     export default {
         props: {
-            buttons: Object,
+            /**
+             * Lista de botones de la base de datos
+             */
+            buttons: Array,
         },
         watch: {
             buttons() {
-                this.free = 0
-                this.occupied = 0
+                //Establecer los valores en 0
+                this.connected = 0
+                this.disconnected = 0
                 this.unassigned = 0
+                //Iterar sobre los botones para leer su estado
                 for (let button of this.buttons) {
                     if (button.client_id == null) {
                         this.unassigned++
                     } else {
-                        if (button.client.state == "Activo") {
-                            this.occupied++
+                        if (button.state == "Connected") {
+                            this.connected++
                         } else {
-                            this.free++
+                            this.disconnected++
                         }
                     }
                 }
+                //Reinicializar el gráfico
                 this.init()
             },
         },
         data() {
             return {
-                free: 0,
-                occupied: 0,
+                /**
+                 * Número de dispositivos conectados
+                 */
+                connected: 0,
+                /**
+                 * Número de dispositivos desconectados
+                 */
+                disconnected: 0,
+                /**
+                 * Número de dispositivos sin asignar
+                 */
                 unassigned: 0,
+                /**
+                 * Gráfico
+                 */
                 chart: null,
             }
         },
         methods: {
             init() {
+                //Colores del gráfico
                 const colors = ["rgb(20, 165, 40)", "rgb(240, 34, 34)", "rgb(163 163 163)"]
+                //Crear las cuñas del gráfico de pastel
                 const items = [
                     {
-                        name: "Clientes activos",
-                        cant: this.occupied,
+                        name: "Dispositivos conectados",
+                        cant: this.connected,
                         color: colors[0],
                     },
                     {
-                        name: "Clientes inactivos",
-                        cant: this.free,
+                        name: "Dispositivos desconectados",
+                        cant: this.disconnected,
                         color: colors[1],
                     },
                     {
@@ -52,6 +72,7 @@
                         color: colors[2],
                     },
                 ]
+                //Crear la configuración de Chart.js
                 const data = [],
                     labels = [],
                     backgroundColor = []
@@ -85,10 +106,13 @@
                         },
                     },
                 }
+                //Inicializar el gráfico
                 const canvas = this.$el.querySelector(".chart").getContext("2d")
+                //Destruir el gráfico si ya existe
                 if (this.chart) {
                     this.chart.destroy()
                 }
+                //Añadir el gráfico al DOM
                 this.chart = new Chart(canvas, config)
             },
         },

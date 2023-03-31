@@ -1,12 +1,21 @@
 <script>
     export default {
+        /**
+         * @emit change: Se emite cuando se cambia la ventana activa en un dispositivo de pequeñas dimensiones
+         */
         emits: ["change"],
         data() {
             return {
+                /**
+                 * Identificador de la ventana activa
+                 */
                 window: null,
             }
         },
         methods: {
+            /**
+             * Actualizar ventana activa
+             */
             update() {
                 if (document.body.offsetWidth >= 768) {
                     this.window = null
@@ -15,6 +24,9 @@
                 }
                 this.$emit("change", this.window)
             },
+            /**
+             * Cambiar la ventana activa
+             */
             change(window) {
                 this.window = window
                 this.$emit("change", window)
@@ -22,6 +34,7 @@
         },
         mounted() {
             this.update()
+            //Añadir evento para cuando se redimensione la ventana actualizar la ventana activa
             window.addEventListener("resize", () => {
                 this.update()
             })

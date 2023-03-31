@@ -16,6 +16,28 @@ export default class Utils {
         return date.toLocaleDateString("es", format)
     }
 
+    static elapsedtime(time) {
+        const today = new Date()
+        const date = new Date(time)
+        const diff = today - date
+        if (diff <= 3600000) {
+            return `Hace ${Math.floor(diff / 60000)} minutos`
+        } else if (diff <= 86400000) {
+            return `Hace ${Math.floor(diff / 3600000)} horas`
+        } else if (diff <= 604800000) {
+            return `Hace ${Math.floor(diff / 86400000)} días`
+        } else if (diff <= 2592000000) {
+            return `Hace ${Math.floor(diff / 604800000)} semanas`
+        } else {
+            return date.toLocaleDateString("es", {
+                day: "numeric",
+                weekday: "short",
+                month: "short",
+                year: "numeric",
+            })
+        }
+    }
+
     static notify(text) {
         const alert = new Alert(
             new AlertConfig({

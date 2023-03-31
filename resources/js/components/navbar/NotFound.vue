@@ -8,6 +8,5 @@
 <style scoped>
     .flex {
         min-height: 10rem;
-        /* border: 1px solid #6366f1; */
     }
 </style>

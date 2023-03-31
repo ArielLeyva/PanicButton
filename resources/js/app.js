@@ -4,7 +4,6 @@ if (localStorage.theme != "light" && (localStorage.theme === "dark" || (!("theme
     document.documentElement.classList.remove("dark")
 }
 
-import "./bootstrap"
 import "bootstrap/scss/bootstrap.scss"
 
 import "bootstrap-icons/font/bootstrap-icons.css"

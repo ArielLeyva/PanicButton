@@ -5,8 +5,14 @@
 
     export default {
         components: { Notifications },
-        emits: ["read"],
+        /**
+         * @emit readed: Se emite cuando se leen las notificaciones sin leer
+         */
+        emits: ["readed"],
         props: {
+            /**
+             * Lista de notificaciones de la base de datos
+             */
             notifications: {
                 type: Array,
                 default: [],
@@ -14,27 +20,42 @@
         },
         data() {
             return {
+                /**
+                 * Datos del usuario logueado
+                 */
                 user: null,
+                /**
+                 * Tema de la página web
+                 */
                 theme: localStorage.theme,
             }
         },
         methods: {
-            changeTheme() {
+            /**
+             * Alternar tema de la página web
+             */
+            toggleTheme() {
                 if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+                    //Si el tema actual es el Oscuro cambiar el Claro
                     localStorage.setItem("theme", "light")
                     this.theme = "light"
                     document.documentElement.classList.remove("dark")
                 } else {
+                    //Si el tema actual es el Claro cambiar el Oscuro
                     localStorage.setItem("theme", "dark")
                     this.theme = "dark"
                     document.documentElement.classList.add("dark")
                 }
             },
+            /**
+             * Cerrar sesión
+             */
             logout() {
                 window.location.href = "logout"
             },
         },
         created() {
+            //Obtener datos del usuario logueado
             Request.get("api/user").then((response) => (this.user = response.data))
         },
     }
@@ -58,13 +79,13 @@
         </div>
         <div class="w-full flex justify-end pr-2">
             <div class="dropdown relative">
-                <span v-if="notifications.length > 0" @click="$emit('read')" class="badge bg-danger rounded-full absolute cursor-pointer" data-bs-toggle="dropdown" style="right: -0.25rem; top: -0.65rem">{{ notifications.length }}</span>
-                <button @click="$emit('read')" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3" data-bs-toggle="dropdown">
+                <span v-if="notifications.length > 0" @click="$emit('readed')" class="badge bg-danger rounded-full absolute cursor-pointer" data-bs-toggle="dropdown" style="right: -0.25rem; top: -0.65rem">{{ notifications.length }}</span>
+                <button @click="$emit('readed')" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3" data-bs-toggle="dropdown">
                     <i class="bi bi-bell-fill"></i>
                 </button>
                 <Notifications :unreaded="notifications" />
             </div>
-            <button @click="changeTheme" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3">
+            <button @click="toggleTheme" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3">
                 <i class="bi" :class="{ 'bi-sun-fill': theme == 'light', 'bi-moon-fill': theme == undefined || theme == 'dark' }"></i>
             </button>
             <button @click="logout" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3">
