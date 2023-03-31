@@ -10,22 +10,21 @@
 
     export default {
         props: {
+            /**
+             * Datos de la alerta
+             */
             alert: Object,
+            /**
+             * Índice de la alerta en la lista visible
+             */
             index: Number,
         },
         methods: {
-            getDatetime(datetime) {
-                const date = new Date(datetime)
-                return date.toLocaleDateString("es", {
-                    day: "2-digit",
-                    month: "numeric",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                })
-            },
+            /**
+             * Elimina la alerta de la base de datos
+             */
             remove() {
+                //Mostrar un modal de confirmación antes de eliminar la alerta
                 const modal = new Modal({
                     title: "¿Seguro que desea eliminar esta alerta?",
                     description: "Esta operación es irreversible",
@@ -35,24 +34,25 @@
                         classes: "btn-danger text-danger hover:text-white",
                     }),
                 })
+                //Mostrar el modal de confirmación
                 modal.fire().then((result) => {
+                    //Si el usuario elige "Aceptar" eliminar la alerta
                     if (result.status == "accept") {
+                        //Hacer la petición para eliminar la alerta de la base de datos
                         Request.delete(`api/alerts/${this.alert.id}`, new FormData()).then(() => {
+                            //Emitir el evento de eliminación de la alerta
                             this.$emit("remove", this.index)
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Se ha eliminado la alerta",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Se ha eliminado la alerta")
                         })
                     }
                 })
             },
-            details() {
+            /**
+             * Muestra los detalles de la alerta
+             */
+            showDetails() {
+                //Crear el modal con los detalles de la alerta
                 const modal = new Modal(
                     {
                         window: "Detalles de la alerta",
@@ -61,12 +61,19 @@
                             text: "Aceptar",
                         }),
                     },
+                    //Pasar una plantilla para mostrar los detalles de la alerta
                     DetailsModal,
+                    //Pasar los datos de la alerta
                     [{ alert: this.alert }]
                 )
+                //Mostrar el modal
                 modal.fire()
             },
-            read() {
+            /**
+             * Marca como leída la alerta
+             */
+            markAsReaded() {
+                //Crear un modal de confirmación antes de marcar como leída la alerta
                 const modal = new Modal({
                     title: "¿Seguro que desea marcar como leída esta alerta?",
                     description: "Esta operación es irreversible",
@@ -76,22 +83,19 @@
                         classes: "btn-danger text-danger hover:text-white",
                     }),
                 })
+                //Mostrar el modal
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
                         const data = new FormData()
                         data.append("_method", "put")
+                        //Si el usuario selecciona "Aceptar" marcar como leída la alerta
                         if (result.status == "accept") {
+                            //Hacer la petición para marcar como leída la alerta
                             Request.post(`api/alerts/readed/${this.alert.id}`, data).then((result) => {
+                                //Cambiar el estado de la alerta
                                 this.alert.state = "Vista"
-                                const alert = new Alert(
-                                    new AlertConfig({
-                                        title: "¡Operación satisfactoria!",
-                                        text: "Se ha marcado como leída esta alerta",
-                                        icon: "bi bi-check2-square",
-                                        color: "#198754",
-                                    })
-                                )
-                                alert.fire()
+                                //Mostrar la notificación en pantalla
+                                this.Utils.notify("Se ha marcado como leída esta alerta")
                             })
                         }
                     }
@@ -109,17 +113,17 @@
             <p v-else class="text-sm flex items-center text-red-600">🚓 Alerta penal</p>
         </div>
         <div @click="details" class="w-5/12 text-center cursor-pointer">
-            <p class="dark:text-white text-sm">{{ getDatetime(alert.created_at) }}</p>
+            <p class="dark:text-white text-sm">{{ Utils.datetime(alert.created_at, Utils.FULL_DATE_TIME) }}</p>
             <span class="badge" :class="{ 'bg-success': alert.state == 'Vista', 'bg-danger': alert.state == 'Pendiente' }">{{ alert.state }}</span>
         </div>
         <div class="w-1/12 flex justify-end dropdown pr-1">
             <button data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical dark:text-white"></i></button>
             <ul class="dropdown-menu dark:bg-slate-700">
                 <li>
-                    <button @click="read" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Marcar como leída</button>
+                    <button @click="markAsReaded" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Marcar como leída</button>
                 </li>
                 <li>
-                    <button @click="details" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Ver detalles</button>
+                    <button @click="showDetails" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Ver detalles</button>
                 </li>
                 <li>
                     <button @click="remove" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Eliminar</button>

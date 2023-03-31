@@ -3,7 +3,7 @@
     import Dropdown from "bootstrap/js/dist/dropdown"
     import Request from "../../Request.js"
 
-    import Alert from "./Alert.vue"
+    import AlertInfo from "./AlertInfo.vue"
     import NotFound from "./NotFound.vue"
     import Pagination from "../Pagination.vue"
     import Navbar from "./Navbar.vue"
@@ -11,12 +11,24 @@
     import audio from "../../../sounds/notification-sound.mp3"
 
     export default {
-        components: { Alert, Pagination, Navbar, NotFound },
-        emits: ["alert"],
+        components: { AlertInfo, Pagination, Navbar, NotFound },
+        /**
+         * @emit notify Se llama cuando se recibe una alerta
+         */
+        emits: ["notify"],
         data() {
             return {
+                /**
+                 * Todas las alertas en la base de datos
+                 */
                 backup: [],
+                /**
+                 * Alertas a mostrar en pantalla
+                 */
                 alerts: [],
+                /**
+                 * Alertas de la página visible en pantalla
+                 */
                 display: [],
             }
         },
@@ -26,57 +38,77 @@
             },
         },
         methods: {
+            /**
+             * Cambiar la página visible
+             * @param {Number} page: Número de la página a mostrar
+             */
             paginate(page) {
                 //Mostrar las filas a partir de este índice mínimo
                 const min = 4 * page
                 //Mostrar las filas hasta este índice máximo
                 const max = min + 4
-                const items = []
+                this.display = []
+                //Actualizar las alertas de la página
                 for (let i = min; i < max; i++) {
                     if (i < this.alerts.length) {
-                        items.push(this.alerts[i])
+                        this.display.push(this.alerts[i])
                     } else {
                         break
                     }
                 }
-                this.display = items
             },
+            /**
+             * Eliminar una alerta
+             * @param {Number} index: Índice de la alerta en la página
+             */
             remove(index) {
+                //Obtener los datos de la alerta a eliminar
                 const alert = this.display[index]
-                this.splice(this.backup, alert)
-                this.splice(this.alerts, alert)
+                //Eliminar alerta del backup de alertas
+                this.Utils.splice(this.backup, alert)
+                //Eliminar la alerta de la lista de alertas a mostrar
+                this.Utils.splice(this.alerts, alert)
+                //Actualizar paginación
                 this.paginate(this.$refs.paginate.page)
-            },
-            splice(items, alert) {
-                for (let i in items) {
-                    if (items[i].id == alert.id) {
-                        items.splice(i, 1)
-                        break
-                    }
-                }
             },
         },
         created() {
+            //Recuperar las alertas de la base de datos
             Request.get("api/alerts").then((response) => {
                 this.backup = response.data
-                console.log(this.backup)
                 this.alerts = [...this.backup]
+                //Establecer la página en 0
                 this.paginate(0)
             })
-            const pusher = new Pusher("8caec03daf5228df1fcc", {
-                cluster: "sa1",
+            //Instanciar pusher para recibir mensajes en tiempo real (Websocket)
+            const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+                cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
             })
+            //Instanciar sonido de alerta recibida
             const sound = new Audio(audio)
-            //Canal de chats
+            //Suscribirse al canal de alertas
             const channel = pusher.subscribe("alert-channel")
-            const _this = this
+            //Añadir oyente de alerta presionada
             channel.bind("AlertPressed", (data) => {
+                //Datos de la alerta
                 const alert = data.alert
+                //Reproducir el sonido
                 sound.play()
-                this.$emit("alert", alert)
-                _this.backup.unshift(alert)
-                _this.alerts.unshift(alert)
-                _this.paginate(0)
+                const notification = {
+                    id: Math.random(),
+                    title: "Alerta presionada",
+                    client_id: alert.client_id,
+                    client: alert.client,
+                    content: `${alert.client.name} ha presionado su botón de pánico con una alerta ${alert.type == "Police" ? "Policial" : "Médica"}`,
+                    created_at: new Date(),
+                }
+                //Emitir evento de alerta recibida
+                this.$emit("notify", notification)
+                //Añadir la alerta nueva a la lista de alertas
+                this.backup.unshift(alert)
+                this.alerts.unshift(alert)
+                //Establecer la primera página
+                this.paginate(0)
             })
         },
     }
@@ -85,7 +117,7 @@
     <div class="w-full lg:w-2/3 px-4">
         <Navbar :backup="backup" @filter="(matched) => (alerts = matched)" />
         <div v-if="display.length > 0" class="bg-gray-100 dark:bg-slate-500 p-2 rounded-lg mt-1">
-            <Alert v-for="(alert, index) in display" @remove="remove" :index="index" :alert="alert" />
+            <AlertInfo v-for="(alert, index) in display" @remove="remove" :index="index" :alert="alert" />
         </div>
         <NotFound v-else />
         <Pagination v-if="display.length !== 0" @paginate="paginate" ref="paginate" :alerts="alerts" />

@@ -3,19 +3,6 @@
 
     export default {
         components: { CustomModal },
-        methods: {
-            getDatetime(datetime) {
-                const date = new Date(datetime)
-                return date.toLocaleDateString("es", {
-                    day: "2-digit",
-                    month: "numeric",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: true,
-                })
-            },
-        },
     }
 </script>
 
@@ -32,7 +19,7 @@
                 <template v-if="alert.type == 'Health'" class="text-sm flex items-center text-sky-600">🚑 Alerta médica</template>
                 <template v-else class="text-sm flex items-center text-red-600">🚓 Alerta penal</template>
             </p>
-            <p class="mt-1 dark:text-white"><i class="bi bi-calendar"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Fecha y hora:</strong> {{ getDatetime(alert.created_at) }}</p>
+            <p class="mt-1 dark:text-white"><i class="bi bi-calendar"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Fecha y hora:</strong> {{ Utils.datetime(alert.created_at, Utils.FULL_DATE_TIME) }}</p>
             <p class="text-center text-indigo-500 dark:text-gray-200 font-bold mt-4">Detalles del cliente</p>
             <div>
                 <div class="w-full flex items-center">
@@ -44,7 +31,10 @@
                 </div>
                 <p class="mt-1 dark:text-white"><i class="bi bi-calendar-day"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Fecha de nacimiento:</strong> {{ alert.client.birthdate }}</p>
                 <p class="mt-1 dark:text-white"><i class="bi bi-gender-ambiguous"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Sexo:</strong> {{ alert.client.gender }}</p>
-                <p class="mt-1 dark:text-white"><i class="bi bi-map"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Dirección postal:</strong> {{ alert.client.address.number }} {{ alert.client.address.street }} {{ alert.client.address.apartment }}. {{ alert.client.address.city }}, {{ alert.client.address.state }}</p>
+                <p class="mt-1 dark:text-white">
+                    <i class="bi bi-map"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Dirección postal:</strong> {{ alert.client.address.number }} {{ alert.client.address.street }} {{ alert.client.address.apartment }}. {{ alert.client.address.city }},
+                    {{ alert.client.address.state }}
+                </p>
                 <p class="mt-1 dark:text-white">
                     <i class="bi bi-telephone"></i> <strong class="text-gray-500 dark:text-gray-200 font-bold">Números de teléfono:</strong>
                     <template v-for="telephone in alert.client.telephone_numbers">

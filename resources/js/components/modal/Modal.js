@@ -2,6 +2,7 @@
 import { createApp } from "vue"
 import Root from "./Root.vue"
 import ModalButton from "./ModalButton"
+import Utils from "../../Utils.js"
 
 /**
  * @class Maneja los ventanas tipo "Modal" del sistema
@@ -92,6 +93,8 @@ export default class Modal {
             },
         ]
         this.app = createApp(this.root)
+        //Añadir funciones de utilidad
+        this.app.config.globalProperties.Utils = Utils
     }
 
     /**

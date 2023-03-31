@@ -4,6 +4,9 @@
     export default {
         components: { CustomModal },
         methods: {
+            /**
+             * Seleccionar un cliente de la lista y cerrar el modal
+             */
             select(client) {
                 const data = new FormData()
                 data.append("client_id", client.id)

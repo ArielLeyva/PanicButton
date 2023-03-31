@@ -10,18 +10,19 @@ class ButtonController extends Controller
 {
     public function index()
     {
-        return response()->json(Button::all()->groupBy('client.state'));
+        return response()->json(Button::all());
     }
 
     public function store(Request $request)
     {
         $request->validate([
             //TODO (Mejorar esta validación)
-            'number' => ['required', 'integer'],
+            'number' => ['required', 'regex:/^[A-Za-z0-9\-]+$/'],
             'state' => ['filled', 'in:Connected,Disconnected']
         ]);
         //Crear la instancia del modelo en la base de datos
         $data = $request->all();
+        $data['last_connection'] = now()->toDateTimeString();
         $item = Button::create($data);
         //Retornar el nuevo modelo
         return response()->json($item);

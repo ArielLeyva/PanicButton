@@ -11,7 +11,9 @@ import "bootstrap-icons/font/bootstrap-icons.css"
 import "../css/app.css"
 import { createApp } from "vue"
 import App from "./components/App.vue"
+import Utils from "./Utils.js"
 
 const app = createApp(App)
+app.config.globalProperties.Utils = Utils
 app.config.unwrapInjectedRef = true
 app.mount("#app")

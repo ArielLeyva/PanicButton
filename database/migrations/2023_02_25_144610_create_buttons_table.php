@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('number', 10);
             $table->enum('state', ['Connected', 'Disconnected'])->default('Connected');
+            $table->dateTime('last_connection');
             $table->foreignId('client_id')
                 ->nullable()
                 ->default(null)

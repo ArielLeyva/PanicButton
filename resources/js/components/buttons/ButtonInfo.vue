@@ -12,12 +12,25 @@
 
     export default {
         props: {
+            /**
+             * Datos del botón
+             */
             button: Object,
+            /**
+             * Índice que ocupa el botón en la lista en pantalla
+             */
             index: Number,
+            /**
+             * Lista de clientes en la base de datos
+             */
             clients: Array,
         },
         methods: {
-            asign() {
+            /**
+             * Asignar un cliente al botón
+             */
+            assign() {
+                //Construir el modal para seleccionar el cliente
                 const modal = new Modal(
                     {
                         window: "Vincular dispositivo a un cliente",
@@ -29,28 +42,28 @@
                     SelectClientModal,
                     [{ clients: this.clients }]
                 )
+                //Mostrar el modal
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
+                        //Si el usuario elige un cliente hacer petición
                         const id = result.data.get("client_id")
                         const data = new FormData()
                         data.append("_method", "put")
-                        Request.post(`api/buttons/asign/${this.button.id}/${id}`, data).then((button) => {
+                        Request.post(`api/buttons/assign/${this.button.id}/${id}`, data).then((button) => {
+                            //Actualizar cliente del botón
                             this.button.client_id = button.client_id
                             this.button.client = button.client
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Se ha asignado un cliente a este dispositivo",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Se ha asignado un cliente a este dispositivo")
                         })
                     }
                 })
             },
-            unasign() {
+            /**
+             * Desvincular cliente del botón
+             */
+            unassign() {
+                //Construir un modal para pedir la confirmación del usuario
                 const modal = new Modal({
                     title: "¿Seguro que desea desvincular este dispositivo del cliente?",
                     description: "Esta operación es irreversible",
@@ -60,28 +73,28 @@
                         classes: "btn-danger text-danger dark:text-red hover:text-white",
                     }),
                 })
+                //Mostrar el modal
                 modal.fire().then((result) => {
-                    const data = new FormData()
-                    data.append("_method", "put")
                     if (result.status == "accept") {
+                        //Si el usuario selecciona aceptar hacer petición
+                        const data = new FormData()
+                        data.append("_method", "put")
                         Request.post(`api/buttons/unasign/${this.button.id}`, data).then((result) => {
+                            //Desvincular cliente del botón en el frontend
                             this.button.client_id = null
                             this.button.client.name = "Sin asignar"
                             this.button.client.avatar = "src/blank-profile.svg"
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Este dispositivo ahora no tiene clientes asignados",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Este dispositivo ahora no tiene clientes asignados")
                         })
                     }
                 })
             },
+            /**
+             * Eliminar botón de la base de datos
+             */
             remove() {
+                //Construir modal para pedir confirmación al usuario
                 const modal = new Modal({
                     title: "¿Seguro que desea eliminar este dispositivo?",
                     description: "Esta operación es irreversible",
@@ -91,24 +104,24 @@
                         classes: "btn-danger text-danger hover:text-white",
                     }),
                 })
+                //Mostar el modal
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
+                        //Si el usuario selecciona aceptar hacer la petición
                         Request.delete(`api/buttons/${this.button.id}`, new FormData()).then(() => {
+                            //Emitir evento
                             this.$emit("remove", this.index)
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Se ha eliminado el dispositivo correctammente",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Se ha eliminado el dispositivo correctamente")
                         })
                     }
                 })
             },
-            details() {
+            /**
+             * Mostrar todos los detalles del botón
+             */
+            showDetails() {
+                //Construir el modal
                 const modal = new Modal(
                     {
                         window: "Detalles del dispositivo",
@@ -120,6 +133,7 @@
                     DetailsModal,
                     [{ button: this.button }]
                 )
+                //Mostrar el modal
                 modal.fire()
             },
         },
@@ -132,9 +146,11 @@
             <div class="px-2 w-11/12">
                 <h4 class="whitespace-nowrap text-gray-500 dark:text-gray-100 font-bold text-ellipsis w-full overflow-hidden">{{ button.client.name }}</h4>
                 <p v-if="button.client.name == 'Sin asignar'" class="text-sm flex items-center text-warning">{{ button.number }}</p>
-                <p v-else class="text-sm flex items-center" :class="{ 'text-green-600': button.client.state == 'Activo', 'text-red-600': button.client.state == 'Bloqueado' }">
+                <p v-else class="text-sm flex items-center" :class="{ 'text-green-600': button.state == 'Connected', 'text-red-600': button.state == 'Disconnected' }">
                     <i class="bi bi-circle-fill mr-1" style="font-size: 0.7em"></i>
-                    {{ button.number }} ({{ button.client.state }})
+                    {{ button.number }}
+                    <template v-if="button.state == 'Connected'"> (Conectado) </template>
+                    <template v-else> (Desconectado) </template>
                 </p>
             </div>
         </div>
@@ -142,13 +158,13 @@
             <button data-bs-toggle="dropdown"><i class="bi bi-three-dots-vertical dark:text-white"></i></button>
             <ul class="dropdown-menu dark:bg-slate-700">
                 <li>
-                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="details">Ver detalles</button>
+                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="showDetails">Ver detalles</button>
                 </li>
                 <li v-if="button.client.name == 'Sin asignar'">
-                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="asign">Vincular</button>
+                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="assign">Vincular</button>
                 </li>
                 <li v-else>
-                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="unasign">Desvincular</button>
+                    <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="unassign">Desvincular</button>
                 </li>
                 <li>
                     <button class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white" @click="remove">Eliminar</button>

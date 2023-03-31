@@ -7,13 +7,28 @@
     import Pagination from "../Pagination.vue"
 
     export default {
+        /**
+         * @emit load: Se emite cuando se cargan los clientes de la base de datos
+         */
         emits: ["load"],
         components: { Navbar, NotFound, ClientInfo, Pagination },
         data() {
             return {
+                /**
+                 * Lista de clientes de la base de datos
+                 */
                 backup: [],
+                /**
+                 * Lista de clientes a mostrar en pantalla
+                 */
                 clients: [],
+                /**
+                 * Lista de clientes en la página actual
+                 */
                 display: [],
+                /**
+                 * Número de clientes a mostrar por página
+                 */
                 rows: 7,
             }
         },
@@ -23,31 +38,43 @@
             },
         },
         methods: {
+            /**
+             * Cambiar la página
+             */
             paginate(page) {
                 //Mostrar las filas a partir de este índice mínimo
                 const min = this.rows * page
                 //Mostrar las filas hasta este índice máximo
                 const max = min + this.rows
-                const items = []
+                //Actualizar los clientes de la página
+                this.display = []
                 for (let i = min; i < max; i++) {
                     if (i < this.clients.length) {
-                        items.push(this.clients[i])
+                        this.display.push(this.clients[i])
                     } else {
                         break
                     }
                 }
-                this.display = items
             },
+            /**
+             * Añadir un cliente a la lista de clientes en el frontend
+             */
             add(client) {
                 this.backup.push(client)
                 this.clients.push(client)
                 this.paginate(this.$refs.paginate.page)
             },
+            /**
+             * Actualizar datos de un cliente en el frontend
+             */
             update(index, data) {
                 this.set(this.backup, data)
                 this.set(this.display, data)
                 this.display[index] = data
             },
+            /**
+             * Establecer datos a un cliente
+             */
             set(items, client) {
                 for (let i in items) {
                     if (items[i].id == client.id) {
@@ -56,26 +83,22 @@
                     }
                 }
             },
+            /**
+             * Eliminar un cliente de la lista de clientes en el frontend
+             */
             remove(index) {
                 const client = this.display[index]
-                this.splice(this.backup, client)
-                this.splice(this.clients, client)
+                this.Utils.splice(this.backup, client)
+                this.Utils.splice(this.clients, client)
                 this.paginate(this.$refs.paginate.page)
-            },
-            splice(items, client) {
-                for (let i in items) {
-                    if (items[i].id == client.id) {
-                        items.splice(i, 1)
-                        break
-                    }
-                }
             },
         },
         created() {
+            //Cargar lista de clientes de la base de datos
             Request.get("api/clients").then((response) => {
                 this.backup = response.data
                 this.clients = [...this.backup]
-                // this.paginate(0)
+                //Emitir evento
                 this.$emit("load", this.clients)
             })
         },

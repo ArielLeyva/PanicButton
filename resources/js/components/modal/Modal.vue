@@ -54,7 +54,7 @@
                 <div class="modal-body dark:bg-slate-600">
                     <h3 v-if="config.title !== false" class="modal-title mb-3 dark:text-gray-100">{{ config.title }}</h3>
                     <h5 v-if="config.description !== false" class="modal-description dark:text-gray-50">{{ config.description }}</h5>
-                    <form v-if="config.inputs.length > 0" class="alert-form mt-3">
+                    <form v-if="config.inputs.length > 0" class="alert-form mt-3 pt-2">
                         <template v-for="input in config.inputs">
                             <div v-if="input.type == 'checkbox'" class="form-check m-auto">
                                 <input class="form-check-input" type="checkbox" :value="input.value" :name="input.name" :checked="input.checked" />
@@ -62,9 +62,14 @@
                                     {{ input.label }}
                                 </label>
                             </div>
-                            <div v-else>
-                                <label class="form-label">{{ input.label }}</label>
-                                <input :name="input.name" :type="input.type" class="form-control" :placeholder="input.placeholder" />
+                            <div v-else class="max-w-xs mb-3 m-auto group">
+                                <label class="text-sm mb-1 ml-1 text-indigo-500 dark:text-white group-focus:text-red-700">{{ input.label }}</label>
+                                <div class="flex items-center border-indigo-500 rounded border dark:border-gray-50">
+                                    <div class="w-10 text-center peer-focus:w-full">
+                                        <i class="left-3 text-indigo-500 dark:text-white" style="top: 0.6em" :class="input.icon"></i>
+                                    </div>
+                                    <input class="py-2 pr-3 focus-visible:outline-none w-full dark:bg-slate-600 dark:text-white" :name="input.name" :type="input.type" :placeholder="input.label" />
+                                </div>
                             </div>
                         </template>
                     </form>

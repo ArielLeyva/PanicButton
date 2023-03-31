@@ -1,12 +1,14 @@
+/**
+ * @class Maneja las opciones de configuración y personalización de las alertas
+ */
 export default class AlertConfig {
-
     /**
      * @param {String} title: Título de la notificación
      * @param {String} text: Contenido de la notificación
      * @param {String} icon: Ícono a mostrar en la notificación
      * @param {String} color: Color a aplicar sobre el ícono de la notificación y la barra de progreso en formato "#argb"
      */
-    constructor({title = "Información", text = "", icon = "", color = ""}) {
+    constructor({ title = "Información", text = "", icon = "", color = "" }) {
         /**
          * @member {String}: Título de la notificación
          */

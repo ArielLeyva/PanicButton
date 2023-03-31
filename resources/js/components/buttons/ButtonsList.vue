@@ -6,125 +6,82 @@
 
     export default {
         components: { ButtonInfo, Navbar, NotFound },
+        /**
+         * @emit load: Se emite cuando se cargan todos los botones de la base de datos
+         */
         emits: ["load"],
         props: {
+            /**
+             * Lista de clientes de la base de datos
+             */
             clients: Array,
         },
         data() {
             return {
+                /**
+                 * Lista de botones de la base de datos
+                 */
                 buttons: [],
+                /**
+                 * Lista de botones a mostrar en pantalla
+                 */
                 display: [],
             }
         },
         methods: {
-            filter(params) {
-                this.display = []
-                const items = []
-                if (this.buttons[""] !== undefined) {
-                    items.push(...this.buttons[""])
-                }
-                if (this.buttons.Activo !== undefined) {
-                    items.push(...this.buttons.Activo)
-                }
-                if (this.buttons.Bloqueado !== undefined) {
-                    items.push(...this.buttons.Bloqueado)
-                }
-                for (let key in params) {
-                    switch (key) {
-                        case "state":
-                            if (this.buttons[params[key]] !== undefined) {
-                                this.display.push(...this.buttons[params[key]])
-                            }
-                            break
-                        case "desvinculated":
-                            if (params[key]) {
-                                for (let button of items) {
-                                    if (button.client.name == "Sin asignar") {
-                                        this.display.push(button)
-                                    }
-                                }
-                            }
-                            break
-                        case "all":
-                            this.display.push(...items)
-                            break
-                        case "number":
-                            for (let button of items) {
-                                if (params[key] == null || button.number.toString().includes(params[key])) {
-                                    this.display.push(button)
-                                }
-                            }
-                            break
-                        case "client":
-                            const client = params.client
-                            this.display = items.filter((button) => {
-                                for (let key in client) {
-                                    if (client[key] !== "") {
-                                        switch (key) {
-                                            case "name":
-                                            case "dni":
-                                                if (button.client[key] == undefined || !button.client[key].toString().toLowerCase().includes(client[key].toString().toLowerCase())) {
-                                                    return false
-                                                }
-                                                break
-                                            case "state":
-                                            case "gender":
-                                                if (button.client[key] !== client[key]) {
-                                                    return false
-                                                }
-                                                break
-                                        }
-                                    }
-                                }
-                                return true
-                            })
-                            break
-                    }
-                }
-            },
+            /**
+             * Eliminar un botón de la lista de botones del frontend
+             */
             remove(index) {
                 const button = this.display[index]
                 this.display.splice(index, 1)
-                this.splice(this.buttons[""])
-                this.splice(this.buttons.Activo, button)
-                this.splice(this.buttons.Bloqueado, button)
+                this.Utils.splice(this.buttons, button)
             },
-            splice(items, button) {
-                if (items !== undefined) {
-                    for (let i in items) {
-                        if (items[i].id == button.id) {
-                            items.splice(i, 1)
-                            break
-                        }
-                    }
-                }
-            },
+            /**
+             * Añadir un nuevo botón a la lista de botones en el frontend
+             */
             add(button) {
-                // if (button.state == "Connected") {
-                //     if (this.buttons.Connected == undefined) this.buttons.Connected = []
-                //     this.buttons.Connected.unshift(button)
-                // } else {
-                //     if (this.buttons.Disconnected == undefined) this.buttons.Disconnected = []
-                //     this.buttons.Disconnected.unshift(button)
-                // }
-                this.buttons[""].unshift(button)
+                this.buttons.unshift(button)
                 this.display.unshift(button)
             },
         },
         mounted() {
+            //Obtener la lista de botones de la base de datos
             Request.get("api/buttons").then((response) => {
-                console.log(response)
                 this.buttons = response.data
-                if (this.buttons[""] !== undefined) {
-                    this.display.push(...this.buttons[""])
-                }
-                if (this.buttons.Activo !== undefined) {
-                    this.display.push(...this.buttons.Activo)
-                }
-                if (this.buttons.Bloqueado !== undefined) {
-                    this.display.push(...this.buttons.Bloqueado)
-                }
+                this.display = [...this.buttons]
                 this.$emit("load", this.buttons)
+            })
+            //Instanciar pusher para recibir mensajes en tiempo real (Websocket)
+            const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+                cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+            })
+            //Suscribirse al canal de cambios de estado de los botones
+            const channel = pusher.subscribe("button-state-channel")
+            //Añadir oyente para un cambio de estado
+            channel.bind("ButtonStateChanged", (data) => {
+                //Obtener id del botón
+                const id = data.id
+                //Obtener nuevo estado del botón
+                const state = data.state
+                //Actualizar el estado del botón
+                for (let button of this.buttons) {
+                    if (button.id == id) {
+                        button.state = state
+                        //Mostrar una notificación
+                        const notification = {
+                            id: Math.random(),
+                            title: state == "Connected" ? "Dispositivo conectado" : "Dispositivo desconectado",
+                            client_id: button.client_id,
+                            client: button.client,
+                            content: `El dispositivo de ${button.client.name} ${state == "Connected" ? "ha retomado la conexión Wi-Fi" : "ha perdido la conexión Wi-Fi"}`,
+                            created_at: new Date(),
+                        }
+                        //Emitir evento de notificación
+                        this.$emit("notify", notification)
+                        break
+                    }
+                }
             })
         },
     }
@@ -133,7 +90,7 @@
 <template>
     <div>
         <div class="main scroll">
-            <Navbar @added="add" @filter="filter" />
+            <Navbar @added="add" @filter="(matched) => (display = matched)" :backup="buttons" />
             <div class="buttons-list">
                 <NotFound v-if="display.length == 0" />
                 <ButtonInfo v-for="(button, index) in display" @remove="remove" :button="button" :index="index" :clients="clients" />

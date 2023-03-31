@@ -5,35 +5,56 @@
         components: { CustomModal },
         data() {
             return {
+                /**
+                 * Lista de números de teléfonos
+                 */
                 numbers: [""],
+                /**
+                 * Avatar seleccionado
+                 */
                 avatar: null,
+                /**
+                 * Ruta o datos de la imagen a mostrar en pantalla
+                 */
                 image: "src/blank-profile.svg",
             }
         },
         methods: {
+            /**
+             * Añadir nuevo campo para introducir un número de teléfono
+             */
             add() {
                 this.numbers.push("")
             },
+            /**
+             * Eliminar número de teléfono
+             */
             remove(index) {
                 this.numbers.splice(index, 1)
             },
-            reset() {},
         },
         mounted() {
+            //Instanciar el input para el avatar
             this.avatar = this.$el.querySelector("[name='avatar']")
+            //Añadir evento para cuando se seleccione una imagen
             this.avatar.addEventListener("change", () => {
                 const files = this.avatar.files
                 if (!files || !files.length) {
+                    //Si no se seleccionó imagen mostrar avatar por defecto
                     this.image = "src/blank-profile.svg"
                 } else {
+                    //Si hay una imagen seleccionada mostrarla en pantalla
                     this.image = URL.createObjectURL(files[0])
                 }
             })
+            //Si se van a modificar los datos del cliente instanciar los datos existentes
             if (this.client.telephone_numbers !== undefined) {
+                //Instanciar los números de teléfono
                 this.numbers = []
                 for (let number of this.client.telephone_numbers) {
                     this.numbers.push(number.number)
                 }
+                //Instanciar la imagen
                 this.image = this.client.avatar
             }
         },
@@ -87,8 +108,8 @@
                         <label class="form-check-label dark:text-white" for="state-active">Activo</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="state" value="Bloqueado" id="state-inactive" :checked="client.state == 'Bloqueado'" />
-                        <label class="form-check-label dark:text-white" for="state-inactive">Bloqueado</label>
+                        <input class="form-check-input" type="radio" name="state" value="Inactivo" id="state-inactive" :checked="client.state == 'Bloqueado'" />
+                        <label class="form-check-label dark:text-white" for="state-inactive">Inactivo</label>
                     </div>
                 </div>
             </fieldset>

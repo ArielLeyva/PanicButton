@@ -7,27 +7,49 @@
         },
         watch: {
             buttons() {
+                this.free = 0
+                this.occupied = 0
+                this.unassigned = 0
+                for (let button of this.buttons) {
+                    if (button.client_id == null) {
+                        this.unassigned++
+                    } else {
+                        if (button.client.state == "Activo") {
+                            this.occupied++
+                        } else {
+                            this.free++
+                        }
+                    }
+                }
                 this.init()
             },
         },
         data() {
             return {
+                free: 0,
+                occupied: 0,
+                unassigned: 0,
                 chart: null,
             }
         },
         methods: {
             init() {
-                const colors = ["rgb(20, 165, 40)", "rgb(240, 34, 34)"]
+                const colors = ["rgb(20, 165, 40)", "rgb(240, 34, 34)", "rgb(163 163 163)"]
                 const items = [
                     {
-                        name: "Dispositivos conectados",
-                        cant: this.buttons.Connected == undefined ? 0 : this.buttons.Connected.length,
+                        name: "Clientes activos",
+                        cant: this.occupied,
                         color: colors[0],
                     },
                     {
-                        name: "Dispositivos desconectados",
-                        cant: this.buttons.Disconnected == undefined ? 0 : this.buttons.Disconnected.length,
+                        name: "Clientes inactivos",
+                        cant: this.free,
                         color: colors[1],
+                    },
+                    {
+                        name: "Dispositivos sin asignar",
+                        cant: this.unassigned,
+                        color: colors[2],
                     },
                 ]
                 const data = [],

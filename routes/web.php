@@ -1,7 +1,12 @@
 <?php
 
+use App\Events\ButtonStateChanged;
 use App\Http\Controllers\AuthController;
+use App\Models\Button;
+use App\Models\Notification;
+use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,3 +37,24 @@ Route::get('/login', function () {
 
 
 Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/state', function () {
+    $buttons = Button::all();
+    foreach ($buttons as $button) {
+        $current = Carbon::now()->subMinutes(11);
+        $lastConnection = Carbon::parse($button['last_connection']);
+        if ($lastConnection->lessThan($current)) {
+            if ($button['state'] == 'Connected') {
+                $item = Button::where('id', $button['id'])->first();
+                $item->update([
+                    'state' => 'Disconnected'
+                ]);
+                Notification::create([
+                    'client_id' => $item->client_id,
+                    'title' => 'Dispositivo desconectado',
+                    'content' => "El dispositivo de %client% ha perdido la conexión Wi-Fi"
+                ]);
+                ButtonStateChanged::dispatch($button['id'], 'Disconnected');
+            }
+        }
+    }
+});

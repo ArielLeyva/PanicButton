@@ -4,78 +4,76 @@
     import ClientFilter from "../filter/ClientFilter.vue"
 
     export default {
+        /**
+         * @emit filter: Se llama cuando se aplica o quita un filtro a la lista de alertas
+         * - @param {Array} items: Lista de alertas que cumplen con los parámetros del filtro
+         */
         emits: ["filter"],
         components: { ClientFilter },
         props: {
+            /**
+             * Lista de alertas en la base de datos
+             */
             backup: Array,
         },
         data() {
             return {
+                /**
+                 * Nombre del filtro de alertas activo
+                 */
                 active: "Todas",
+                /**
+                 * Filtros de tiempo
+                 */
+                times: {
+                    1: "Últimas 24 horas",
+                    7: "Últimos 7 días",
+                    15: "Últimos 15 días",
+                    30: "Últimos 30 días",
+                },
             }
         },
         methods: {
+            /**
+             * Aplicar un filtro a las alertas en la base de datos
+             * @event filter
+             */
             filter(params) {
-                if (params == undefined) {
-                    params = { client: {} }
-                    const data = new FormData(this.$el.querySelector("form"))
-                    for (let entry of data.entries()) {
-                        params.client[entry[0]] = entry[1]
-                    }
-                    this.active = "Filtro"
-                }
+                //Aplicar filtro a la lista intacta de alertas
                 const items = this.backup.filter((alert) => {
+                    //Iterar sobre todos los parámetros del filtro
                     for (let key in params) {
+                        //Valor del parámetro de filtro
                         const param = params[key]
                         switch (key) {
                             case "date":
+                                //Actualizar nombre del filtro activo
+                                this.active = this.times[param]
+                                //Obtener la fecha y hora de la alerta
                                 const date = new Date(alert.created_at)
-                                if (new Date() - date > param) {
+                                //Verificar que la fecha y hora se encuentre dentro del rango de filtro de fecha
+                                if (Date.now() - date > param * 86400000) {
                                     return false
-                                }
-                                switch (param) {
-                                    case 86400000:
-                                        this.active = "Últimas 24 horas"
-                                        break
-                                    case 7 * 86400000:
-                                        this.active = "Últimos 7 días"
-                                        break
-                                    case 15 * 86400000:
-                                        this.active = "Últimos 15 días"
-                                        break
-                                    case 30 * 86400000:
-                                        this.active = "Últimos 30 días"
-                                        break
                                 }
                                 break
                             case "all":
+                                //Actualizar nombre del filtro activo
                                 this.active = "Todas"
                                 break
                             case "client":
-                                const client = params.client
-                                for (let key in client) {
-                                    if (client[key] !== "") {
-                                        switch (key) {
-                                            case "name":
-                                            case "dni":
-                                                if (alert.client[key] == undefined || !alert.client[key].toString().toLowerCase().includes(client[key].toString().toLowerCase())) {
-                                                    return false
-                                                }
-                                                break
-                                            case "state":
-                                            case "gender":
-                                                if (alert.client[key] !== client[key]) {
-                                                    return false
-                                                }
-                                                break
-                                        }
-                                    }
+                                //Actualizar nombre del filtro activo
+                                this.active = "Cliente"
+                                //Verificar si el cliente de la alerta cumple con los requisitos del filtro
+                                if (!this.Utils.filter(alert.client, param)) {
+                                    return false
                                 }
                                 break
                         }
+                        //Retornar true si la alerta cumple con todos los parámetros del filtro
                         return true
                     }
                 })
+                //Emitir evento
                 this.$emit("filter", items)
             },
         },
@@ -84,22 +82,22 @@
 <template>
     <div>
         <div class="float-right flex items-center mb-1">
-            <ClientFilter @filter="filter" @reset="filter({ date: 30 * 86400000 })" />
-            
+            <!-- TODO (Quitar este filtro de reset y poner el filtro de todo) -->
+            <ClientFilter @filter="filter" @reset="filter({ all: true })" />
             <div class="dropdown p-1 pr-2">
                 <button class="dropdown-toggle font-bold dark:text-white" data-bs-toggle="dropdown">{{ active }}</button>
                 <ul class="dropdown-menu dark:bg-slate-700">
                     <li>
-                        <button @click="filter({ date: 30 * 86400000 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimos 30 días</button>
+                        <button @click="filter({ date: 30 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimos 30 días</button>
                     </li>
                     <li>
-                        <button @click="filter({ date: 15 * 86400000 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimos 15 días</button>
+                        <button @click="filter({ date: 15 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimos 15 días</button>
                     </li>
                     <li>
-                        <button @click="filter({ date: 7 * 86400000 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimos 7 días</button>
+                        <button @click="filter({ date: 7 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimos 7 días</button>
                     </li>
                     <li>
-                        <button @click="filter({ date: 86400000 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimas 24 horas</button>
+                        <button @click="filter({ date: 1 })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Últimas 24 horas</button>
                     </li>
                     <li>
                         <hr class="dropdown-divider dark:border-gray-500" />

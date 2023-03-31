@@ -10,6 +10,9 @@ export default {
     },
     data() {
         return {
+            /**
+             * <code>true</code> si el mouse está arriba de la alerta y <code>false</code> si no
+             */
             toastMouseHover: false,
         }
     },

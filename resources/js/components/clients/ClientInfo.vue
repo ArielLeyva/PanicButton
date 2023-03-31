@@ -10,16 +10,32 @@
     import AlertConfig from "../alert/AlertConfig.js"
 
     export default {
+        /**
+         * @emit update: Se emite cuando se han actualizado los datos del cliente
+         */
         emits: ["update"],
         props: {
+            /**
+             * Datos del cliente
+             */
             client: Object,
+            /**
+             * Índice del cliente en la página que se está mostrando
+             */
             index: Number,
         },
         methods: {
-            collapse() {
+            /**
+             * Mostrar u ocultar detalles del cliente
+             */
+            toggleDetails() {
                 this.client.collapse = this.client.collapse == undefined ? true : undefined
             },
+            /**
+             * Eliminar el cliente de la base de datos
+             */
             remove() {
+                //Crear un modal de confirmación
                 const modal = new Modal({
                     title: "¿Seguro que desea eliminar este cliente?",
                     description: "Esta operación es irreversible",
@@ -29,24 +45,24 @@
                         classes: "btn-danger text-danger hover:text-white",
                     }),
                 })
+                //Mostrar el modal
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
+                        //Si el usuario eligió aceptar hacer la petición
                         Request.delete(`api/clients/${this.client.id}`, new FormData()).then(() => {
+                            //Emitir evento
                             this.$emit("remove", this.index)
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Se ha eliminado este cliente correctamente",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Se ha eliminado este cliente correctamente")
                         })
                     }
                 })
             },
+            /**
+             * Editar datos del cliente
+             */
             edit() {
+                //Crear el modal para la edición de datos
                 const modal = new Modal(
                     {
                         window: "Editar datos del cliente",
@@ -60,21 +76,17 @@
                     ClientModal,
                     [{ client: this.client }]
                 )
+                //Mostrar el modal
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
+                        //Si el usuario eligió aceptar hacer la petición
                         const data = result.data
                         data.append("_method", "put")
                         Request.post(`api/clients/${this.client.id}`, data).then((data) => {
+                            //Emitir evento
                             this.$emit("update", data)
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Se han actualizados los datos del cliente",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Se han actualizados los datos del cliente")
                         })
                     }
                 })
@@ -84,7 +96,7 @@
 </script>
 <template>
     <div class="groupr my-2 rounded-lg shadow-sm bg-white dark:bg-slate-900 p-2">
-        <div @click="collapse" data-bs-toggle="collapse" :data-bs-target="'#info_' + client.id" class="w-full flex items-cente cursor-pointer">
+        <div @click="toggleDetails" data-bs-toggle="collapse" :data-bs-target="'#info_' + client.id" class="w-full flex items-cente cursor-pointer">
             <div class="w-100 sm:w-4/12 flex items-center client">
                 <img :src="client.avatar" class="rounded-full w-8" />
                 <div class="w-10/12 pl-2">

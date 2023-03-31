@@ -5,46 +5,93 @@
     import ClientFilter from "../filter/ClientFilter.vue"
     import Modal from "../modal/Modal.js"
     import ModalButton from "../modal/ModalButton.js"
-    import AddButtonModal from "./AddButtonModal.vue"
+    import ModalInput from "../modal/ModalInput.js"
 
     import Alert from "../alert/Alert.js"
     import AlertConfig from "../alert/AlertConfig.js"
 
     export default {
+        /**
+         * @emit filter: Se emite cuando se selecciona algún filtro
+         */
         emits: ["filter"],
         components: { ClientFilter },
+        props: {
+            /**
+             * Lista de botones en la base de datos
+             */
+            backup: Array,
+        },
         data() {
             return {
+                /**
+                 * Nombre del filtro de botones activo
+                 */
                 active: "Todos",
+                /**
+                 * <code>true</code> si se está buscando un botón por su identificador
+                 */
                 isSearching: false,
+                /**
+                 * Identificador del botón introducido por el usuario para buscar
+                 */
                 number: null,
             }
         },
         methods: {
+            /**
+             * Aplicar un filtro a la lista de botones
+             * @param {Object} params: Lista de filtros a aplicar
+             */
             filter(params) {
-                if (params == undefined) {
-                    params = { client: {} }
-                    const data = new FormData(this.$el.querySelector("form"))
-                    for (let entry of data.entries()) {
-                        params.client[entry[0]] = entry[1]
+                const items = this.backup.filter((button) => {
+                    //Iterar sobre todos los parámetros del filtro
+                    for (let key in params) {
+                        //Valor del parámetro de filtro
+                        const param = params[key]
+                        switch (key) {
+                            case "state":
+                                this.active = param == "Connected" ? "Conectados" : "Desconectados"
+                                if (button.state !== param) {
+                                    return false
+                                }
+                                break
+                            case "desvinculated":
+                                this.active = "Desvinculados"
+                                if (button.client_id !== null) {
+                                    return false
+                                }
+                                break
+                            case "all":
+                                //Actualizar nombre del filtro activo
+                                this.active = "Todas"
+                                break
+                            case "client":
+                                //Actualizar nombre del filtro activo
+                                this.active = "Cliente"
+                                //Verificar si el cliente asigando al botón cumple con los requisitos del filtro
+                                if (!this.Utils.filter(button.client, param)) {
+                                    return false
+                                }
+                                break
+                        }
+                        //Retornar true si la alerta cumple con todos los parámetros del filtro
+                        return true
                     }
-                    this.active = "Filtro"
-                } else {
-                    if (params.all) {
-                        this.active = "Todos"
-                    } else if (params.state !== undefined) {
-                        if (params.state == "Activo") this.active = "Activos"
-                        else this.active = "Inactivos"
-                    } else {
-                        this.active = "Sin asignar"
-                    }
-                }
-                this.$emit("filter", params)
+                })
+                //Emitir evento
+                this.$emit("filter", items)
             },
+            /**
+             * Quitar el filtro aplicado sobre la lista de botones
+             */
             reset() {
                 this.$emit("filter", { all: true })
                 this.active = "Todos"
             },
+            /**
+             * Mostrar formulario para buscar un dispositivo por su número de identificación
+             */
             search() {
                 this.isSearching = !this.isSearching
                 if (this.isSearching) {
@@ -55,32 +102,38 @@
                     this.active = "Todos"
                 }
             },
+            /**
+             * Registrar un nuevo botón
+             */
             add() {
-                const modal = new Modal(
-                    {
-                        title: "Registrar un nuevo dispositivo",
-                        icon: "bi bi-joystick",
-                        background: "#157347",
-                        accept: new ModalButton({
-                            classes: "btn-success text-success hover:text-white",
-                            text: "Registrar",
+                /**
+                 * Constuir el modal para pedir el número de identificación del botón al usuario
+                 */
+                const modal = new Modal({
+                    title: "Registrar un nuevo dispositivo",
+                    icon: "bi bi-joystick",
+                    background: "#157347",
+                    inputs: [
+                        new ModalInput({
+                            label: "Identificador del dispositivo",
+                            name: "number",
+                            icon: "bi bi-joystick",
                         }),
-                    },
-                    AddButtonModal
-                )
+                    ],
+                    accept: new ModalButton({
+                        classes: "btn-success text-success hover:text-white",
+                        text: "Registrar",
+                    }),
+                })
+                //Mostrar el modal
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
+                        //Si el usuario presiona registrar hacer la petición
                         Request.post("api/buttons", result.data).then((data) => {
+                            //Emitir el evento
                             this.$emit("added", data)
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Se ha registrado un nuevo dispositivo",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Se ha registrado un nuevo dispositivo")
                         })
                     }
                 })
@@ -97,10 +150,10 @@
                     <button @click="filter({ all: true })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Todos los dispositivos</button>
                 </li>
                 <li>
-                    <button @click="filter({ state: 'Activo' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes activos</button>
+                    <button @click="filter({ state: 'Connected' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Dispositivos conectados</button>
                 </li>
                 <li>
-                    <button @click="filter({ state: 'Bloqueado' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes bloqueados</button>
+                    <button @click="filter({ state: 'Disconnected' })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Dispositivos desconectados</button>
                 </li>
                 <li>
                     <hr class="dropdown-divider dark:border-gray-500" />

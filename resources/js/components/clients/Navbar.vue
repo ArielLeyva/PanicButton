@@ -1,6 +1,6 @@
 <script>
     import Request from "../../Request.js"
-    
+
     import Modal from "../modal/Modal.js"
     import ModalButton from "../modal/ModalButton.js"
     import ClientModal from "./ClientModal.vue"
@@ -8,17 +8,30 @@
     import Alert from "../alert/Alert.js"
     import AlertConfig from "../alert/AlertConfig.js"
 
+    import ClientFilter from "../filter/ClientFilter.vue"
+
     export default {
+        components: { ClientFilter },
         props: {
+            /**
+             * Lista de clientes de la base de datos
+             */
             backup: Array,
         },
         data() {
             return {
+                /**
+                 * Nombre del filtro activo
+                 */
                 active: "Todos",
             }
         },
         methods: {
+            /**
+             * Registrar un nuevo cliente
+             */
             add() {
+                //Construir el modal con el formulario de registro
                 const modal = new Modal(
                     {
                         window: "Registrar un nuevo cliente",
@@ -32,37 +45,28 @@
                     ClientModal,
                     [{ client: { address: {} } }]
                 )
+                //Mostrar el modal
                 modal.fire().then((result) => {
                     if (result.status == "accept") {
+                        //Si el usuario elige aceptar hacer la petición
                         Request.post("api/clients", result.data).then((data) => {
+                            //Emitir evento
                             this.$emit("add", data)
-                            const alert = new Alert(
-                                new AlertConfig({
-                                    title: "¡Operación satisfactoria!",
-                                    text: "Se ha registrado el cliente correctamente",
-                                    icon: "bi bi-check2-square",
-                                    color: "#198754",
-                                })
-                            )
-                            alert.fire()
+                            //Mostrar la notificación de eliminación en la pantalla
+                            this.Utils.notify("Se ha registrado el cliente correctamente")
                         })
                     }
                 })
             },
+            /**
+             * Aplicar un filtro a la lista de clientes
+             */
             filter(params) {
-                if (params == undefined) {
-                    params = { client: {} }
-                    const data = new FormData(this.$el.querySelector("form"))
-                    for (let entry of data.entries()) {
-                        params.client[entry[0]] = entry[1]
-                    }
-                    this.active = "Filtro"
-                }
                 const items = this.backup.filter((item) => {
                     for (let key in params) {
                         const param = params[key]
                         switch (key) {
-                            case "asign":
+                            case "assign":
                                 if ((param && item.buttons.length == 0) || (!param && item.buttons.length !== 0)) {
                                     return false
                                 }
@@ -72,24 +76,11 @@
                                 this.active = "Todos"
                                 break
                             case "client":
-                                const client = params.client
-                                for (let key in client) {
-                                    if (client[key] !== "") {
-                                        switch (key) {
-                                            case "name":
-                                            case "dni":
-                                                if (item[key] == undefined || !item[key].toString().toLowerCase().includes(client[key].toString().toLowerCase())) {
-                                                    return false
-                                                }
-                                                break
-                                            case "state":
-                                            case "gender":
-                                                if (item[key] !== client[key]) {
-                                                    return false
-                                                }
-                                                break
-                                        }
-                                    }
+                                //Actualizar nombre del filtro activo
+                                this.active = "Cliente"
+                                //Verificar si el cliente de la alerta cumple con los requisitos del filtro
+                                if (!this.Utils.filter(item, param)) {
+                                    return false
                                 }
                                 break
                         }
@@ -103,66 +94,16 @@
 </script>
 <template>
     <div>
-        <div class="float-right flex mr-5">
-            <form @change="filter()" @input="filter()" @reset="filter({ date: 30 * 86400000 })" class="dropdown">
-                <button data-bs-toggle="dropdown" class="mx-1 rounded-xl w-8 mt-1 dark:text-gray-100 dark:focus-visible:outline-gray-50 focus-visible:outline-indigo-500">
-                    <i class="bi bi-filter"></i>
-                </button>
-                <ul class="dropdown-menu p-2 dark:bg-slate-700">
-                    <li>
-                        <p class="text-center text-gray-500 font-bold dark:text-gray-200">Datos del cliente</p>
-                    </li>
-                    <li class="flex items-center px-2 relative border-b-gray-200 border-b py-2">
-                        <i class="bi bi-person absolute top-3 left-4 text-gray-500 dark:text-gray-50"></i>
-                        <input class="border border-gray-400 dark:border-white dark:bg-slate-500 dark:text-gray-50 dark:placeholder:text-gray-200 rounded focus-visible:outline-none pl-8 py-1" name="name" type="text" placeholder="Nombre del cliente" />
-                    </li>
-                    <li class="flex items-center px-2 relative border-b-gray-200 border-b py-2">
-                        <i class="bi bi-person-vcard absolute top-3 left-4 text-gray-500 dark:text-gray-50"></i>
-                        <input class="border border-gray-400 dark:border-white dark:bg-slate-500 dark:text-gray-50 dark:placeholder:text-gray-200 rounded focus-visible:outline-none pl-8 py-1" name="dni" type="text" placeholder="DNI del cliente" />
-                    </li>
-                    <li class="p-2 border-b-gray-200 border-b">
-                        <p class="text-gray-400 dark:text-gray-200 font-bold">Sexo:</p>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="" name="gender" checked />
-                            <label class="form-check-label dark:text-gray-50">Sin especificar</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="Femenino" name="gender" />
-                            <label class="form-check-label dark:text-gray-50">Femenino</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="Masculino" name="gender" />
-                            <label class="form-check-label dark:text-gray-50">Masculino</label>
-                        </div>
-                    </li>
-                    <li class="p-2">
-                        <p class="text-gray-400 dark:text-gray-200 font-bold">Estado del servicio:</p>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="" name="state" checked />
-                            <label class="form-check-label dark:text-gray-50">Sin especificar</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="Activo" name="state" />
-                            <label class="form-check-label dark:text-gray-50">Activo</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" value="Inactivo" name="state" />
-                            <label class="form-check-label dark:text-gray-50">Inactivo</label>
-                        </div>
-                    </li>
-                    <li class="mt-1">
-                        <button type="reset" class="btn btn-sm border border-indigo-500 dark:border-indigo-300 w-full text-indigo-500 dark:text-indigo-300 hover:text-white hover:bg-indigo-500">Limpiar filtro</button>
-                    </li>
-                </ul>
-            </form>
+        <div class="float-right flex mr-5 items-center">
+            <ClientFilter @filter="filter" @reset="filter({ all: true })" />
             <div class="dropdown p-1 pr-2">
                 <button class="dropdown-toggle dark:text-white font-bold" data-bs-toggle="dropdown">{{ active }}</button>
                 <ul class="dropdown-menu dark:bg-slate-700">
                     <li>
-                        <button @click="filter({ asign: true })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes asignados</button>
+                        <button @click="filter({ assign: true })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes asignados</button>
                     </li>
                     <li>
-                        <button @click="filter({ asign: false })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes sin asignar</button>
+                        <button @click="filter({ assign: false })" class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Clientes sin asignar</button>
                     </li>
                     <li>
                         <hr class="dropdown-divider dark:border-gray-300" />

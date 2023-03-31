@@ -21,14 +21,6 @@ export default class Alert {
                 },
             },
         ]
-        this.create()
-    }
-
-    /**
-     * Crea una aplicación Vue para mostrar la notificación con la configuración definida
-     * y las personalizaciones pasadas en el constructor de la clase
-     */
-    create() {
         this.app = createApp(Root)
     }
 

@@ -170,7 +170,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '00110381328',
                 'gender' => 'Femenino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '05-02-1986',
+                'birthdate' => '1986-02-05',
             ],
             [
                 'name' => 'Prof. Mervin Bergnaum',
@@ -179,7 +179,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '32589621478',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '04-05-1758',
+                'birthdate' => '1758-05-04',
             ],
             [
                 'name' => 'Mr. Hal Gerlach',
@@ -188,7 +188,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '36521478965',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '03-11-1998',
+                'birthdate' => '1998-11-03',
             ],
             [
                 'name' => 'Murray Homenick',
@@ -197,7 +197,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '36521478963',
                 'gender' => 'Femenino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '03-11-1998',
+                'birthdate' => '1998-11-03',
             ],
             [
                 'name' => 'Roman Renner',
@@ -206,7 +206,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '25893781963',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '23-12-1965',
+                'birthdate' => '1965-12-23',
             ],
             [
                 'name' => 'Mr. Ike Grimes DVM',
@@ -215,7 +215,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '54193852147',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '30-05-1955',
+                'birthdate' => '1955-05-30',
             ],
             [
                 'name' => 'Greyson Hammes',
@@ -224,7 +224,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '25893781963',
                 'gender' => 'Femenino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '10-05-1985',
+                'birthdate' => '1985-05-10',
             ],
             [
                 'name' => 'Mr. Jamie Kshlerin',
@@ -233,7 +233,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '23658965853',
                 'gender' => 'Femenino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '01-01-1993',
+                'birthdate' => '1993-01-01',
             ],
             [
                 'name' => 'Dr. Stefanie Gibson',
@@ -242,7 +242,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '23658963257',
                 'gender' => 'Femenino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '02-03-1975',
+                'birthdate' => '1975-03-02',
             ],
             [
                 'name' => 'Dr. Dillon Kilback',
@@ -251,7 +251,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '32589687452',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '03-03-1976',
+                'birthdate' => '1976-03-03',
             ],
             [
                 'name' => 'Alfonso Zarza Izalde',
@@ -260,7 +260,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '3256985874',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '23-09-1965',
+                'birthdate' => '1965-09-23',
             ],
             [
                 'name' => 'Reinaldo Tamayo Álvarez',
@@ -269,7 +269,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '23658758961',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '22-10-1984',
+                'birthdate' => '1984-10-22',
             ],
             [
                 'name' => 'Fernanda María Hernández López',
@@ -278,7 +278,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '3256985874',
                 'gender' => 'Femenino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '23-09-1965',
+                'birthdate' => '1965-09-23',
             ],
             [
                 'name' => 'Pedro Armando Matute Rodríguez',
@@ -287,7 +287,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '365897741',
                 'gender' => 'Masculino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '02-09-1978',
+                'birthdate' => '1978-09-02',
             ],
             [
                 'name' => 'Elena Quevent Godinez',
@@ -296,7 +296,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '32569878852',
                 'gender' => 'Femenino',
                 'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '23-29-1985',
+                'birthdate' => '1985-09-23',
             ],
         ]);
 
@@ -328,49 +328,43 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('buttons')->insert([
-            ['number' => '123245', 'state' => 'Connected', 'client_id' => 1],
-            ['number' => '345365', 'state' => 'Connected', 'client_id' => 2],
-            ['number' => '678852', 'state' => 'Disconnected', 'client_id' => 3],
-            ['number' => '912365', 'state' => 'Connected', 'client_id' => 4],
-            ['number' => '365458', 'state' => 'Connected', 'client_id' => 5],
-            ['number' => '235235', 'state' => 'Disconnected', 'client_id' => 6],
-            ['number' => '654157', 'state' => 'Disconnected', 'client_id' => 7],
-            ['number' => '032953', 'state' => 'Connected', 'client_id' => 8],
-            ['number' => '951423', 'state' => 'Connected', 'client_id' => 9],
-            ['number' => '852905', 'state' => 'Connected', 'client_id' => 10],
-            ['number' => '258147', 'state' => 'Connected', 'client_id' => 11],
-            ['number' => '753124', 'state' => 'Connected', 'client_id' => 12],
-            ['number' => '159435', 'state' => 'Connected', 'client_id' => 13],
-            ['number' => '754087', 'state' => 'Disconnected', 'client_id' => 14],
-            ['number' => '359325', 'state' => 'Connected', 'client_id' => 15],
-            ['number' => '851126', 'state' => 'Disconnected', 'client_id' => null],
+            ['number' => 'alert001', 'state' => 'Connected', 'client_id' => 1, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert002', 'state' => 'Connected', 'client_id' => 2, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert003', 'state' => 'Disconnected', 'client_id' => 3, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert004', 'state' => 'Connected', 'client_id' => 4, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert005', 'state' => 'Connected', 'client_id' => 5, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert006', 'state' => 'Disconnected', 'client_id' => 6, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert007', 'state' => 'Disconnected', 'client_id' => 7, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert008', 'state' => 'Connected', 'client_id' => 8, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert009', 'state' => 'Connected', 'client_id' => 9, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert010', 'state' => 'Connected', 'client_id' => 10, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert011', 'state' => 'Connected', 'client_id' => 11, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert012', 'state' => 'Connected', 'client_id' => 12, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert013', 'state' => 'Connected', 'client_id' => 13, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert014', 'state' => 'Disconnected', 'client_id' => 14, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert015', 'state' => 'Connected', 'client_id' => 15, 'last_connection' => now()->toDateTimeString()],
+            ['number' => 'alert016', 'state' => 'Disconnected', 'client_id' => null, 'last_connection' => now()->toDateTimeString()],
         ]);
 
         DB::table('alerts')->insert([
-            ['client_id' => 2, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '4-03-2023 12:40'],
-            ['client_id' => 4, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '4-03-2023 10:17'],
-            ['client_id' => 5, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '3-03-2023 01:24'],
-            ['client_id' => 7, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2-03-2023 16:10'],
-            ['client_id' => 8, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2-03-2023 14:11'],
-            ['client_id' => 3, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '1-03-2023 08:32'],
-            ['client_id' => 1, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '28-02-2023 07:10'],
+            ['client_id' => 2, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-4 12:40:00'],
+            ['client_id' => 4, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-4 10:17:00'],
+            ['client_id' => 5, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-3 01:24:00'],
+            ['client_id' => 7, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-2 16:10:00'],
+            ['client_id' => 8, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-2 14:11:00'],
+            ['client_id' => 3, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-1 08:32:00'],
+            ['client_id' => 1, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-02-28 07:10:00'],
         ]);
 
         DB::table('notifications')->insert([
-            ['client_id' => 2, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '4-03-2023 12:40'],
-            ['client_id' => 2, 'title' => 'Dispositivo desconectado', 'content' => 'El dispositivo de %client% ha perdido la conexión.', 'created_at' => '1-03-2023 8:33'],
-            ['client_id' => 4, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '4-03-2023 10:17'],
-            ['client_id' => 5, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '3-03-2023 01:24'],
-            ['client_id' => 7, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2-03-2023 16:10'],
-            ['client_id' => 10, 'title' => 'Dispositivo conectado', 'content' => 'El dispositivo de %client% ha recuperado la conexión.', 'created_at' => '28-02-2023 18:27'],
-            ['client_id' => 8, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2-03-2023 14:11'],
-            ['client_id' => 8, 'title' => 'Dispositivo asignado', 'content' => 'Se ha asigando un nuevo dispositivo a %client%.', 'created_at' => '1-03-2023 08:10'],
-            ['client_id' => 3, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '1-03-2023 08:32'],
-            ['client_id' => 1, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '28-02-2023 07:10'],
-            ['client_id' => 10, 'title' => 'Dispositivo desconectado', 'content' => 'El dispositivo de %client% ha perdido la conexión.', 'created_at' => '28-02-2023 18:27'],
-            ['client_id' => 11, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '4-02-2023 4:11'],
-            ['client_id' => 12, 'title' => 'Dispositivo asignado', 'content' => 'Se ha asigando un nuevo dispositivo a %client%.', 'created_at' => '05-03-2023 08:10'],
-            ['client_id' => 12, 'title' => 'Dispositivo conectado', 'content' => 'El dispositivo de %client% ha recuperado la conexión.', 'created_at' => '05-03-2023 9:10'],
+            ['client_id' => 2, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-4 12:40:00'],
+            ['client_id' => 4, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-4 10:17:00'],
+            ['client_id' => 5, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-3 01:24:00'],
+            ['client_id' => 7, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-2 16:10:00'],
+            ['client_id' => 8, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-2 14:11:00'],
+            ['client_id' => 3, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-1 08:32:00'],
+            ['client_id' => 1, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-02-28 07:10:00'],
+            ['client_id' => 11, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-02-4 4:11:00'],
         ]);
     }
 }

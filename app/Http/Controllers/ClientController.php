@@ -20,10 +20,10 @@ class ClientController extends Controller
         $request->validate([
             //TODO (Mejorar esta validación)
             'name' => ['required', 'between:3,60'],
-            'dni' => ['required', 'integer'],
+            'dni' => ['required', 'regex:/^[0-9]+$/'],
             'birthdate' => ['required', 'date'],
             'gender' => ['required', 'in:Femenino,Masculino'],
-            'state' => ['required', 'in:Activo,Bloqueado']
+            'state' => ['required', 'in:Activo,Inactivo']
         ]);
         //Crear la instancia del modelo en la base de datos
         $address = Address::create($request->address);
@@ -49,10 +49,10 @@ class ClientController extends Controller
         $request->validate([
             //TODO (Mejorar esta validación)
             'name' => ['required', 'between:3,60'],
-            'dni' => ['required', 'integer'],
+            'dni' => ['required', 'regex:/^[0-9]+$/'],
             'birthdate' => ['required', 'date'],
             'gender' => ['required', 'in:Femenino,Masculino'],
-            'state' => ['required', 'in:Activo,Bloqueado']
+            'state' => ['required', 'in:Activo,Inactivo']
         ]);
         //Crear la instancia del modelo en la base de datos
         $client = Client::find($id);

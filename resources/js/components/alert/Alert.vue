@@ -12,13 +12,13 @@
 <template>
     <div class="toast align-items-center border-0 dark:bg-slate-400" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex position-relative">
-            <div class="toast-body">
-                <div>
-                    <i :class="config.icon" :style="{ color: config.color }"></i>
+            <div class="toast-body flex items-center">
+                <div class="mx-2 flex items-center justify-center">
+                    <i class="text-6xl" :class="config.icon" :style="{ color: config.color }"></i>
                 </div>
-                <div>
-                    <h6 class="mb-1 dark:text-gray-200">{{ config.title }}</h6>
-                    <p class="mb-0 dark:text-gray-50">{{ config.text }}</p>
+                <div class="border-l border-l-gray-300 py-2 px-3">
+                    <h6 class="mb-1 text-black font-bold dark:text-gray-200">{{ config.title }}</h6>
+                    <p class="mb-0 text-gray-600 dark:text-gray-50">{{ config.text }}</p>
                 </div>
             </div>
             <div :style="{ background: config.color }" class="toast-progress"></div>
@@ -28,31 +28,6 @@
 </template>
 
 <style scoped>
-    .toast-body {
-        display: flex;
-        align-items: center;
-    }
-    .toast-body > div:last-child {
-        border-left: solid 1px #d9d9d9;
-        padding: 0.5rem 0.75rem;
-    }
-    .toast-body > div:first-child {
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    i {
-        font-size: 4em;
-    }
-    h6 {
-        color: #000;
-        font-weight: 700;
-    }
-    p {
-        color: #949494;
-    }
     .toast-progress {
         position: absolute;
         width: 100%;
