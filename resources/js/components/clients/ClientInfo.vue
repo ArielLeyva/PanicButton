@@ -50,10 +50,11 @@
                     if (result.status == "accept") {
                         //Si el usuario eligió aceptar hacer la petición
                         Request.delete(`api/clients/${this.client.id}`, new FormData()).then(() => {
-                            //Emitir evento
-                            this.$emit("remove", this.index)
                             //Mostrar la notificación de eliminación en la pantalla
                             this.Utils.notify("Se ha eliminado este cliente correctamente")
+                            //Emitir evento
+                            this.emitter.emit("client-removed", this.client)
+                            this.$emit("remove", this.index)
                         })
                     }
                 })
@@ -85,12 +86,32 @@
                         Request.post(`api/clients/${this.client.id}`, data).then((data) => {
                             //Emitir evento
                             this.$emit("update", data)
+                            this.emitter.emit("client-updated", data)
                             //Mostrar la notificación de eliminación en la pantalla
                             this.Utils.notify("Se han actualizados los datos del cliente")
                         })
                     }
                 })
             },
+        },
+        mounted() {
+            this.emitter.on("button-assigned", (button) => {
+                if (button.client.id == this.client.id) {
+                    this.buttons.push(button.number)
+                }
+            })
+            this.emitter.on("button-unassigned", (button) => {
+                if (button.client.id == this.client.id) {
+                    const index = this.buttons.indexOf(button.number)
+                    this.client.buttons.splice(index, 1)
+                }
+            })
+            this.emitter.on("button-removed", (button) => {
+                if (button.client.id == this.client.id) {
+                    const index = this.buttons.indexOf(button.number)
+                    this.client.buttons.splice(index, 1)
+                }
+            })
         },
     }
 </script>

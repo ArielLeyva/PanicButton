@@ -102,6 +102,13 @@
                 })
             },
         },
+        mounted() {
+            this.emitter.on("client-updated", (client) => {
+                if (client.id == this.alert.client_id) {
+                    this.alert.client = client
+                }
+            })
+        },
     }
 </script>
 <template>

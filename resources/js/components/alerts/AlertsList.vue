@@ -99,7 +99,8 @@
                     title: "Alerta presionada",
                     client_id: alert.client_id,
                     client: alert.client,
-                    content: `${alert.client.name} ha presionado su botón de pánico con una alerta ${alert.type == "Police" ? "Policial" : "Médica"}`,
+                    content: `%client% ha presionado su botón de pánico con una alerta ${alert.type == "Police" ? "Policial" : "Médica"}`,
+                    text: `${alert.client.name} ha presionado su botón de pánico con una alerta ${alert.type == "Police" ? "Policial" : "Médica"}`,
                     created_at: new Date(),
                 }
                 //Emitir evento de alerta recibida
@@ -109,6 +110,16 @@
                 this.alerts.unshift(alert)
                 //Establecer la primera página
                 this.paginate(0)
+            })
+            this.emitter.on("client-removed", (client) => {
+                for (let i in this.backup) {
+                    if (this.backup[i].client_id == client.id) {
+                        this.Utils.splice(this.alerts, this.backup[i])
+                        this.backup.splice(i, 1)
+                    }
+                }
+                //Actualizar paginación
+                this.paginate(this.$refs.paginate.page)
             })
         },
     }

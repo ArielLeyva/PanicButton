@@ -118,6 +118,46 @@
         },
         mounted() {
             this.init()
+            this.emitter.on("button-state-changed", (button) => {
+                if (button.state == "Connected") {
+                    this.connected++
+                    this.disconnected--
+                } else {
+                    this.connected--
+                    this.disconnected++
+                }
+                this.init()
+            })
+            this.emitter.on("button-assigned", (button) => {
+                this.unassigned--
+                if (button.state == "Connected") {
+                    this.connected++
+                } else {
+                    this.disconnected--
+                }
+                this.init()
+            })
+            this.emitter.on("button-unassigned", (button) => {
+                this.unassigned++
+                if (button.state == "Connected") {
+                    this.connected--
+                } else {
+                    this.disconnected++
+                }
+                this.init()
+            })
+            this.emitter.on("button-removed", (button) => {
+                if (button.client_id == null) {
+                    this.unassigned--
+                } else {
+                    if (button.state == "Connected") {
+                        this.connected--
+                    } else {
+                        this.disconnected--
+                    }
+                }
+                this.init()
+            })
         },
     }
 </script>

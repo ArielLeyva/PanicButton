@@ -44,13 +44,13 @@ class ButtonController extends Controller
         }
     }
 
-    public function unasign($id)
+    public function unassign($id)
     {
         Button::find($id)->update(['client_id' => null]);
         return response('');
     }
 
-    public function asign($id, $client)
+    public function assign($id, $client)
     {
         $button = Button::find($id);
         $button->update(['client_id' => $client]);

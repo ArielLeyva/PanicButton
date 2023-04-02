@@ -28,8 +28,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/buttons', ButtonController::class)->only([
         'store', 'index', 'update', 'destroy'
     ]);
-    Route::put('/buttons/unasign/{id}', [ButtonController::class, 'unasign']);
-    Route::put('/buttons/asign/{id}/{client}', [ButtonController::class, 'asign']);
+    Route::put('/buttons/unassign/{id}', [ButtonController::class, 'unassign']);
+    Route::put('/buttons/assign/{id}/{client}', [ButtonController::class, 'assign']);
 
     Route::resource('/clients', ClientController::class)->only([
         'store', 'index', 'update', 'destroy'

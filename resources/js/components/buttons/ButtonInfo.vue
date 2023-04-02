@@ -137,6 +137,22 @@
                 modal.fire()
             },
         },
+        mounted() {
+            this.emitter.on("client-updated", (client) => {
+                if (client.id == this.button.client_id) {
+                    this.button.client = client
+                }
+            })
+            this.emitter.on("client-removed", (client) => {
+                if (client.id == this.button.client_id) {
+                    this.button.client_id = null
+                    this.button.client = {
+                        avatar: "src/blank-profile.svg",
+                        name: "Sin asignar",
+                    }
+                }
+            })
+        },
     }
 </script>
 <template>

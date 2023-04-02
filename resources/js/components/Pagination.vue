@@ -141,7 +141,7 @@
         </ul>
     </nav>
 </template>
-<style>
+<style scoped>
     .page-link.active,
     .active > .page-link {
         z-index: 3;

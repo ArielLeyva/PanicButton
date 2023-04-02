@@ -22,10 +22,6 @@
                  */
                 window: null,
                 /**
-                 * Lista de notificaciones de la base de datos
-                 */
-                notifications: [],
-                /**
                  * Notificación del sistema
                  */
                 notification: null,
@@ -37,13 +33,14 @@
              */
             notify(notification) {
                 //Añadir la notificación a la lista de notificaciones
-                this.notifications = [notification, ...this.notifications]
+                this.emitter.emit("notification-received", notification)
                 //Verificar si el dispositivo del usuario admite la API de notificaciones y aceptó el permiso de notificaciones
                 if ("Notification" in window && Notification.permission == "granted") {
                     //Crear y mostrar la notificación
                     this.notification = new Notification("Sistema de Alerta Comunitaria", {
-                        body: notification.content,
-                        icon: "../src/logo_contrast.png",
+                        body: notification.text,
+                        // icon: "../src/logo_contrast.png",
+                        icon: notification.client.avatar,
                         title: notification.title,
                     })
                 }
@@ -67,7 +64,7 @@
 </script>
 
 <template>
-    <Navbar :notifications="notifications" @readed="notifications = []" />
+    <Navbar />
     <main class="bg-gradient-to-br from-indigo-100 to-fuchsia-100 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 w-full p-1 sm:p-3">
         <div class="block md:flex">
             <section :class="{ hidden: window !== 'buttons' && window !== null }" class="md:w-1/3 lg:w-1/4 main scroll pb-10 sm:pb-0">

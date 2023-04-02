@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\Button;
 use App\Models\Client;
 use App\Models\TelephoneNumber;
 use Illuminate\Http\Request;
@@ -83,6 +84,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
+        Button::where('client_id', $id)->update(['client_id' => null]);
         $result = Client::destroy($id);
         if ($result) {
             return response('');
