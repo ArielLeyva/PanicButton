@@ -132,6 +132,7 @@
                         Request.post("api/buttons", result.data).then((data) => {
                             //Emitir el evento
                             this.$emit("added", data)
+                            this.emitter.emit("button-added", this.button)
                             //Mostrar la notificación de eliminación en la pantalla
                             this.Utils.notify("Se ha registrado un nuevo dispositivo")
                         })

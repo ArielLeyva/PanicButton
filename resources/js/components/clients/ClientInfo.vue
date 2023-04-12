@@ -97,18 +97,18 @@
         mounted() {
             this.emitter.on("button-assigned", (button) => {
                 if (button.client.id == this.client.id) {
-                    this.buttons.push(button.number)
+                    this.client.buttons.push(button.number)
                 }
             })
             this.emitter.on("button-unassigned", (button) => {
                 if (button.client.id == this.client.id) {
-                    const index = this.buttons.indexOf(button.number)
+                    const index = this.client.buttons.indexOf(button.number)
                     this.client.buttons.splice(index, 1)
                 }
             })
             this.emitter.on("button-removed", (button) => {
-                if (button.client.id == this.client.id) {
-                    const index = this.buttons.indexOf(button.number)
+                if (button.client_id == this.client.id) {
+                    const index = this.client.buttons.indexOf(button.number)
                     this.client.buttons.splice(index, 1)
                 }
             })

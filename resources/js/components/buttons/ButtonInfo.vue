@@ -53,6 +53,7 @@
                             //Actualizar cliente del botón
                             this.button.client_id = button.client_id
                             this.button.client = button.client
+                            this.emitter.emit("button-assigned", this.button)
                             //Mostrar la notificación de eliminación en la pantalla
                             this.Utils.notify("Se ha asignado un cliente a este dispositivo")
                         })
@@ -79,7 +80,8 @@
                         //Si el usuario selecciona aceptar hacer petición
                         const data = new FormData()
                         data.append("_method", "put")
-                        Request.post(`api/buttons/unasign/${this.button.id}`, data).then((result) => {
+                        Request.post(`api/buttons/unassign/${this.button.id}`, data).then((result) => {
+                            this.emitter.emit("button-unassigned", this.button)
                             //Desvincular cliente del botón en el frontend
                             this.button.client_id = null
                             this.button.client.name = "Sin asignar"
@@ -110,6 +112,7 @@
                         //Si el usuario selecciona aceptar hacer la petición
                         Request.delete(`api/buttons/${this.button.id}`, new FormData()).then(() => {
                             //Emitir evento
+                            this.emitter.emit("button-removed", this.button)
                             this.$emit("remove", this.index)
                             //Mostrar la notificación de eliminación en la pantalla
                             this.Utils.notify("Se ha eliminado el dispositivo correctamente")
@@ -150,6 +153,7 @@
                         avatar: "src/blank-profile.svg",
                         name: "Sin asignar",
                     }
+                    this.emitter.emit("button-unassigned", this.button)
                 }
             })
         },

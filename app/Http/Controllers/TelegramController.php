@@ -22,30 +22,20 @@ class TelegramController extends Controller
             if ($data['text'] !== "/start") {
                 $separator = strpos($data['text'], ':');
                 $text = Str::of($data['text']);
-                $number = $separator === false ? $text->substr(1) : $text->substr(1, $separator);
+                $number = $separator === false ? $text : $text->substr(0, $separator);
                 $type = $separator === false ? 'Health' : $text->substr($separator + 1);
                 $button = Button::where('number', $number)->first();
                 Log::alert($type);
                 if ($button !== null && $button->client_id !== null) {
                     if ($type == 'Online') {
                         $this->updateState($button);
-                        //Eliminar mensaje de Telegram
-                        // $token = env('TELEGRAM_TOKEN');
-                        // $chat = env('TELEGRAM_CHAT_ID');
-                        // $message = $data['message']['message_id'];
-                        // $url = "https://api.telegram.org/bot{$token}/deleteMessage?chat_id={$chat}&message_id={$message}";
-                        // $ch = curl_init();
-                        // curl_setopt($ch, CURLOPT_URL, $url);
-                        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                        // curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-                        // curl_exec($ch);
-                        // curl_close($ch);
                     } else {
                         $this->createAlert($button, $type);
                     }
                 }
             }
         }
+        return response('');
     }
 
     private function updateState(Button $button)

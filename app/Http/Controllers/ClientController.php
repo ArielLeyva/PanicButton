@@ -8,6 +8,7 @@ use App\Models\Button;
 use App\Models\Client;
 use App\Models\TelephoneNumber;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
@@ -84,8 +85,13 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
+        $buttons = Button::where('client_id', $id)->get();
         Button::where('client_id', $id)->update(['client_id' => null]);
-        $result = Client::destroy($id);
+        $client = Client::find($id);
+        if ($client->avatar !== null) {
+            Storage::disk('src')->delete($client->avatar);
+        }
+        $result = $client->delete();
         if ($result) {
             return response('');
         } else {

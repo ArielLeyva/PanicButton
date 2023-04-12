@@ -64,7 +64,7 @@
 </script>
 <template>
     <div class="dropdown relative">
-        <span v-if="notifications.length > 0" @click="unreaded = 0" class="badge bg-danger rounded-full absolute cursor-pointer" data-bs-toggle="dropdown" style="right: -0.25rem; top: -0.65rem">{{ notifications.length }}</span>
+        <span v-if="unreaded > 0" @click="unreaded = 0" class="badge bg-danger rounded-full absolute cursor-pointer" data-bs-toggle="dropdown" style="right: -0.25rem; top: -0.65rem">{{ unreaded }}</span>
         <button @click="unreaded = 0" class="text-gray-500 dark:text-gray-200 hover:text-black dark:hover:text-white mx-3" data-bs-toggle="dropdown">
             <i class="bi bi-bell-fill"></i>
         </button>

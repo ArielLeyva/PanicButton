@@ -36,33 +36,6 @@
                             </p>
                         </div>
                     </div>
-                    <div class="w-2/12 m-auto flex justify-end">
-                        <button
-                            data-bs-toggle="collapse"
-                            :data-bs-target="'#modal_info_' + client.id"
-                            :class="{ 'transform rotate-180 transition-transform': client.collapse !== undefined, 'transform rotate-0 transition-transform': client.collapse == undefined }"
-                            @click="client.collapse = client.collapse == undefined ? true : undefined"
-                            class="transition-all mt-2 rounded-full w-8 h-8 bg-indigo-500 shadow-lg text-white opacity-0 hover:!opacity-100 group-hover:!opacity-50"
-                        >
-                            <i class="bi bi-chevron-down"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="collapse mt-2" :id="'modal_info_' + client.id">
-                    <div class="card card-body dark:bg-transparent">
-                        <p class="dark:text-gray-50"><i class="bi bi-calendar-day"></i> Fecha de nacimiento: {{ client.birthdate }}</p>
-                        <p class="dark:text-gray-50"><i class="bi bi-gender-ambiguous"></i> Sexo: {{ client.gender }}</p>
-                        <p class="dark:text-gray-50"><i class="bi bi-person-vcard"></i> DNI: {{ client.dni }}</p>
-                        <p class="dark:text-gray-50"><i class="bi bi-map"></i> Dirección postal: {{ client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}</p>
-                        <p class="dark:text-gray-50" v-for="telephone in client.telephone_numbers">
-                            <i class="bi" :class="{ 'bi-telephone': telephone.type == 'normal', 'bi-phone': telephone.type == 'mobile' }"></i>
-                            {{ telephone.number }}
-                        </p>
-                        <p class="dark:text-gray-50">
-                            <i class="bi bi-toggle2-off"></i> Estado:
-                            <span class="badge" :class="{ 'bg-success': client.state == 'Activo', 'bg-danger': client.state == 'Bloqueado' }">{{ client.state }}</span>
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>

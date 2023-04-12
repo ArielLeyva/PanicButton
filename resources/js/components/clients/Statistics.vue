@@ -146,6 +146,10 @@
                 }
                 this.init()
             })
+            this.emitter.on("button-added", () => {
+                this.unassigned++
+                this.init()
+            })
             this.emitter.on("button-removed", (button) => {
                 if (button.client_id == null) {
                     this.unassigned--

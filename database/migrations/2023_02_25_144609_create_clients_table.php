@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
             $table->string('name', 80);
-            $table->string('avatar', 60);
+            $table->string('avatar', 60)->nullable()->default(null);
             $table->string('dni', 20);
             $table->enum('gender', ['Femenino', 'Masculino']);
             $table->text('details');

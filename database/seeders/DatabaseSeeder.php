@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Ariel Eliezer Leyva Gutiérrez',
-                'avatar' => '1.jpg',
+                'avatar' => 'admin_1.jpg',
                 'email' => 'arieleliezer@gmail.com',
                 'username' => 'ArielEliezer',
                 'password' => bcrypt('gWCXR3Y8'),
