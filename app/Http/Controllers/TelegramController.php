@@ -14,25 +14,18 @@ use Illuminate\Support\Facades\Log;
 
 class TelegramController extends Controller
 {
-    public function handle(Request $request)
+    public function handle(Request $request, $message)
     {
-        $data = $request->all();
-        Log::alert(json_encode($request->all()));
-        if (isset($data['text'])) {
-            if ($data['text'] !== "/start") {
-                $separator = strpos($data['text'], ':');
-                $text = Str::of($data['text']);
-                $number = $separator === false ? $text : $text->substr(0, $separator);
-                $type = $separator === false ? 'Health' : $text->substr($separator + 1);
-                $button = Button::where('number', $number)->first();
-                Log::alert($type);
-                if ($button !== null && $button->client_id !== null) {
-                    if ($type == 'Online') {
-                        $this->updateState($button);
-                    } else {
-                        $this->createAlert($button, $type);
-                    }
-                }
+        $separator = strpos($message, ':');
+        $text = Str::of($message);
+        $number = $separator === false ? $text : $text->substr(0, $separator);
+        $type = $separator === false ? 'Health' : $text->substr($separator + 1);
+        $button = Button::where('number', $number)->first();
+        if ($button !== null && $button->client_id !== null) {
+            if ($type == 'Online') {
+                $this->updateState($button);
+            } else {
+                $this->createAlert($button, $type);
             }
         }
         return response('');

@@ -43,4 +43,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index']);
 });
 
-Route::post("/lksiw2assol25sdpl548", [TelegramController::class, 'handle']);
+Route::get("/lksiw2assol25sdpl548/{message}", [TelegramController::class, 'handle']);
