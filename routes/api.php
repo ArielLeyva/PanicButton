@@ -8,6 +8,8 @@ use App\Http\Controllers\TelegramController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use App\Models\Button;
+use App\Http\Controllers\ClientAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +46,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::get("/lksiw2assol25sdpl548/{message}", [TelegramController::class, 'handle']);
+
+Route::get("/client/devices", function() {
+    $devices = Button::all();
+    return response()->json($devices);
+});
+
+Route::post('client/login', [ClientAuthController::class, 'authenticate']);
+// Route::post('client/login', function(Request $request) {
+//     // $credentials = $request->validate([
+//     //     'username' => ['required'],
+//     //     'password' => ['required']
+//     // ]);
+//     return response()->json(["data" => "example"], 200);
+// });
