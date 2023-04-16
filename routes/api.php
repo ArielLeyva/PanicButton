@@ -45,7 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index']);
 });
 
-Route::get("/lksiw2assol25sdpl548/{message}", [TelegramController::class, 'handle']);
+Route::get("/lksiw2assol25sdpl548/{message}", [AlertController::class, 'handle']);
 
 Route::get("/client/devices", function() {
     $devices = Button::all();
@@ -53,10 +53,3 @@ Route::get("/client/devices", function() {
 });
 
 Route::post('client/login', [ClientAuthController::class, 'authenticate']);
-// Route::post('client/login', function(Request $request) {
-//     // $credentials = $request->validate([
-//     //     'username' => ['required'],
-//     //     'password' => ['required']
-//     // ]);
-//     return response()->json(["data" => "example"], 200);
-// });
