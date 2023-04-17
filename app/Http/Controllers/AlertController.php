@@ -10,6 +10,7 @@ use App\Models\Button;
 use App\Models\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AlertController extends Controller
 {
@@ -18,6 +19,30 @@ class AlertController extends Controller
         $alerts = Alert::all();
         $sort = $alerts->sortByDesc('created_at');
         return response()->json($sort->values()->all());
+    }
+
+    public function getAlertsByClient(Request $request) {
+        $token = PersonalAccessToken::findToken(request()->bearerToken());
+        if($token) {
+            $user = $token->tokenable;
+            if($user) {
+                $sort = Alert::where('client_id', $user->id)->get()->sortByDesc('created_at');
+                $alerts = [];
+                foreach($sort as $alert) {
+                    $alerts[] = [
+                        'id' => $alert['id'],
+                        'type' => $alert['type'],
+                        'state' => $alert['state'],
+                        'created_at' => $alert['created_at']
+                    ];
+                }
+                return response()->json($alerts);
+            } else {
+                return response('No Content', 204);
+            }
+        } else {
+            return response('Unauthorized', 401);
+        }
     }
 
     public function handle(Request $request, $message)

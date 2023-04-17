@@ -55,8 +55,8 @@ Route::get("/client/devices", function() {
 
 Route::post('client/login', [ClientAuthController::class, 'authenticate']);
 
-Route::get("/client/user", function(Request $request) {
-    $token = PersonalAccessToken::findToken(request()->bearerToken());
-    $user = $token->tokenable;
-    return response()->json($user);
-});
+Route::get("/client/user", [ClientController::class, 'getClientByToken']);
+
+Route::get("/client/alerts", [AlertController::class, 'getAlertsByClient']);
+
+Route::get("/client/devices", [ButtonController::class, 'getDevicesByClient']);

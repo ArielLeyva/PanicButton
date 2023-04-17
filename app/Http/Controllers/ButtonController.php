@@ -5,12 +5,38 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Button;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class ButtonController extends Controller
 {
     public function index()
     {
         return response()->json(Button::all());
+    }
+
+    public function getDevicesByClient(Request $request) {
+        $token = PersonalAccessToken::findToken(request()->bearerToken());
+        if($token) {
+            $user = $token->tokenable;
+            if($user) {
+                $items = Button::where('client_id', $user->id)->get();
+                $buttons = [];
+                foreach($items as $button) {
+                    $buttons[] = [
+                        'id' => $button['id'],
+                        'number' => $button['number'],
+                        'state' => $button['state'],
+                        'last_connection' => $button['last_connection'],
+                        'created_at' => $button['created_at']
+                    ];
+                }
+                return response()->json($buttons);
+            } else {
+                return response('No Content', 204);
+            }
+        } else {
+            return response('Unauthorized', 401);
+        }
     }
 
     public function store(Request $request)
