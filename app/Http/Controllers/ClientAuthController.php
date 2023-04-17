@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\Client;
+use Illuminate\Support\Facades\Hash;
 
 class ClientAuthController extends Controller
 {
@@ -17,18 +19,27 @@ class ClientAuthController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'username' => ['required'],
-            'password' => ['required']
+            'email' => ['required'],
+            'password' => ['required'],
+            'device_name' => ['required']
         ]);
-        if (Auth::attempt($credentials, true)) {
-            $request->user()->tokens()->delete();
+        if (Auth::guard('client')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']], true)) {
+            $client = Client::where('email', $credentials['email'])->first();
+            //TODO (Eliminar esta función para mantener la cuenta en varios dispositivos)
+            $client->tokens()->delete();
             //Generar token API
-            $token = $request->user()->createToken("pxsfs5qsslhp5sdpl548");
+            $token = $client->createToken($request->device_name)->plainTextToken;
             return response()->json($token);
         }
-        return response()->json([
-            'message' => 'Authentication Error'
-        ]);
+        // $user = Client::where('email', $request->email)->first();
+        // if (!$user || !Hash::check($request->password, $user->password)) {
+        //     return response()->json([
+        //         'message' => 'Authentication Error'
+        //     ]);
+        // }
+        // return $user->createToken($request->device_name)->plainTextToken;
+        return response()->json($user->createToken($request->device_name)->plainTextToken);
+
     }
 
     public function logout(Request $request)

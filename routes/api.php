@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Models\Button;
 use App\Http\Controllers\ClientAuthController;
+use Laravel\Sanctum\PersonalAccessToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +54,9 @@ Route::get("/client/devices", function() {
 });
 
 Route::post('client/login', [ClientAuthController::class, 'authenticate']);
+
+Route::get("/client/user", function(Request $request) {
+    $token = PersonalAccessToken::findToken(request()->bearerToken());
+    $user = $token->tokenable;
+    return response()->json($user);
+});

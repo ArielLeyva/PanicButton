@@ -1,9 +1,16 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class Client extends BaseModel
+class Client extends Authenticatable
 {
+    use HasApiTokens, HasFactory, Notifiable;
+
+    protected $guard = 'client';
 
     public function getAvatarPathAttribute()
     {
@@ -16,7 +23,7 @@ class Client extends BaseModel
 
     /**
      * Obtener la dirección del cliente
-     * 
+     *
      * @return Address El modelo de la dirección del producto
      */
     public function address()
@@ -26,7 +33,7 @@ class Client extends BaseModel
 
     /**
      * Obtener la dirección del cliente
-     * 
+     *
      * @return Button El modelo de la dirección del producto
      */
     public function buttons()
@@ -36,7 +43,7 @@ class Client extends BaseModel
 
     /**
      * Obtener la categoría del producto
-     * 
+     *
      * @return TelephoneNumber Recupera todos los números de teléfonos del cliente
      */
     public function telephone_numbers()

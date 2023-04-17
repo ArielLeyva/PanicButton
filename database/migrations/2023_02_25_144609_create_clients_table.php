@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
+            $table->string('email', )->unique();
+            $table->string('password');
             $table->string('name', 80);
             $table->string('avatar', 60)->nullable()->default(null);
             $table->string('dni', 20);
@@ -24,6 +26,8 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             $table->enum('state', ['Activo', 'Inactivo'])->default('Activo');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }
