@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('buttons', function (Blueprint $table) {
             $table->id();
             $table->string('number', 10);
+            $table->string('name', 50)->default('Default device');
             $table->enum('state', ['Connected', 'Disconnected'])->default('Connected');
+            $table->string('coordinates', 100)->nullable()->default(null);
             $table->dateTime('last_connection');
             $table->foreignId('client_id')
                 ->nullable()

@@ -24,10 +24,13 @@ class ButtonController extends Controller
                 foreach($items as $button) {
                     $buttons[] = [
                         'id' => $button['id'],
+                        'name' => $button['name'],
                         'number' => $button['number'],
                         'state' => $button['state'],
+                        'coordinates' => $button['coordinates'],
                         'last_connection' => $button['last_connection'],
-                        'created_at' => $button['created_at']
+                        'created_at' => $button['created_at'],
+                        'updated_at' => $button['updated_at'],
                     ];
                 }
                 return response()->json($buttons);
