@@ -36,7 +36,7 @@ class Message extends BaseModel
             $data['client'] = null;
         }
         if ($this->user) {
-            $data['user'] = $this->client;
+            $data['user'] = $this->user;
         } else {
             $data['user'] = null;
         }
