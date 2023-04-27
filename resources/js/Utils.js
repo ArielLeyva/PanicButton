@@ -11,6 +11,12 @@ export default class Utils {
         hour12: true,
     }
 
+    static FULL_TIME = {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+    }
+
     static datetime(datetime, format) {
         const date = new Date(datetime)
         return date.toLocaleDateString("es", format)
