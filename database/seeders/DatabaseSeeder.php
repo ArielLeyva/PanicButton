@@ -396,5 +396,33 @@ class DatabaseSeeder extends Seeder
             ['client_id' => 1, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-02-28 07:10:00'],
             ['client_id' => 11, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-02-4 4:11:00'],
         ]);
+
+        DB::table('messages')->insert([
+            ['user_id' => null, 'client_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 1,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 1,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 1,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 1,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 1,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 2, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 2,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 2, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 2,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 2, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 2,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 4, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 4,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 4, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 4,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 4, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 4,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['user_id' => null, 'client_id' => 4, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+            ['client_id' => 4,'user_id' => 1, 'message' => 'Reprehenderit culpa enim quis cupidatat ullamco occaecat irure Lorem Lorem labore reprehenderit enim.'],
+
+        ]);
     }
 }
