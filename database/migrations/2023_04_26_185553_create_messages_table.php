@@ -23,7 +23,9 @@ return new class extends Migration {
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('message');
+            $table->string('image', 100)->nullable()->default(null);
             $table->enum('state', ['sent', 'delivered', 'seen'])->default('sent');
+            $table->boolean('edited')->default(false);
             $table->timestamps();
         });
     }

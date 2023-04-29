@@ -54,9 +54,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::resource('/messages', MessageController::class)->only([
         'store',
         'index',
+        // 'destroy',
         'update',
-        'destroy'
     ]);
+    Route::delete('/messages', [MessageController::class, 'destroy']);
 });
 
 Route::get("/lksiw2assol25sdpl548/{message}", [AlertController::class, 'handle']);
