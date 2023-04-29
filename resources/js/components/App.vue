@@ -29,7 +29,11 @@ export default {
             /**
              * Visibilidad del chat
              */
-            chatVisible: true
+            chatVisible: true,
+            /**
+             * Datos del usuario logueado
+             */
+            user: null,
         }
     },
     methods: {
@@ -69,7 +73,7 @@ export default {
 </script>
 
 <template>
-    <Navbar />
+    <Navbar @loaded="(data) => user = data" />
     <main
         class="bg-gradient-to-br from-indigo-100 to-fuchsia-100 dark:from-slate-600 dark:via-slate-500 dark:to-slate-600 w-full p-1 sm:p-3">
         <div class="block md:flex">
@@ -93,7 +97,7 @@ export default {
         <div class="absolute bottom-5 right-5 z-50 overflow-hidden">
             <transition name="chat">
                 <div v-show="!chatVisible" class="mb-2">
-                    <Chats />
+                    <Chats :user="user" @close="chatVisible = true" />
                 </div>
             </transition>
             <div class="relative">
