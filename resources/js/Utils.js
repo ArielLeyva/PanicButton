@@ -1,5 +1,5 @@
-import Alert from "./components/alert/Alert.js"
-import AlertConfig from "./components/alert/AlertConfig.js"
+import Alert from "./components/alert/Alert.js";
+import AlertConfig from "./components/alert/AlertConfig.js";
 
 export default class Utils {
     static FULL_DATE_TIME = {
@@ -9,38 +9,45 @@ export default class Utils {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
-    }
+    };
 
     static FULL_TIME = {
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,
-    }
+    };
 
     static datetime(datetime, format) {
-        const date = new Date(datetime)
-        return date.toLocaleDateString("es", format)
+        const date = new Date(datetime);
+        return date.toLocaleDateString("es", format);
+    }
+
+    static time(datetime, format) {
+        const date = new Date(datetime);
+        const time = date.toLocaleDateString("es", format);
+        const comma = time.indexOf(",");
+        return time.substring(comma + 2);
     }
 
     static elapsedtime(time) {
-        const today = new Date()
-        const date = new Date(time)
-        const diff = today - date
+        const today = new Date();
+        const date = new Date(time);
+        const diff = today - date;
         if (diff <= 3600000) {
-            return `Hace ${Math.floor(diff / 60000)} minutos`
+            return `Hace ${Math.floor(diff / 60000)} minutos`;
         } else if (diff <= 86400000) {
-            return `Hace ${Math.floor(diff / 3600000)} horas`
+            return `Hace ${Math.floor(diff / 3600000)} horas`;
         } else if (diff <= 604800000) {
-            return `Hace ${Math.floor(diff / 86400000)} días`
+            return `Hace ${Math.floor(diff / 86400000)} días`;
         } else if (diff <= 2592000000) {
-            return `Hace ${Math.floor(diff / 604800000)} semanas`
+            return `Hace ${Math.floor(diff / 604800000)} semanas`;
         } else {
             return date.toLocaleDateString("es", {
                 day: "numeric",
                 weekday: "short",
                 month: "short",
                 year: "numeric",
-            })
+            });
         }
     }
 
@@ -52,15 +59,15 @@ export default class Utils {
                 icon: "bi bi-check2-square",
                 color: "#198754",
             })
-        )
-        alert.fire()
+        );
+        alert.fire();
     }
 
     static splice(items, item) {
         for (let i in items) {
             if (items[i].id == item.id) {
-                items.splice(i, 1)
-                break
+                items.splice(i, 1);
+                break;
             }
         }
     }
@@ -71,19 +78,25 @@ export default class Utils {
                 switch (key) {
                     case "name":
                     case "dni":
-                        if (haystack[key] == undefined || !haystack[key].toString().toLowerCase().includes(needle[key].toString().toLowerCase())) {
-                            return false
+                        if (
+                            haystack[key] == undefined ||
+                            !haystack[key]
+                                .toString()
+                                .toLowerCase()
+                                .includes(needle[key].toString().toLowerCase())
+                        ) {
+                            return false;
                         }
-                        break
+                        break;
                     case "state":
                     case "gender":
                         if (haystack[key] !== needle[key]) {
-                            return false
+                            return false;
                         }
-                        break
+                        break;
                 }
             }
         }
-        return true
+        return true;
     }
 }

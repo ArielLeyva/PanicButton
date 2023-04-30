@@ -53,7 +53,7 @@ export default {
                         class="bi bi-three-dots-vertical"></i></button>
                 <ul class="dropdown-menu dark:bg-slate-700">
                     <li>
-                        <button
+                        <button @click="emitter.emit('search-message')"
                             class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Buscar</button>
                     </li>
                     <li v-if="selection == null">
