@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class MessageController extends Controller
@@ -22,13 +23,32 @@ class MessageController extends Controller
             //TODO (Mejorar esta validación)
             'message' => ['required'],
             'client_id' => ['required'],
+            'image' => ['filled', 'image', 'between:3,4096'],
         ]);
         $data = $request->except('frontend_id');
+        if ($request->exists('image')) {
+            $path = $request->file('image')->store('messages', 'src');
+            $data['image'] = $path;
+        }
         $data['user_id'] = $request->user()->id;
         $message = Message::create($data);
         $json = $message->toArray();
         $json['frontend_id'] = $request->frontend_id;
         return response()->json($json);
+    }
+
+    /**
+     * Marcar como leídos los mensajes pasados en los ids de la petición
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function read(Request $request)
+    {
+        // Obtener los ids del la petición
+        $ids = Str::of($request->ids)->explode(',');
+        Message::ids($ids)->update(['state' => 'seen']);
+        return response('', 200);
     }
 
     /**
@@ -49,9 +69,9 @@ class MessageController extends Controller
                 // MessageDeleted::dispatch($message);
                 $result = $message->delete();
                 //Verificar si se eliminó y eliminar la imagen anexada si existía
-                if ($result == 1 && $message->annexed !== null) {
+                if ($result == 1 && $message->image !== null) {
                     //Eliminar imagen anexada del mensaje
-                    // Storage::disk('images')->delete($message->annexed);
+                    Storage::disk('src')->delete($message->image);
                 }
             }
         }

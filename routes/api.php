@@ -51,10 +51,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/notifications', [NotificationController::class, 'index']);
 
+    Route::put('/messages/read', [MessageController::class, 'read']);
     Route::resource('/messages', MessageController::class)->only([
         'store',
         'index',
-        // 'destroy',
         'update',
     ]);
     Route::delete('/messages', [MessageController::class, 'destroy']);

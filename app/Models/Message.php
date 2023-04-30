@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class Message extends BaseModel
 {
     /**
@@ -22,6 +25,22 @@ class Message extends BaseModel
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Scope para incluir todos los registros con los ids pasados en el argumento $ids
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param array $ids Ids de los modelos a incluir en el scope
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeIds($query, $ids)
+    {
+        foreach ($ids as $id) {
+            $query = $query->orWhere('id', $id);
+        }
+        return $query;
     }
 
     /**
