@@ -7,6 +7,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class MessageController extends Controller
 {
@@ -17,12 +18,40 @@ class MessageController extends Controller
         return response()->json($sort->values()->all());
     }
 
+    public function getClientMessages(Request $request)
+    {
+        $token = PersonalAccessToken::findToken(request()->bearerToken());
+        if ($token) {
+            $user = $token->tokenable;
+            if ($user) {
+                $items = Message::where('client_id', $user->id)->get();
+                $messages = [];
+                foreach ($items as $message) {
+                    $messages[] = [
+                        'id' => $message['id'],
+                        'user_id' => $message['user_id'],
+                        'message' => $message['message'],
+                        'image' => $message['image'],
+                        'state' => $message['state'],
+                        'created_at' => $message['created_at'],
+                        'updated_at' => $message['updated_at'],
+                    ];
+                }
+                return response()->json($messages);
+            } else {
+                return response('No Content', 204);
+            }
+        } else {
+            return response('Unauthorized', 401);
+        }
+    }
+
     public function store(Request $request)
     {
         $request->validate([
             //TODO (Mejorar esta validación)
             'message' => ['required'],
-            'client_id' => ['required'],
+            'client_id' => ['filled'],
             'image' => ['filled', 'image', 'between:3,4096'],
         ]);
         $data = $request->except('frontend_id');
@@ -30,7 +59,23 @@ class MessageController extends Controller
             $path = $request->file('image')->store('messages', 'src');
             $data['image'] = $path;
         }
-        $data['user_id'] = $request->user()->id;
+        //Verificar si el mensaje fue enviado por un usuario de soporte técnico desde la página o si fue
+        //enviado por un cliente desde la aplicación
+        if ($request->exists('client_id')) {
+            $data['user_id'] = $request->user()->id;
+        } else {
+            $token = PersonalAccessToken::findToken(request()->bearerToken());
+            if ($token) {
+                $user = $token->tokenable;
+                if ($user) {
+                    $data['client_id'] = $user->id;
+                } else {
+                    return response('No Content', 204);
+                }
+            } else {
+                return response('Unauthorized', 401);
+            }
+        }
         $message = Message::create($data);
         $json = $message->toArray();
         $json['frontend_id'] = $request->frontend_id;
