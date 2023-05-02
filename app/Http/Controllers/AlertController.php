@@ -21,14 +21,15 @@ class AlertController extends Controller
         return response()->json($sort->values()->all());
     }
 
-    public function getAlertsByClient(Request $request) {
+    public function getAlertsByClient(Request $request)
+    {
         $token = PersonalAccessToken::findToken(request()->bearerToken());
-        if($token) {
+        if ($token) {
             $user = $token->tokenable;
-            if($user) {
+            if ($user) {
                 $sort = Alert::where('client_id', $user->id)->get()->sortByDesc('created_at');
                 $alerts = [];
-                foreach($sort as $alert) {
+                foreach ($sort as $alert) {
                     $alerts[] = [
                         'id' => $alert['id'],
                         'type' => $alert['type'],
@@ -52,7 +53,7 @@ class AlertController extends Controller
         $number = $separator === false ? $text : $text->substr(0, $separator);
         $type = $separator === false ? 'Health' : $text->substr($separator + 1);
         $button = Button::where('number', $number)->first();
-        if ($button !== null && $button->client_id !== null) {
+        if ($button !== null) {
             if ($type == 'Online') {
                 $this->state($button);
             } else {
@@ -62,15 +63,16 @@ class AlertController extends Controller
         return response('');
     }
 
-    public function store(Button $button, $type) {
+    public function store(Button $button, $type)
+    {
         //Registrar alerta
         $alert = Alert::create([
-            'client_id' => $button->client_id,
+            'button_id' => $button->id,
             'type' => $type
         ]);
         $type = $type == "Police" ? "Policial" : "Médica";
         Notification::create([
-            'client_id' => $alert->client_id,
+            'client_id' => $alert->button->client_id,
             'title' => 'Alerta presionada',
             'content' => "%client% ha presionado su botón de pánico con una alerta $type"
         ]);

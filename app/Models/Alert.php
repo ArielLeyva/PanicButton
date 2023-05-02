@@ -6,12 +6,12 @@ class Alert extends BaseModel
 {
     /**
      * Obtener la dirección del cliente
-     * 
-     * @return Client El modelo de la dirección del producto
+     *
+     * @return Button El modelo de la dirección del producto
      */
-    public function client()
+    public function button()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Button::class);
     }
 
     /**
@@ -20,10 +20,10 @@ class Alert extends BaseModel
     public function toArray()
     {
         $data = parent::toArray();
-        if ($this->client) {
-            $data['client'] = $this->client;
+        if ($this->button) {
+            $data['button'] = $this->button;
         } else {
-            $data['client'] = null;
+            $data['button'] = null;
         }
         return $data;
     }

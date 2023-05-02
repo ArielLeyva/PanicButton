@@ -377,13 +377,13 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('alerts')->insert([
-            ['client_id' => 2, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-4 12:40:00'],
-            ['client_id' => 4, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-4 10:17:00'],
-            ['client_id' => 5, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-3 01:24:00'],
-            ['client_id' => 7, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-2 16:10:00'],
-            ['client_id' => 8, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-2 14:11:00'],
-            ['client_id' => 3, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-1 08:32:00'],
-            ['client_id' => 1, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-02-28 07:10:00'],
+            ['button_id' => 2, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-4 12:40:00'],
+            ['button_id' => 4, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-4 10:17:00'],
+            ['button_id' => 5, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-3 01:24:00'],
+            ['button_id' => 7, 'type' => 'Health', 'state' => 'Pendiente', 'created_at' => '2023-03-2 16:10:00'],
+            ['button_id' => 8, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-2 14:11:00'],
+            ['button_id' => 3, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-03-1 08:32:00'],
+            ['button_id' => 1, 'type' => 'Police', 'state' => 'Vista', 'created_at' => '2023-02-28 07:10:00'],
         ]);
 
         DB::table('notifications')->insert([

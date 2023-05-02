@@ -7,7 +7,7 @@ class Button extends BaseModel
 
     /**
      * Obtener la dirección del cliente
-     * 
+     *
      * @return Client El modelo de la dirección del producto
      */
     public function client()
@@ -26,7 +26,11 @@ class Button extends BaseModel
         } else {
             $data['client'] = [
                 'avatar' => asset("src/blank-profile.svg"),
-                'name' => 'Sin asignar'
+                'name' => 'Sin asignar',
+                'email' => '',
+                'address_id' => null,
+                'telephone_numbers' => [],
+                'state' => 'Activo',
             ];
         }
         return $data;
