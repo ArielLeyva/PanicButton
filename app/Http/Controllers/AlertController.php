@@ -27,7 +27,13 @@ class AlertController extends Controller
         if ($token) {
             $user = $token->tokenable;
             if ($user) {
-                $sort = Alert::where('client_id', $user->id)->get()->sortByDesc('created_at');
+                // $sort = Alert::where('button.client_id', $user->id)->get()->sortByDesc('created_at');
+                $buttons = Button::where('client_id', $user->id)->get();
+                $ids = [];
+                foreach ($buttons as $button) {
+                    $ids[] = $button['id'];
+                }
+                $sort = Alert::buttons($ids)->get()->sortByDesc('created_at');
                 $alerts = [];
                 foreach ($sort as $alert) {
                     $alerts[] = [
@@ -71,11 +77,19 @@ class AlertController extends Controller
             'type' => $type
         ]);
         $type = $type == "Police" ? "Policial" : "Médica";
-        Notification::create([
-            'client_id' => $alert->button->client_id,
-            'title' => 'Alerta presionada',
-            'content' => "%client% ha presionado su botón de pánico con una alerta $type"
-        ]);
+        if ($alert->button->client_id == null) {
+            Notification::create([
+                'client_id' => $alert->button->client_id,
+                'title' => 'Alerta presionada',
+                'content' => 'Se ha presionado la alerta de un dispositivo sin vincular'
+            ]);
+        } else {
+            Notification::create([
+                'client_id' => $alert->button->client_id,
+                'title' => 'Alerta presionada',
+                'content' => "%client% ha presionado su botón de pánico con una alerta $type"
+            ]);
+        }
         AlertPressed::dispatch($alert);
     }
 

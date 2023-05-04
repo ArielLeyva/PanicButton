@@ -5,9 +5,6 @@ import Modal from "../modal/Modal.js"
 import ModalButton from "../modal/ModalButton.js"
 import DetailsModal from "./DetailsModal.vue"
 
-import Alert from "../alert/Alert.js"
-import AlertConfig from "../alert/AlertConfig.js"
-
 export default {
     props: {
         /**

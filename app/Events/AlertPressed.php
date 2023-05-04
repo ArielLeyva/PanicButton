@@ -28,10 +28,11 @@ class AlertPressed implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        // return [
-        //     new PrivateChannel('channel-name'),
-        // ];
-        return ['alert-channel'];
+        $channels = ['alert-channel'];
+        if ($this->alert->button->client_id !== null) {
+            $channels[] = "client-alert-channel-{$this->alert->button->client_id}";
+        }
+        return $channels;
     }
 
     public function broadcastAs()
