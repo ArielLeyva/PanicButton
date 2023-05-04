@@ -4,6 +4,23 @@ namespace App\Models;
 
 class Alert extends BaseModel
 {
+
+    /**
+     * Scope para incluir todos los registros con los ids pasados en el argumento $ids
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param array $ids Ids de los modelos a incluir en el scope
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeButtons($query, $ids)
+    {
+        foreach ($ids as $id) {
+            $query = $query->orWhere('button_id', $id);
+        }
+        return $query;
+    }
+
     /**
      * Obtener la dirección del cliente
      *

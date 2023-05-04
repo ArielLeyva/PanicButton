@@ -38,7 +38,6 @@ class ClientController extends Controller
             //TODO (Mejorar esta validación)
             'name' => ['required', 'between:3,60'],
             'dni' => ['required', 'regex:/^[0-9]+$/'],
-            'birthdate' => ['required', 'date'],
             'gender' => ['required', 'in:Femenino,Masculino'],
             'state' => ['required', 'in:Activo,Inactivo']
         ]);
@@ -67,7 +66,6 @@ class ClientController extends Controller
             //TODO (Mejorar esta validación)
             'name' => ['required', 'between:3,60'],
             'dni' => ['required', 'regex:/^[0-9]+$/'],
-            'birthdate' => ['required', 'date'],
             'gender' => ['required', 'in:Femenino,Masculino'],
             'state' => ['required', 'in:Activo,Inactivo']
         ]);
@@ -100,7 +98,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $buttons = Button::where('client_id', $id)->get();
         Button::where('client_id', $id)->update(['client_id' => null]);
         $client = Client::find($id);
         if ($client->avatar !== null) {
@@ -110,7 +107,7 @@ class ClientController extends Controller
         if ($result) {
             return response('');
         } else {
-            return response('No se pudo eliminar el botón', 422);
+            return response('No se pudo eliminar el cliente', 422);
         }
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Events\ButtonStateChanged;
 use App\Http\Controllers\AuthController;
+use App\Models\Alert;
 use App\Models\Button;
 use App\Models\Notification;
 use Carbon\Carbon;
