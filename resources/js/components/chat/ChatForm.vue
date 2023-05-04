@@ -21,14 +21,14 @@ export default {
                 const data = new FormData(e.target)
                 data.append('frontend_id', Math.random())
                 Request.post('api/messages', data).then((data) => {
-                    const message = data
-                    for (let i in this.sending) {
-                        if (this.sending[i].id == message.frontend_id) {
-                            this.sending.splice(i, 1)
-                            break
-                        }
-                    }
-                    this.messages.push(message)
+                    // const message = data
+                    // for (let i in this.sending) {
+                    //     if (this.sending[i].id == message.frontend_id) {
+                    //         this.sending.splice(i, 1)
+                    //         break
+                    //     }
+                    // }
+                    // this.messages.push(message)
                 })
                 this.sending.push({
                     id: data.get('frontend_id'),

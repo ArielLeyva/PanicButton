@@ -6,13 +6,14 @@ import MatchedMessage from './MatchedMessage.vue'
 export default {
     props: {
         messages: Object,
+        sending: Array,
         selection: Object,
         user: Object,
     },
     components: { Message, MatchedMessage, ChatForm },
     data() {
         return {
-            sending: [],
+            // sending: [],
             matched: null,
             preview: "",
         }

@@ -171,8 +171,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '00110381328',
                 'gender' => 'Femenino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1986-02-05',
             ],
             [
                 'name' => 'Prof. Mervin Bergnaum',
@@ -182,8 +180,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '32589621478',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1758-05-04',
             ],
             [
                 'name' => 'Mr. Hal Gerlach',
@@ -193,8 +189,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '36521478965',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1998-11-03',
             ],
             [
                 'name' => 'Murray Homenick',
@@ -204,8 +198,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '36521478963',
                 'gender' => 'Femenino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1998-11-03',
             ],
             [
                 'name' => 'Roman Renner',
@@ -215,8 +207,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '25893781963',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1965-12-23',
             ],
             [
                 'name' => 'Mr. Ike Grimes DVM',
@@ -226,8 +216,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '54193852147',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1955-05-30',
             ],
             [
                 'name' => 'Greyson Hammes',
@@ -237,8 +225,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '25893781963',
                 'gender' => 'Femenino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1985-05-10',
             ],
             [
                 'name' => 'Mr. Jamie Kshlerin',
@@ -248,8 +234,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '23658965853',
                 'gender' => 'Femenino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1993-01-01',
             ],
             [
                 'name' => 'Dr. Stefanie Gibson',
@@ -259,8 +243,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '23658963257',
                 'gender' => 'Femenino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1975-03-02',
             ],
             [
                 'name' => 'Dr. Dillon Kilback',
@@ -270,8 +252,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '32589687452',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1976-03-03',
             ],
             [
                 'name' => 'Alfonso Zarza Izalde',
@@ -281,8 +261,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '3256985874',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1965-09-23',
             ],
             [
                 'name' => 'Reinaldo Tamayo Álvarez',
@@ -292,8 +270,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '23658758961',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1984-10-22',
             ],
             [
                 'name' => 'Fernanda María Hernández López',
@@ -303,8 +279,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '3256985874',
                 'gender' => 'Femenino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1965-09-23',
             ],
             [
                 'name' => 'Pedro Armando Matute Rodríguez',
@@ -314,8 +288,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '365897741',
                 'gender' => 'Masculino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1978-09-02',
             ],
             [
                 'name' => 'Elena Quevent Godinez',
@@ -325,8 +297,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('gWCXR3Y8'),
                 'dni' => '32569878852',
                 'gender' => 'Femenino',
-                'details' => 'Fugiat nulla consequat duis anim pariatur ipsum veniam ad ut sint fugiat nulla sunt veniam.',
-                'birthdate' => '1985-09-23',
             ],
         ]);
 

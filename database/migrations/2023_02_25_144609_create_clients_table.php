@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('avatar', 60)->nullable()->default(null);
             $table->string('dni', 20);
             $table->enum('gender', ['Femenino', 'Masculino']);
-            $table->text('details');
-            $table->date('birthdate');
             $table->foreignId('address_id')
                 ->constrained()
                 ->onUpdate('cascade')

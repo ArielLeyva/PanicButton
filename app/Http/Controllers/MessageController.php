@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageRemoved;
+use App\Events\MessageSended;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -79,6 +82,7 @@ class MessageController extends Controller
         $message = Message::create($data);
         $json = $message->toArray();
         $json['frontend_id'] = $request->frontend_id;
+        MessageSended::dispatch($message, $request->frontend_id);
         return response()->json($json);
     }
 
@@ -106,20 +110,23 @@ class MessageController extends Controller
     {
         //Obtener los ids del la petición
         $ids = Str::of($request->ids)->explode(',');
+        Log::alert(json_encode($ids));
+        $clientId = 0;
         foreach ($ids as $id) {
             //Recuperar el modelo
             $message = Message::find($id);
             //Eliminar el modelo si no es un mensaje de Soporte Técnico
-            if ($message->user !== null) {
-                // MessageDeleted::dispatch($message);
+            if ($message && $message->user_id !== null) {
                 $result = $message->delete();
                 //Verificar si se eliminó y eliminar la imagen anexada si existía
                 if ($result == 1 && $message->image !== null) {
                     //Eliminar imagen anexada del mensaje
                     Storage::disk('src')->delete($message->image);
                 }
+                $clientId = $message->client_id;
             }
         }
+        MessageRemoved::dispatch($ids, $clientId);
         return response('', 200);
     }
 }
