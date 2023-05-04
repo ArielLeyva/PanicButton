@@ -24,7 +24,7 @@ class AuthController extends Controller
         $remember = $request->has('remember') && $request->boolean('remember');
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
-            $request->user()->tokens()->delete();
+            // $request->user()->tokens()->delete();
             //Generar token API
             $token = $request->user()->createToken(csrf_token());
             //Guardar una cookie con el valor del token
