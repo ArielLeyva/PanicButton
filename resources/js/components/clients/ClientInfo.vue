@@ -1,127 +1,128 @@
 <script>
-    import Collapse from "bootstrap/js/dist/collapse"
-    import Request from "../../Request.js"
+import Collapse from "bootstrap/js/dist/collapse"
+import Request from "../../Request.js"
 
-    import Modal from "../modal/Modal.js"
-    import ModalButton from "../modal/ModalButton.js"
-    import ClientModal from "./ClientModal.vue"
+import Modal from "../modal/Modal.js"
+import ModalButton from "../modal/ModalButton.js"
+import ClientModal from "./ClientModal.vue"
 
-    import Alert from "../alert/Alert.js"
-    import AlertConfig from "../alert/AlertConfig.js"
-
-    export default {
+export default {
+    /**
+     * @emit update: Se emite cuando se han actualizado los datos del cliente
+     */
+    emits: ["update"],
+    props: {
         /**
-         * @emit update: Se emite cuando se han actualizado los datos del cliente
+         * Datos del cliente
          */
-        emits: ["update"],
-        props: {
-            /**
-             * Datos del cliente
-             */
-            client: Object,
-            /**
-             * Índice del cliente en la página que se está mostrando
-             */
-            index: Number,
+        client: Object,
+        /**
+         * Índice del cliente en la página que se está mostrando
+         */
+        index: Number,
+    },
+    methods: {
+        /**
+         * Mostrar u ocultar detalles del cliente
+         */
+        toggleDetails() {
+            this.client.collapse = this.client.collapse == undefined ? true : undefined
         },
-        methods: {
-            /**
-             * Mostrar u ocultar detalles del cliente
-             */
-            toggleDetails() {
-                this.client.collapse = this.client.collapse == undefined ? true : undefined
-            },
-            /**
-             * Eliminar el cliente de la base de datos
-             */
-            remove() {
-                //Crear un modal de confirmación
-                const modal = new Modal({
-                    title: "¿Seguro que desea eliminar este cliente?",
-                    description: "Esta operación es irreversible",
-                    icon: "bi bi-exclamation-triangle",
-                    background: "#e5162a",
+        /**
+         * Eliminar el cliente de la base de datos
+         */
+        remove() {
+            //Crear un modal de confirmación
+            const modal = new Modal({
+                title: "¿Seguro que desea eliminar este cliente?",
+                description: "Esta operación es irreversible",
+                icon: "bi bi-exclamation-triangle",
+                background: "#e5162a",
+                accept: new ModalButton({
+                    classes: "btn-danger text-danger hover:text-white",
+                }),
+            })
+            //Mostrar el modal
+            modal.fire().then((result) => {
+                if (result.status == "accept") {
+                    //Si el usuario eligió aceptar hacer la petición
+                    Request.delete(`api/clients/${this.client.id}`, new FormData()).then(() => {
+                        //Mostrar la notificación de eliminación en la pantalla
+                        this.Utils.notify("Se ha eliminado este cliente correctamente")
+                        //Emitir evento
+                        this.emitter.emit("client-removed", this.client)
+                        this.$emit("remove", this.index)
+                    })
+                }
+            })
+        },
+        /**
+         * Editar datos del cliente
+         */
+        edit() {
+            //Crear el modal para la edición de datos
+            const modal = new Modal(
+                {
+                    window: "Editar datos del cliente",
+                    // icon: "bi bi-person",
+                    // background: "#157347",
                     accept: new ModalButton({
-                        classes: "btn-danger text-danger hover:text-white",
+                        classes: "btn-success text-success hover:text-white",
+                        text: "Actualizar",
                     }),
-                })
-                //Mostrar el modal
-                modal.fire().then((result) => {
-                    if (result.status == "accept") {
-                        //Si el usuario eligió aceptar hacer la petición
-                        Request.delete(`api/clients/${this.client.id}`, new FormData()).then(() => {
-                            //Mostrar la notificación de eliminación en la pantalla
-                            this.Utils.notify("Se ha eliminado este cliente correctamente")
-                            //Emitir evento
-                            this.emitter.emit("client-removed", this.client)
-                            this.$emit("remove", this.index)
-                        })
-                    }
-                })
-            },
-            /**
-             * Editar datos del cliente
-             */
-            edit() {
-                //Crear el modal para la edición de datos
-                const modal = new Modal(
-                    {
-                        window: "Editar datos del cliente",
-                        // icon: "bi bi-person",
-                        // background: "#157347",
-                        accept: new ModalButton({
-                            classes: "btn-success text-success hover:text-white",
-                            text: "Actualizar",
-                        }),
-                    },
-                    ClientModal,
-                    [{ client: this.client }]
-                )
-                //Mostrar el modal
-                modal.fire().then((result) => {
-                    if (result.status == "accept") {
-                        //Si el usuario eligió aceptar hacer la petición
-                        const data = result.data
-                        data.append("_method", "put")
-                        Request.post(`api/clients/${this.client.id}`, data).then((data) => {
-                            //Emitir evento
-                            this.$emit("update", data)
-                            this.emitter.emit("client-updated", data)
-                            //Mostrar la notificación de eliminación en la pantalla
-                            this.Utils.notify("Se han actualizados los datos del cliente")
-                        })
-                    }
-                })
-            },
-        },
-        mounted() {
-            this.emitter.on("button-assigned", (button) => {
-                if (button.client.id == this.client.id) {
-                    this.client.buttons.push(button.number)
-                }
-            })
-            this.emitter.on("button-unassigned", (button) => {
-                if (button.client.id == this.client.id) {
-                    const index = this.client.buttons.indexOf(button.number)
-                    this.client.buttons.splice(index, 1)
-                }
-            })
-            this.emitter.on("button-removed", (button) => {
-                if (button.client_id == this.client.id) {
-                    const index = this.client.buttons.indexOf(button.number)
-                    this.client.buttons.splice(index, 1)
+                },
+                ClientModal,
+                [{ client: this.client }]
+            )
+            //Mostrar el modal
+            modal.fire().then((result) => {
+                if (result.status == "accept") {
+                    //Si el usuario eligió aceptar hacer la petición
+                    const data = result.data
+                    data.append("_method", "put")
+                    Request.post(`api/clients/${this.client.id}`, data).then((data) => {
+                        //Emitir evento
+                        this.$emit("update", data)
+                        this.emitter.emit("client-updated", data)
+                        //Mostrar la notificación de eliminación en la pantalla
+                        this.Utils.notify("Se han actualizados los datos del cliente")
+                    })
                 }
             })
         },
-    }
+    },
+    mounted() {
+        this.emitter.on("button-assigned", (button) => {
+            if (button.client.id == this.client.id) {
+                this.client.buttons.push(button.number)
+            }
+        })
+        this.emitter.on("button-unassigned", (button) => {
+            if (button.client.id == this.client.id) {
+                const index = this.client.buttons.indexOf(button.number)
+                this.client.buttons.splice(index, 1)
+            }
+        })
+        this.emitter.on("button-removed", (button) => {
+            if (button.client_id == this.client.id) {
+                const index = this.client.buttons.indexOf(button.number)
+                this.client.buttons.splice(index, 1)
+            }
+        })
+    },
+}
 </script>
 <template>
     <div class="groupr my-2 rounded-lg shadow-sm bg-white dark:bg-slate-900 p-2">
-        <div @click="toggleDetails" data-bs-toggle="collapse" :data-bs-target="'#info_' + client.id" class="w-full flex items-cente cursor-pointer">
+        <div @click="toggleDetails" data-bs-toggle="collapse" :data-bs-target="'#info_' + client.id"
+            class="w-full flex items-cente cursor-pointer">
             <div class="w-100 sm:w-4/12 flex items-center client">
-                <img :src="client.avatar" class="rounded-full w-8" />
+                <img :src="client.avatar" class="rounded-full w-8 border-2"
+                    :class="{ 'border-red-600': client.state == 'Inactivo', 'border-green-600': client.state == 'Activo' }" />
                 <div class="w-10/12 pl-2">
-                    <h4 class="w-full text-ellipsis whitespace-nowrap overflow-hidden text-gray-500 dark:text-gray-50 font-bold">{{ client.name }}</h4>
+                    <h4
+                        class="w-full text-ellipsis whitespace-nowrap overflow-hidden text-gray-500 dark:text-gray-50 font-bold">
+                        {{ client.name }}</h4>
                     <p v-if="client.buttons.length > 0" class="text-gray-400 dark:text-gray-200">
                         <i class="bi bi-joystick"></i>
                         <template v-for="button in client.buttons"> ({{ button }}) </template>
@@ -130,50 +131,65 @@
                 </div>
             </div>
             <div class="hidden sm:block sm:w-3/12 m-auto">
-                <p v-for="telephone in client.telephone_numbers" class="text-center dark:text-gray-100">
-                    <i class="bi" :class="{ 'bi-telephone': telephone.type == 'normal', 'bi-phone': telephone.type == 'mobile' }"></i>
-                    {{ telephone.number }}
+                <p v-for="telephone in client.telephone_numbers">
+                    <button class="text-white text-xs bg-indigo-500 rounded py-1 px-2 my-0.5">
+                        <i class="bi"
+                            :class="{ 'bi-telephone': telephone.type == 'normal', 'bi-phone': telephone.type == 'mobile' }"></i>
+                        {{ telephone.number }}
+                    </button>
                 </p>
             </div>
             <div class="hidden w-1/2 sm:w-5/12 address">
-                <p class="dark:text-gray-100">{{ client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}</p>
+                <p class="dark:text-gray-100">{{ client.address.number }} {{ client.address.street }} {{
+                    client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}</p>
             </div>
         </div>
         <div class="collapse mt-2" :id="'info_' + client.id">
             <div class="card card-body dark:bg-transparent">
-                <p class="dark:text-white"><i class="bi bi-calendar-day dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Fecha de nacimiento:</strong> {{ client.birthdate }}</p>
-                <p class="dark:text-white"><i class="bi bi-gender-ambiguous dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Sexo:</strong> {{ client.gender }}</p>
-                <p class="dark:text-white"><i class="bi bi-person-vcard dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">DNI:</strong> {{ client.dni }}</p>
-                <p class="dark:text-white"><i class="bi bi-book dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Detalles adicionales:</strong> {{ client.details }}</p>
+                <p class="dark:text-white"><i class="bi bi-gender-ambiguous dark:text-gray-50"></i> <strong
+                        class="text-gray-500 font-bold dark:text-gray-200">Sexo:</strong> {{ client.gender }}</p>
+                <p class="dark:text-white"><i class="bi bi-person-vcard dark:text-gray-50"></i> <strong
+                        class="text-gray-500 font-bold dark:text-gray-200">DNI:</strong> {{ client.dni }}</p>
                 <p class="sm:hidden dark:text-gray-100">
-                    <i class="bi bi-telephone dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Números de teléfono: </strong>
+                    <i class="bi bi-telephone dark:text-gray-50"></i> <strong
+                        class="text-gray-500 font-bold dark:text-gray-200">Números de teléfono: </strong>
                     <template v-for="telephone in client.telephone_numbers"> ({{ telephone.number }}) </template>
                 </p>
                 <p class="dark:text-gray-100 sm:hidden">
-                    <i class="bi bi-map dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Dirección postal: </strong>{{ client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{ client.address.city }}, {{ client.address.state }}
+                    <i class="bi bi-map dark:text-gray-50"></i> <strong
+                        class="text-gray-500 font-bold dark:text-gray-200">Dirección postal: </strong>{{
+                            client.address.number }} {{ client.address.street }} {{ client.address.apartment }}. {{
+        client.address.city }}, {{ client.address.state }}
                 </p>
                 <p class="dark:text-white">
-                    <i class="bi bi-toggle2-off dark:text-gray-50"></i> <strong class="text-gray-500 font-bold dark:text-gray-200">Estado:</strong>
-                    <span class="badge ml-1" :class="{ 'bg-success': client.state == 'Activo', 'bg-danger': client.state == 'Bloqueado' }">{{ client.state }}</span>
+                    <i class="bi bi-toggle2-off dark:text-gray-50"></i> <strong
+                        class="text-gray-500 font-bold dark:text-gray-200">Estado:</strong>
+                    <span class="badge ml-1"
+                        :class="{ 'bg-success': client.state == 'Activo', 'bg-danger': client.state == 'Bloqueado' }">{{
+                            client.state }}</span>
                 </p>
                 <p class="mt-2">
-                    <button @click="edit" class="bg-indigo-500 text-white rounded mr-2 my-1 p-1"><i class="bi bi-pencil-square"></i> Actualizar</button>
-                    <button @click="remove" class="bg-indigo-500 text-white rounded mr-2 my-1 p-1"><i class="bi bi-trash"></i> Eliminar</button>
+                    <button @click="edit" class="bg-indigo-500 text-white rounded mr-2 my-1 p-1 text-sm px-2"><i
+                            class="bi bi-pencil-square"></i> Actualizar</button>
+                    <button @click="remove" class="bg-indigo-500 text-white rounded mr-2 my-1 p-1 text-sm px-2"><i
+                            class="bi bi-trash"></i> Eliminar</button>
                 </p>
             </div>
         </div>
     </div>
 </template>
 <style scoped>
-    .collapse {
-        visibility: unset !important;
+.collapse {
+    visibility: unset !important;
+}
+
+@media (min-width: 530px) {
+    .address {
+        display: block !important;
     }
-    @media (min-width: 530px) {
-        .address {
-            display: block !important;
-        }
-        .client {
-            width: 50% !important;
-        }
+
+    .client {
+        width: 50% !important;
     }
+}
 </style>

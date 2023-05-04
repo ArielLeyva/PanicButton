@@ -162,7 +162,7 @@
 <template>
     <div class="flex items-center my-2 bg-white dark:bg-slate-800 p-3 rounded-lg shadow-sm cursor-pointer">
         <div class="w-10/12 flex" @click="details">
-            <img :src="button.client.avatar" class="rounded-full w-10 h-10" />
+            <img :src="button.client.avatar" class="rounded-full w-10 h-10 border-2" :class="{ 'border-red-600': button.client.state == 'Inactivo', 'border-green-600': button.client.state == 'Activo' }" />
             <div class="px-2 w-11/12">
                 <h4 class="whitespace-nowrap text-gray-500 dark:text-gray-100 font-bold text-ellipsis w-full overflow-hidden">{{ button.client.name }}</h4>
                 <p v-if="button.client.name == 'Sin asignar'" class="text-sm flex items-center text-warning">{{ button.number }}</p>
