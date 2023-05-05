@@ -2,6 +2,7 @@
 import Dropdown from "bootstrap/js/dist/dropdown"
 import Request from "../../Request.js"
 import Notifications from "./Notifications.vue"
+import Pusher from "pusher-js"
 
 export default {
     components: { Notifications },
@@ -16,6 +17,10 @@ export default {
              * Tema de la página web
              */
             theme: localStorage.theme,
+            /**
+             * Estado de la conexión
+             */
+            conectionState: 'disconnected'
         }
     },
     methods: {
@@ -48,13 +53,30 @@ export default {
             this.user = response.data
             this.$emit('loaded', this.user)
         })
+        const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
+            cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+        })
+        pusher.connection.bind("state_change", (states) => {
+            // states = {previous: 'oldState', current: 'newState'}
+            console.log(states)
+            this.conectionState = states.current
+        });
+        window.addEventListener('offline', () => {
+            pusher.connect()
+            console.log('offline')
+            console.log(pusher.states.current)
+        })
     },
 }
 </script>
 <template>
     <nav class="w-full h-16 bg-white dark:bg-slate-900 flex items-center p-2 text-black dark:text-white shadow">
         <div class="text-indigo-500 dark:text-white flex">
-            <img :src="user == null ? 'src/blank-profile.svg' : user.avatar" class="rounded-full w-10 h-10" />
+            <div class="relative w-10 h-10">
+                <i class="bi bi-circle-fill absolute text-sm" style="top: -0.3rem; right: -0.3rem;"
+                    :class="{ 'text-red-600': conectionState != 'connected' && conectionState != 'connecting', 'text-green-600': conectionState == 'connected', 'text-amber-500': conectionState == 'connecting' }"></i>
+                <img :src="user == null ? 'src/blank-profile.svg' : user.avatar" class="rounded-full w-10 h-10" />
+            </div>
             <div class="px-2">
                 <h4 class="whitespace-nowrap font-bold text-ellipsis w-40 sm:w-full overflow-hidden">
                     <template v-if="user == null">
@@ -64,7 +86,7 @@ export default {
                 </h4>
                 <p class="text-sm flex items-center text-gray-500 dark:text-gray-50">
                     <i class="bi bi-person-fill-check mr-1" style="font-size: 0.7em"></i>
-                    Administrador
+                    Administrador ({{ conectionState }})
                 </p>
             </div>
         </div>
