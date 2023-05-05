@@ -1,45 +1,45 @@
 <script>
-    import Modal from "bootstrap/js/dist/modal"
+import Modal from "bootstrap/js/dist/modal"
 
-    export default {
+export default {
+    /**
+     * @emit accept Se llama cuando se presiona el botón de aceptar del modal
+     * - @param {FormData} data Datos del formulario del modal
+     * @emit cancel Se llama cuando se presiona el botón de cancelar o se cierra el modal
+     */
+    emits: ["cancel", "accept"],
+    props: {
         /**
-         * @emit accept Se llama cuando se presiona el botón de aceptar del modal
-         * - @param {FormData} data Datos del formulario del modal
-         * @emit cancel Se llama cuando se presiona el botón de cancelar o se cierra el modal
+         * Configuración del modal
          */
-        emits: ["cancel", "accept"],
-        props: {
-            /**
-             * Configuración del modal
-             */
-            config: Object,
+        config: Object,
+    },
+    methods: {
+        /**
+         * Emite el evento de cancelar del modal
+         * @event cancel
+         */
+        cancel() {
+            this.$emit("cancel")
         },
-        methods: {
-            /**
-             * Emite el evento de cancelar del modal
-             * @event cancel
-             */
-            cancel() {
-                this.$emit("cancel")
-            },
-            /**
-             * Emite el evento de aceptar del modal y pasa los datos del fromulario
-             * @event accept
-             */
-            accept() {
-                const form = this.$el.querySelector(".alert-form")
-                const data = form !== null ? new FormData(form) : new FormData()
-                this.$emit("accept", data)
-            },
+        /**
+         * Emite el evento de aceptar del modal y pasa los datos del fromulario
+         * @event accept
+         */
+        accept() {
+            const form = this.$el.querySelector(".alert-form")
+            const data = form !== null ? new FormData(form) : new FormData()
+            this.$emit("accept", data)
         },
-        mounted() {
-            const modal = new Modal(this.$el)
-            this.$el.addEventListener("hide.bs.modal", () => {
-                this.$el.querySelector(".modal-content").classList.add("modal-hide")
-            })
-            modal.show()
-        },
-    }
+    },
+    mounted() {
+        const modal = new Modal(this.$el)
+        this.$el.addEventListener("hide.bs.modal", () => {
+            this.$el.querySelector(".modal-content").classList.add("modal-hide")
+        })
+        modal.show()
+    },
+}
 </script>
 
 <template>
@@ -49,34 +49,45 @@
                 <div class="modal-header" :style="{ background: config.background }">
                     <h5 v-if="config.window !== false" class="mb-0">{{ config.window }}</h5>
                     <i class="modal-icon" v-if="config.icon !== false" :class="config.icon"></i>
-                    <button v-if="config.close.show" type="button" class="btn-close btn-close-white" :class="config.close.icon" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button v-if="config.close.show" type="button" class="btn-close btn-close-white"
+                        :class="config.close.icon" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body dark:bg-slate-600">
                     <h3 v-if="config.title !== false" class="modal-title mb-3 dark:text-gray-100">{{ config.title }}</h3>
-                    <h5 v-if="config.description !== false" class="modal-description dark:text-gray-50">{{ config.description }}</h5>
+                    <h5 v-if="config.description !== false" class="modal-description dark:text-gray-50">{{
+                        config.description }}</h5>
                     <form v-if="config.inputs.length > 0" class="alert-form mt-3 pt-2">
                         <template v-for="input in config.inputs">
                             <div v-if="input.type == 'checkbox'" class="form-check m-auto">
-                                <input class="form-check-input" type="checkbox" :value="input.value" :name="input.name" :checked="input.checked" />
+                                <input class="form-check-input" type="checkbox" :value="input.value" :name="input.name"
+                                    :checked="input.checked" />
                                 <label class="form-check-label">
                                     {{ input.label }}
                                 </label>
                             </div>
                             <div v-else class="max-w-xs mb-3 m-auto group">
-                                <label class="text-sm mb-1 ml-1 text-indigo-500 dark:text-white group-focus:text-red-700">{{ input.label }}</label>
+                                <label class="text-sm mb-1 ml-1 text-indigo-500 dark:text-white group-focus:text-red-700">{{
+                                    input.label }}</label>
                                 <div class="flex items-center border-indigo-500 rounded border dark:border-gray-50">
                                     <div class="w-10 text-center peer-focus:w-full">
-                                        <i class="left-3 text-indigo-500 dark:text-white" style="top: 0.6em" :class="input.icon"></i>
+                                        <i class="left-3 text-indigo-500 dark:text-white" style="top: 0.6em"
+                                            :class="input.icon"></i>
                                     </div>
-                                    <input class="py-2 pr-3 focus-visible:outline-none w-full dark:bg-slate-600 dark:text-white" :name="input.name" :type="input.type" :placeholder="input.label" />
+                                    <input
+                                        class="py-2 pr-3 focus-visible:outline-none w-full dark:bg-slate-600 dark:text-white"
+                                        :name="input.name" :type="input.type" :placeholder="input.label" />
                                 </div>
                             </div>
                         </template>
                     </form>
                     <slot></slot>
                     <div class="buttons mt-3">
-                        <button v-if="config.accept.show" @click="accept" type="button" class="btn btn-md me-2" :class="config.accept.classes" data-bs-dismiss="modal"><i :class="config.accept.icon"></i> {{ config.accept.text }}</button>
-                        <button v-if="config.cancel.show" @click="cancel" type="button" class="btn btn-md" :class="config.cancel.classes" data-bs-dismiss="modal"><i :class="config.cancel.icon"></i> {{ config.cancel.text }}</button>
+                        <button v-if="config.accept.show" @click="accept" type="button" class="btn btn-md me-2"
+                            :class="config.accept.classes" data-bs-dismiss="modal"><i :class="config.accept.icon"></i> {{
+                                config.accept.text }}</button>
+                        <button v-if="config.cancel.show" @click="cancel" type="button" class="btn btn-md"
+                            :class="config.cancel.classes" data-bs-dismiss="modal"><i :class="config.cancel.icon"></i> {{
+                                config.cancel.text }}</button>
                     </div>
                 </div>
             </div>
@@ -85,130 +96,134 @@
 </template>
 
 <style scoped>
-    .modal-header {
-        padding: 1rem;
-        border-top-left-radius: calc(2rem - 1px);
-        border-top-right-radius: calc(2rem - 1px);
-        background-color: #fff;
-        min-height: 45px;
-    }
-    .dark .modal-header {
-        background-color: #373a41;
-        color: white;
-    }
-    .modal-header > i {
-        font-size: 6em;
-        margin: auto;
-        color: #fff;
-    }
+.modal-header {
+    padding: 1rem;
+    border-top-left-radius: calc(2rem - 1px);
+    border-top-right-radius: calc(2rem - 1px);
+    background-color: #fff;
+    min-height: 45px;
+}
 
-    .btn-close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-    }
+.dark .modal-header {
+    background-color: #373a41;
+    color: white;
+}
 
-    .modal-content {
-        border-radius: 2rem;
-        background-color: transparent;
-    }
+.modal-header>i {
+    font-size: 6em;
+    margin: auto;
+    color: #fff;
+}
 
-    .modal-title {
-        font-weight: 700;
-        color: rgb(46 46 80);
-        text-align: center;
-    }
+.btn-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
 
-    .modal-body {
-        background-color: #fff;
-        border-bottom-left-radius: calc(2rem - 1px);
-        border-bottom-right-radius: calc(2rem - 1px);
-    }
+.modal-content {
+    border-radius: 2rem;
+    background-color: transparent;
+}
 
-    .buttons {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        margin-top: 1rem;
-    }
+.modal-title {
+    font-weight: 700;
+    color: rgb(46 46 80);
+    text-align: center;
+}
 
-    .buttons > button {
-        border-radius: 1.3rem;
-    }
+.modal-body {
+    background-color: #fff;
+    border-bottom-left-radius: calc(2rem - 1px);
+    border-bottom-right-radius: calc(2rem - 1px);
+}
 
-    .modal-description {
-        color: rgb(82, 82, 82);
-        text-align: center;
-    }
-    @keyframes jackInTheBox {
-        from {
-            opacity: 0;
-            transform: scale(0.1) rotate(30deg);
-            transform-origin: center bottom;
-        }
+.buttons {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+}
 
-        50% {
-            transform: rotate(-10deg);
-        }
+.buttons>button {
+    border-radius: 1.3rem;
+}
 
-        70% {
-            transform: rotate(3deg);
-        }
+.modal-description {
+    color: rgb(82, 82, 82);
+    text-align: center;
+}
 
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-    .modal.show .modal-icon {
-        animation-name: jackInTheBox;
-        animation-duration: 0.5s;
-        animation-fill-mode: both;
-        animation-delay: 300ms;
+@keyframes jackInTheBox {
+    from {
+        opacity: 0;
+        transform: scale(0.1) rotate(30deg);
+        transform-origin: center bottom;
     }
 
-    @keyframes backOutDown {
-        0% {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        20% {
-            transform: translateY(0px) scale(0.7);
-            opacity: 0.7;
-        }
-
-        100% {
-            transform: translateY(700px) scale(0.7);
-            opacity: 0.7;
-        }
+    50% {
+        transform: rotate(-10deg);
     }
 
-    @keyframes backInDown {
-        0% {
-            transform: translateY(-1200px) scale(0.7);
-            opacity: 0.7;
-        }
-
-        80% {
-            transform: translateY(0px) scale(0.7);
-            opacity: 0.7;
-        }
-
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
+    70% {
+        transform: rotate(3deg);
     }
 
-    .modal.fade {
-        animation-name: backInDown;
-        animation-duration: 0.3s;
-        animation-fill-mode: both;
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
-    .modal-hide {
-        animation-name: backOutDown;
-        animation-duration: 0.3s;
-        animation-fill-mode: both;
+}
+
+.modal.show .modal-icon {
+    animation-name: jackInTheBox;
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+    animation-delay: 300ms;
+}
+
+@keyframes backOutDown {
+    0% {
+        transform: scale(1);
+        opacity: 1;
     }
-</style>
+
+    20% {
+        transform: translateY(0px) scale(0.7);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(700px) scale(0.7);
+        opacity: 0.7;
+    }
+}
+
+@keyframes backInDown {
+    0% {
+        transform: translateY(-1200px) scale(0.7);
+        opacity: 0.7;
+    }
+
+    80% {
+        transform: translateY(0px) scale(0.7);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal.fade {
+    animation-name: backInDown;
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+}
+
+.modal-hide {
+    animation-name: backOutDown;
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+}</style>

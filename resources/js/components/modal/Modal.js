@@ -89,6 +89,12 @@ export default class Modal {
                             status: "cancel",
                         })
                     },
+                    resolve(result) {
+                        _this.resolve({
+                            status: result.status,
+                            data: result.data,
+                        })
+                    }
                 },
             },
         ]
