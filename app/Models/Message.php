@@ -28,22 +28,6 @@ class Message extends BaseModel
     }
 
     /**
-     * Scope para incluir todos los registros con los ids pasados en el argumento $ids
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param array $ids Ids de los modelos a incluir en el scope
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeIds($query, $ids)
-    {
-        foreach ($ids as $id) {
-            $query = $query->orWhere('id', $id);
-        }
-        return $query;
-    }
-
-    /**
      * Incluir la dirección y el botón del cliente en el array de salida del modelo
      */
     public function toArray()

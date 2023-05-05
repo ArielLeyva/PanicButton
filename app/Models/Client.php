@@ -12,6 +12,13 @@ class Client extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
+     * Define que todos los atributos pueden ser asignados de forma masiva en la base de datos
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

@@ -80,10 +80,8 @@ class MessageController extends Controller
             }
         }
         $message = Message::create($data);
-        $json = $message->toArray();
-        $json['frontend_id'] = $request->frontend_id;
         MessageSended::dispatch($message, $request->frontend_id);
-        return response()->json($json);
+        return response()->json($message);
     }
 
     /**

@@ -20,17 +20,7 @@ class MessageSended implements ShouldBroadcast
      */
     public function __construct($message, $frontend_id)
     {
-        $data = $message->get();
-        $this->message = [
-            'id' => $message->id,
-            'client_id' => $message->client_id,
-            'user_id' => $message->user_id,
-            'message' => $message->message,
-            'image' => $message->image,
-            'state' => $message->state,
-            'created_at' => $message->created_at,
-            'updated_at' => $message->updated_at,
-        ];
+        $this->message = $message;
         $this->frontend_id = $frontend_id;
     }
 
@@ -41,7 +31,7 @@ class MessageSended implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return ['message-channel', "client-message-channel-" . $this->message['client_id']];
+        return ['message-channel', "client-message-channel-{$this->message->client_id}"];
     }
 
     public function broadcastAs()
