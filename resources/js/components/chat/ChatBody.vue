@@ -13,7 +13,6 @@ export default {
     components: { Message, MatchedMessage, ChatForm },
     data() {
         return {
-            // sending: [],
             matched: null,
             preview: "",
         }
@@ -74,7 +73,7 @@ export default {
         <div v-if="matched !== null" class="absolute top-0 left-0 p-2">
             <div class="rounded-full bg-indigo-200 flex items-center px-3 py-1">
                 <input @input="match"
-                    class="bg-transparent dark:text-gray-50 dark:placeholder:text-gray-50 focus-visible:outline-none text-sm" />
+                    class="bg-transparent dark:text-gray-800 focus-visible:outline-none text-sm" />
                 <button @click="matched = null" class="text-indigo-500"><i class="bi bi-x"></i></button>
             </div>
         </div>

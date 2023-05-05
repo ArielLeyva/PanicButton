@@ -90,6 +90,9 @@ export default {
                 }
             })
         },
+        chat() {
+            this.emitter.emit("client-chat", this.client)
+        }
     },
     mounted() {
         this.emitter.on("button-assigned", (button) => {
@@ -173,6 +176,8 @@ export default {
                             class="bi bi-pencil-square"></i> Actualizar</button>
                     <button @click="remove" class="bg-indigo-500 text-white rounded mr-2 my-1 p-1 text-sm px-2"><i
                             class="bi bi-trash"></i> Eliminar</button>
+                    <button @click="chat" class="bg-indigo-500 text-white rounded mr-2 my-1 p-1 text-sm px-2"><i
+                            class="bi bi-chat"></i> Chatear</button>
                 </p>
             </div>
         </div>

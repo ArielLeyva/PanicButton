@@ -96,14 +96,25 @@ export default {
                     break
                 }
             }
-            for (let chat of this.chats) {
+            for (let i in this.chats) {
+                const chat = this.chats[i]
                 if (chat[0].client_id == message.client_id) {
                     chat.push(message)
+                    if (this.messages !== null) {
+                        if (this.messages[0].client_id == message.client_id) {
+                            if (this.$refs.chatBody !== undefined) {
+                                this.$refs.chatBody.scroll()
+                            }
+                        } else {
+                            this.unread[i]++
+                        }
+                    } else {
+                        this.unread[i]++
+                    }
                     break
                 }
             }
-            //TODO (Verificar si no está activo el chat del mensaje y añadir marca de mensaje pendiente)
-            // this.messages.push(message)
+
         })
         channel.bind("MessageRemoved", (data) => {
             const ids = data.ids
@@ -122,6 +133,31 @@ export default {
             }
         })
     },
+    mounted() {
+        this.emitter.on("client-chat", (client) => {
+            let isEmpty = true
+            for (let chat of this.chats) {
+                if (chat[0].client_id == client.id) {
+                    isEmpty = false
+                    this.messages = chat
+                    break
+                }
+            }
+            if (isEmpty) {
+                this.chats.push([
+                    {
+                        id: 0,
+                        message: '',
+                        client_id: client.id,
+                        client: client,
+                        user_id: null,
+                        user: null,
+                    }
+                ])
+                this.messages = this.chats[this.chats.length - 1]
+            }
+        })
+    }
 }
 </script>
 <template>
@@ -135,7 +171,7 @@ export default {
                     :unread="unread[index]" />
             </div>
             <div v-else class="relative">
-                <ChatBody :messages="messages" :sending="sending" :selection="selection" :user="user" />
+                <ChatBody ref="chatBody" :messages="messages" :sending="sending" :selection="selection" :user="user" />
             </div>
         </div>
     </section>
@@ -144,5 +180,9 @@ export default {
 section {
     height: calc(100vh - 10rem);
     width: 310px;
+}
+.overflow-auto {
+    max-height: calc(100vh - 13rem);
+    min-height: calc(100vh - 13rem);
 }
 </style>

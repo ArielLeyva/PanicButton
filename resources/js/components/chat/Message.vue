@@ -10,7 +10,7 @@ export default {
 }
 </script>
 <template>
-    <div :class="{ 'justify-content-end': message.user_id !== null, 'pl-5': message.user_id !== null, 'pr-5': message.user_id == null }"
+    <div :class="{ 'justify-content-end': message.user_id !== null, 'pl-5': message.user_id !== null, 'pr-5': message.user_id == null, hidden: message.message == '' }"
         class="w-full flex py-1 first:pt-0 last:pb-0">
         <div v-if="selection !== null && message.user_id !== null" class="select">
             <div class="form-check">

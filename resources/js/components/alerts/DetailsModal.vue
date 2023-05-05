@@ -20,7 +20,7 @@ export default {
             <p class="mt-1 dark:text-white"><i class="bi bi-calendar mr-1"></i><strong
                     class="text-gray-500 dark:text-gray-200 font-bold">Fecha y hora:</strong> {{
                         Utils.datetime(alert.created_at, Utils.FULL_DATE_TIME) }}</p>
-            <ClientResume v-if="alert.button_id !== null" :client="alert.button.client" />
+            <ClientResume @resolve="resolve" v-if="alert.button_id !== null" :client="alert.button.client" />
             <ClientNotFound v-else />
         </div>
     </CustomModal>

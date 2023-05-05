@@ -64,7 +64,11 @@ export default {
                 [{ alert: this.alert }]
             )
             //Mostrar el modal
-            modal.fire()
+            modal.fire().then((result) => {
+                if(result.status == 'chat') {
+                    this.emitter.emit("client-chat", result.data)
+                }
+            })
         },
         /**
          * Marca como leída la alerta
@@ -137,8 +141,9 @@ export default {
                 </li>
                 <li>
                     <button @click="remove"
-                    class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Eliminar</button>
-            </li>
-        </ul>
+                        class="dropdown-item dark:text-gray-50 dark:hover:bg-slate-400 dark:hover:text-white">Eliminar</button>
+                </li>
+            </ul>
+        </div>
     </div>
-</div></template>
+</template>

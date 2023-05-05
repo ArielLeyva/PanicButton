@@ -16,7 +16,7 @@
                 {{ button.state }}
             </p>
             <p class="dark:text-gray-50"><i class="bi bi-joystick"></i> <strong class="text-gray-500 dark:text-gray-50">Nº de indetificación:</strong> {{ button.number }}</p>
-            <ClientResume v-if="button.client_id !== null" :client="button.client" />
+            <ClientResume @resolve="resolve" v-if="button.client_id !== null" :client="button.client" />
             <ClientNotFound v-else />
         </div>
     </CustomModal>

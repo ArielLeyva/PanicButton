@@ -72,6 +72,9 @@ export default {
                 }
             })
         }
+        this.emitter.on("client-chat", (client) => {
+            this.chatVisible = false
+        })
     },
 }
 </script>
