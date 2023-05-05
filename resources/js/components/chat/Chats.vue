@@ -40,7 +40,19 @@ export default {
         }
     },
     methods: {
+        sort() {
+            this.chats.sort((a, b) => {
+                const dateA = new Date(a[a.length - 1].created_at)
+                const dateB = new Date(b[b.length - 1].created_at)
+                if (dateA < dateB) {
+                    return 1
+                } else {
+                    return -1
+                }
+            })
+        },
         init() {
+            this.sort()
             this.unread = []
             let unread = 0
             for (let chat of this.chats) {
@@ -100,37 +112,33 @@ export default {
                 const chat = this.chats[i]
                 if (chat[0].client_id == message.client_id) {
                     chat.push(message)
-                    if (this.messages !== null) {
-                        if (this.messages[0].client_id == message.client_id) {
-                            if (this.$refs.chatBody !== undefined) {
-                                this.$refs.chatBody.scroll()
-                            }
-                        } else {
-                            this.unread[i]++
-                        }
-                    } else {
-                        this.unread[i]++
-                    }
                     break
                 }
             }
+            this.init()
 
         })
         channel.bind("MessageRemoved", (data) => {
             const ids = data.ids
-            for (let chat of this.chats) {
+            for (let i in this.chats) {
+                const chat = this.chats[i]
                 if (chat[0].client_id == data.client) {
                     for (let id of ids) {
-                        for (let i in chat) {
-                            if (id == chat[i].id) {
-                                chat.splice(i, 1)
+                        for (let j in chat) {
+                            if (id == chat[j].id) {
+                                chat.splice(j, 1)
                                 break
                             }
                         }
                     }
+                    if (chat.length == 0) {
+                        this.messages = null
+                        this.chats.splice(i, 1)
+                    }
                     break
                 }
             }
+            this.init()
         })
     },
     mounted() {
@@ -144,7 +152,7 @@ export default {
                 }
             }
             if (isEmpty) {
-                this.chats.push([
+                this.chats.unshift([
                     {
                         id: 0,
                         message: '',
@@ -154,7 +162,8 @@ export default {
                         user: null,
                     }
                 ])
-                this.messages = this.chats[this.chats.length - 1]
+                this.unread.unshift(0)
+                this.messages = this.chats[0]
             }
         })
     }
@@ -181,6 +190,7 @@ section {
     height: calc(100vh - 10rem);
     width: 310px;
 }
+
 .overflow-auto {
     max-height: calc(100vh - 13rem);
     min-height: calc(100vh - 13rem);
