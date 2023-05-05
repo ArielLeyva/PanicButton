@@ -45,10 +45,10 @@ export default {
             </template>
         </h3>
         <div class="flex justify-end">
-            <button class="mx-1 rounded-xl w-6 text-white">
-                <i class="bi bi-filter"></i>
+            <button v-if="messages == null" class="mx-1 rounded-xl w-6 text-white">
+                <i class="bi bi-search text-xs"></i>
             </button>
-            <div class="flex justify-end dropdown text-sm" v-if="messages !== null">
+            <div class="flex justify-end dropdown text-sm" v-else>
                 <button data-bs-toggle="dropdown" class="mx-1 rounded-xl w-6 text-white"><i
                         class="bi bi-three-dots-vertical"></i></button>
                 <ul class="dropdown-menu dark:bg-slate-700">
