@@ -20,7 +20,7 @@ export default {
         <img v-if="message.user_id !== null" :src="message.user.avatar" class="rounded-full w-8 h-8 mr-2" />
         <div>
             <img v-if="message.image !== null && message.image !== undefined"
-                class="rounded mb-0.5 border border-indigo-500" :src="'src/' + message.image" />
+                class="rounded mb-0.5 border border-indigo-500" :src="message.image" />
             <div class="text-sm p-2 rounded bg-indigo-500 text-gray-300">
                 <p style="white-space: pre-line">{{ message.message }}</p>
                 <div class="flex justify-end">
