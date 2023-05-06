@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends BaseModel
 {
+
+    public function getImagePathAttribute()
+    {
+        if ($this->image !== null) {
+            return asset("src/$this->image");
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Obtener la dirección del cliente
      *
@@ -43,6 +53,7 @@ class Message extends BaseModel
         } else {
             $data['user'] = null;
         }
+        $data['image'] = $this->imagePath;
         return $data;
     }
 }

@@ -34,7 +34,7 @@ class MessageController extends Controller
                         'id' => $message['id'],
                         'user_id' => $message['user_id'],
                         'message' => $message['message'],
-                        'image' => $message['image'],
+                        'image' => $message['image'] == null ? null : asset('src/' . $message['image']),
                         'state' => $message['state'],
                         'created_at' => $message['created_at'],
                         'updated_at' => $message['updated_at'],
@@ -57,10 +57,18 @@ class MessageController extends Controller
             'client_id' => ['filled'],
             'image' => ['filled', 'image', 'between:3,4096'],
         ]);
-        $data = $request->except('frontend_id');
+        $data = $request->except('frontend_id', 'file');
         if ($request->exists('image')) {
             $path = $request->file('image')->store('messages', 'src');
             $data['image'] = $path;
+        }
+        if ($request->has('file')) {
+            $image = $request->input('file');
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $name = time() . '.' . 'png';
+            Storage::disk('src')->put("messages/$name", base64_decode($image));
+            $data['image'] = "messages/$name";
         }
         //Verificar si el mensaje fue enviado por un usuario de soporte técnico desde la página o si fue
         //enviado por un cliente desde la aplicación
