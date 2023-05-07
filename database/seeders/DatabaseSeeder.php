@@ -357,14 +357,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('notifications')->insert([
-            ['client_id' => 2, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-4 12:40:00'],
-            ['client_id' => 4, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-4 10:17:00'],
-            ['client_id' => 5, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-3 01:24:00'],
-            ['client_id' => 7, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-2 16:10:00'],
-            ['client_id' => 8, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-2 14:11:00'],
-            ['client_id' => 3, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-03-1 08:32:00'],
-            ['client_id' => 1, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-02-28 07:10:00'],
-            ['client_id' => 11, 'title' => 'Alerta presionada', 'content' => '%client% ha presionado su botón de pánico con una aperta médica.', 'created_at' => '2023-02-4 4:11:00'],
+            ['client_id' => 2, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert002)', 'created_at' => '2023-03-4 12:40:00'],
+            ['client_id' => 4, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert004)', 'created_at' => '2023-03-4 10:17:00'],
+            ['client_id' => 5, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert005)', 'created_at' => '2023-03-3 01:24:00'],
+            ['client_id' => 7, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert007)', 'created_at' => '2023-03-2 16:10:00'],
+            ['client_id' => 8, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert008)', 'created_at' => '2023-03-2 14:11:00'],
+            ['client_id' => 3, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert003)', 'created_at' => '2023-03-1 08:32:00'],
+            ['client_id' => 1, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert001)', 'created_at' => '2023-02-28 07:10:00'],
+            ['client_id' => 11, 'title' => 'Alerta emitida', 'content' => 'Se ha emitido un alerta del dispositivo Default device (alert011)', 'created_at' => '2023-02-4 4:11:00'],
         ]);
 
         DB::table('messages')->insert([

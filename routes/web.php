@@ -52,7 +52,7 @@ Route::get('/state', function () {
                 Notification::create([
                     'client_id' => $item->client_id,
                     'title' => 'Dispositivo desconectado',
-                    'content' => "El dispositivo de %client% ha perdido la conexión Wi-Fi"
+                    'content' => "El dispositivo " . $button['name'] . " (" . $button['number'] . ") ha perdido la conexión Wi-Fi"
                 ]);
                 ButtonStateChanged::dispatch($button['id'], 'Disconnected');
             }

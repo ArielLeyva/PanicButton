@@ -23,9 +23,9 @@ export default {
             for (let i in this.backup) {
                 const notification = Object.assign({}, this.backup[i])
                 //Agregar nombre del cliente a la notificación
-                if (notification.client !== null && notification.client !== undefined) {
-                    notification.content = notification.content.replace("%client%", notification.client.name)
-                }
+                // if (notification.client !== null && notification.client !== undefined) {
+                //     notification.content = notification.content.replace("%device%", `${notification.client.name}`)
+                // }
                 this.notifications.push(notification)
             }
         },

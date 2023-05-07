@@ -27,7 +27,6 @@ class AlertController extends Controller
         if ($token) {
             $user = $token->tokenable;
             if ($user) {
-                // $sort = Alert::where('button.client_id', $user->id)->get()->sortByDesc('created_at');
                 $buttons = Button::where('client_id', $user->id)->get();
                 $ids = [];
                 foreach ($buttons as $button) {
@@ -80,14 +79,14 @@ class AlertController extends Controller
         if ($alert->button->client_id == null) {
             Notification::create([
                 'client_id' => $alert->button->client_id,
-                'title' => 'Alerta presionada',
-                'content' => 'Se ha presionado la alerta de un dispositivo sin vincular'
+                'title' => 'Alerta emitida',
+                'content' => 'Se ha emitido un alerta de un dispositivo sin vincular'
             ]);
         } else {
             Notification::create([
                 'client_id' => $alert->button->client_id,
-                'title' => 'Alerta presionada',
-                'content' => "%client% ha presionado su botón de pánico con una alerta $type"
+                'title' => 'Alerta emitida',
+                'content' => "Se ha emitido un alerta del dispositivo {$alert->button->name} ({$alert->button->number})"
             ]);
         }
         AlertPressed::dispatch($alert);
@@ -104,7 +103,7 @@ class AlertController extends Controller
             Notification::create([
                 'client_id' => $button->client_id,
                 'title' => 'Dispositivo conectado',
-                'content' => "El dispositivo de %client% ha retomado la conexión Wi-Fi"
+                'content' => "El dispositivo {$button->name} ({$button->number}) ha retomado la conexión Wi-Fi"
             ]);
             ButtonStateChanged::dispatch($button->id, 'Connected');
         }

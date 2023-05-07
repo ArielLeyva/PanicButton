@@ -74,7 +74,7 @@
                             title: state == "Connected" ? "Dispositivo conectado" : "Dispositivo desconectado",
                             client_id: button.client_id,
                             client: button.client,
-                            content: `El dispositivo de %client% ${state == "Connected" ? "ha retomado la conexión Wi-Fi" : "ha perdido la conexión Wi-Fi"}`,
+                            content: `El dispositivo ${button.name} (${button.number}) ${state == "Connected" ? "ha retomado la conexión Wi-Fi" : "ha perdido la conexión Wi-Fi"}`,
                             text: `El dispositivo de ${button.client.name} ${state == "Connected" ? "ha retomado la conexión Wi-Fi" : "ha perdido la conexión Wi-Fi"}`,
                             created_at: new Date(),
                         }

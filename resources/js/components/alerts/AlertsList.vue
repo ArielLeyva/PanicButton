@@ -106,8 +106,8 @@ export default {
                 notification.content = 'Se ha presionado la alerta de un dispositivo sin vincular'
                 notification.text = 'Se ha presionado la alerta de un dispositivo sin vincular'
             } else {
-                notification.content = `%client% ha presionado su botón de pánico con una alerta ${alert.type == "Police" ? "Policial" : "Médica"}`
-                notification.text = `${alert.button.client.name} ha presionado su botón de pánico con una alerta ${alert.type == "Police" ? "Policial" : "Médica"}`
+                notification.content = `Se ha emitido un alerta del dispositivo ${alert.button.name} (${alert.button.number})`
+                notification.text = `Se ha emitido un alerta del dispositivo ${alert.button.name} (${alert.button.number})`
             }
             //Emitir evento de alerta recibida
             this.$emit("notify", notification)

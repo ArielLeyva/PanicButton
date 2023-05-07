@@ -64,13 +64,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::get('/client/messages', [MessageController::class, 'getClientMessages']);
 Route::post('/client/messages', [MessageController::class, 'store']);
+Route::get('/client/notifications', [NotificationController::class, 'getClientNotifications']);
 
 Route::get("/lksiw2assol25sdpl548/{message}", [AlertController::class, 'handle']);
-
-// Route::get("/client/devices", function () {
-//     $devices = Button::all();
-//     return response()->json($devices);
-// });
 
 Route::post('client/login', [ClientAuthController::class, 'authenticate']);
 
