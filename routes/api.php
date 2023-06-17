@@ -75,3 +75,4 @@ Route::get("/client/user", [ClientController::class, 'getClientByToken']);
 Route::get("/client/alerts", [AlertController::class, 'getAlertsByClient']);
 
 Route::get("/client/devices", [ButtonController::class, 'getDevicesByClient']);
+Route::post('/client/devices', [ButtonController::class, 'store']);

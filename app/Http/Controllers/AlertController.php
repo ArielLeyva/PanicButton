@@ -9,6 +9,7 @@ use App\Models\Alert;
 use App\Models\Button;
 use App\Models\Notification;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
 
@@ -23,31 +24,18 @@ class AlertController extends Controller
 
     public function getAlertsByClient(Request $request)
     {
-        $token = PersonalAccessToken::findToken(request()->bearerToken());
-        if ($token) {
-            $user = $token->tokenable;
-            if ($user) {
-                $buttons = Button::where('client_id', $user->id)->get();
-                $ids = [];
-                foreach ($buttons as $button) {
-                    $ids[] = $button['id'];
-                }
-                $sort = Alert::buttons($ids)->get()->sortByDesc('created_at');
-                $alerts = [];
-                foreach ($sort as $alert) {
-                    $alerts[] = [
-                        'id' => $alert['id'],
-                        'type' => $alert['type'],
-                        'state' => $alert['state'],
-                        'created_at' => $alert['created_at']
-                    ];
-                }
-                return response()->json($alerts);
-            } else {
-                return response('No Content', 204);
+        $id = $this->getIdByToken();
+        if($id !== null) {
+            $buttons = Button::where('client_id', $id)->get();
+            $ids = Arr::pluck($buttons->toArray(), 'id');
+            $items = Alert::buttons($ids)->get();
+            $alerts = [];
+            foreach ($items as $alert) {
+                $alerts[] = Arr::except($alert->toArray(), ['button']);
             }
+            return response()->json($alerts);
         } else {
-            return response('Unauthorized', 401);
+            return response('No Content', 204);
         }
     }
 

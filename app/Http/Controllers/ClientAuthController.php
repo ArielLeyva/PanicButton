@@ -31,14 +31,7 @@ class ClientAuthController extends Controller
             $token = $client->createToken($request->device_name)->plainTextToken;
             return response()->json($token);
         }
-        // $user = Client::where('email', $request->email)->first();
-        // if (!$user || !Hash::check($request->password, $user->password)) {
-        //     return response()->json([
-        //         'message' => 'Authentication Error'
-        //     ]);
-        // }
-        // return $user->createToken($request->device_name)->plainTextToken;
-        return response()->json($user->createToken($request->device_name)->plainTextToken);
+        return response('Unauthorized', 401);
 
     }
 
