@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('state', ['Connected', 'Disconnected'])->default('Connected');
             $table->string('coordinates', 100)->nullable()->default(null);
             $table->dateTime('last_connection');
+            $table->boolean('on')->nullable()->default(true);
             $table->foreignId('client_id')
                 ->nullable()
                 ->default(null)

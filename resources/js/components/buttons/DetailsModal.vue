@@ -15,7 +15,17 @@
                 <i class="bi bi-circle-fill mr-1" style="font-size: 0.7em"></i>
                 {{ button.state }}
             </p>
-            <p class="dark:text-gray-50"><i class="bi bi-joystick"></i> <strong class="text-gray-500 dark:text-gray-50">Nº de indetificación:</strong> {{ button.number }}</p>
+            <p class="dark:text-gray-50">
+                <span class="badge" :class="{ 'bg-green-600': button.on, 'bg-red-600': !button.on }">
+                    <i class="bi bi-power"></i>
+                    <template v-if="button.on">
+                        Encendido
+                    </template>
+                    <template>
+                        Apagado
+                    </template>
+                </span>
+            </p>
             <ClientResume @resolve="resolve" v-if="button.client_id !== null" :client="button.client" />
             <ClientNotFound v-else />
         </div>

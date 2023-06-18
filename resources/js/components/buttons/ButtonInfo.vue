@@ -127,7 +127,8 @@ export default {
             //Construir el modal
             const modal = new Modal(
                 {
-                    window: "Detalles del dispositivo",
+                    // window: "Detalles del dispositivo",
+                    window: `${this.button.name} (${this.button.number})`,
                     accept: new ModalButton({
                         classes: "btn-success text-success dark:text-green-400 dark:hover:text-white hover:text-white",
                         text: "Aceptar",
