@@ -74,3 +74,4 @@ Route::get("/client/devices", [ButtonController::class, 'getDevicesByClient']);
 Route::post('/client/devices', [ButtonController::class, 'store']);
 Route::put('/client/devices/{id}', [ButtonController::class, 'update']);
 Route::post('/client/devices/{id}/power', [ButtonController::class, 'power']);
+Route::delete('/client/devices/{id}', [ButtonController::class, 'destroy']);

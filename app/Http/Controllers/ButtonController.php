@@ -60,24 +60,23 @@ class ButtonController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $request->validate([
             //TODO (Mejorar esta validación)
             'name' => ['required', 'regex:/^[A-Za-z0-9\- ]+$/'],
             'number' => ['required', 'regex:/^[A-Za-z0-9\-]+$/'],
             'coordinates' => ['required']
         ]);
+        $button = Button::find($id);
         //Crear la instancia del modelo en la base de datos
         if ($request->path() == 'api/client/devices') {
-            if ($request->client_id != $this->getIdByToken()) {
+            if ($button->client_id != $this->getIdByToken()) {
                 return response('Unauthorized', 401);
             }
         }
         $data = $request->except('_method');
-        Button::where('id', $id)->update($data);
-        $item = Button::find($id);
+        $button->update($data);
         //Retornar el nuevo modelo
-        return response()->json($item);
+        return response()->json($button);
     }
 
     public function power($id)
@@ -99,9 +98,16 @@ class ButtonController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $result = Button::destroy($id);
+        $button = Button::find($id);
+        //Crear la instancia del modelo en la base de datos
+        if ($request->path() == 'api/client/devices') {
+            if ($button->client_id != $this->getIdByToken()) {
+                return response('Unauthorized', 401);
+            }
+        }
+        $result = $button->delete();
         if ($result) {
             return response('');
         } else {
