@@ -58,6 +58,28 @@ class ButtonController extends Controller
         return response()->json($item);
     }
 
+    public function update(Request $request, $id)
+    {
+
+        $request->validate([
+            //TODO (Mejorar esta validación)
+            'name' => ['required', 'regex:/^[A-Za-z0-9\- ]+$/'],
+            'number' => ['required', 'regex:/^[A-Za-z0-9\-]+$/'],
+            'coordinates' => ['required']
+        ]);
+        //Crear la instancia del modelo en la base de datos
+        if ($request->path() == 'api/client/devices') {
+            if ($request->client_id != $this->getIdByToken()) {
+                return response('Unauthorized', 401);
+            }
+        }
+        $data = $request->except('_method');
+        Button::where('id', $id)->update($data);
+        $item = Button::find($id);
+        //Retornar el nuevo modelo
+        return response()->json($item);
+    }
+
     public function power($id)
     {
         $button = Button::find($id);
