@@ -47,6 +47,7 @@ return [
         'src' => [
             'driver' => 'local',
             'root' => public_path('src'),
+            // 'root' => '/home/u594920092/domains/sac-monitoreo.online/public_html/alert/src',
             'url' => env('APP_URL') . '/src',
             'visibility' => 'public',
             'throw' => false,

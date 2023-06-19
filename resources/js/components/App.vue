@@ -101,14 +101,14 @@ export default {
                 </div>
             </section>
         </div>
-        <div class="absolute bottom-5 right-5 z-50 overflow-hidden">
+        <div class="absolute bottom-20 md:bottom-5 right-5 z-50 overflow-hidden">
             <transition name="chat">
                 <div v-show="!chatVisible" class="mb-2">
                     <Chats :user="user" @close="chatVisible = true" @unread="(value) => unread = value" />
                 </div>
             </transition>
             <div class="relative">
-                <span v-if="unread > 0" class="badge bg-red-600 text-white rounded-full absolute top-0 right-0">{{ unread }}</span>
+                <span v-if="unread > 0" class="badge bg-red-600 text-white rounded-full absolute top-5 right-0">{{ unread }}</span>
                 <button
                     class="bg-indigo-500 p-3 w-12 h-12 text-center text-white border-none rounded-full shadow-lg float-right"
                     @click="chatVisible = !chatVisible">
