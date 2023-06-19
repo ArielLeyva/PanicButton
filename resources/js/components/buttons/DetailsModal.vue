@@ -21,7 +21,7 @@
                     <template v-if="button.on">
                         Encendido
                     </template>
-                    <template>
+                    <template v-else>
                         Apagado
                     </template>
                 </span>

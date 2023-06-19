@@ -15,12 +15,13 @@ class ButtonController extends Controller
         return response()->json(Button::all());
     }
 
-    public function getDevicesByClient(Request $request) {
+    public function getDevicesByClient(Request $request)
+    {
         $id = $this->getIdByToken();
-        if($id !== null) {
+        if ($id !== null) {
             $items = Button::where('client_id', $id)->get();
             $buttons = [];
-            foreach($items as $button) {
+            foreach ($items as $button) {
                 $buttons[] = Arr::except($button->toArray(), ['client_id', 'client']);
             }
             return response()->json($buttons);
@@ -31,18 +32,23 @@ class ButtonController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             //TODO (Mejorar esta validación)
-            'name' => ['filled', 'regex:/^[A-Za-z0-9\-]+$/'],
+            'name' => ['filled', 'regex:/^[A-Za-z0-9\- ]+$/'],
             'number' => ['required', 'regex:/^[A-Za-z0-9\-]+$/'],
             'coordinates' => ['filled'],
-            // 'client_id' => ['filled', 'exists:id,clients,id'],
+            'client_id' => ['filled', 'exists:clients,id'],
             'state' => ['filled', 'in:Connected,Disconnected']
         ]);
         //Crear la instancia del modelo en la base de datos
-        if($request->exists('client_id')) {
-            if($request->client_id != $this->getIdByToken()) {
-                return response('Unauthorized', 401);
+        if ($request->path() == 'api/client/devices') {
+            if ($request->exists('client_id')) {
+                if ($request->client_id != $this->getIdByToken()) {
+                    return response('Unauthorized', 401);
+                }
+            } else {
+                return response('', 422);
             }
         }
         $data = $request->all();
@@ -50,6 +56,19 @@ class ButtonController extends Controller
         $item = Button::create($data);
         //Retornar el nuevo modelo
         return response()->json($item);
+    }
+
+    public function power($id)
+    {
+        $button = Button::find($id);
+        $id = $this->getIdByToken();
+        if ($id == $button->client_id) {
+            $button->on = !$button->on;
+            $button->save();
+            return response()->json($button);
+        } else {
+            return response('Unauthorized', 401);
+        }
     }
 
     /**
