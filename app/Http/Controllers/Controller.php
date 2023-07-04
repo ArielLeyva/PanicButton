@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Request;
 use Laravel\Sanctum\PersonalAccessToken;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -20,5 +22,9 @@ class Controller extends BaseController
             }
         }
         return null;
+    }
+
+    protected function isClientRequest(Request $request) {
+        return Str::startsWith($request->path(), 'api/client');
     }
 }

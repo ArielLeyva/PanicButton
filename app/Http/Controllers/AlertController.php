@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Events\AlertPressed;
 use App\Events\ButtonStateChanged;
 use App\Http\Controllers\Controller;
+use App\Jobs\SendFirebaseCloudMessage;
 use App\Models\Alert;
 use App\Models\Button;
 use App\Models\Notification;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class AlertController extends Controller
 {
@@ -22,10 +22,10 @@ class AlertController extends Controller
         return response()->json($sort->values()->all());
     }
 
-    public function getAlertsByClient(Request $request)
+    public function getAlertsByClient()
     {
         $id = $this->getIdByToken();
-        if($id !== null) {
+        if ($id !== null) {
             $buttons = Button::where('client_id', $id)->get();
             $ids = Arr::pluck($buttons->toArray(), 'id');
             $items = Alert::buttons($ids)->get();
@@ -39,7 +39,7 @@ class AlertController extends Controller
         }
     }
 
-    public function handle(Request $request, $message)
+    public function handle($message)
     {
         $separator = strpos($message, ':');
         $text = Str::of($message);
@@ -49,7 +49,7 @@ class AlertController extends Controller
         if ($button !== null) {
             if ($type == 'Online') {
                 $this->state($button);
-            } else {
+            } else if ($button->on) {
                 $this->store($button, $type);
             }
         }
@@ -78,6 +78,7 @@ class AlertController extends Controller
             ]);
         }
         AlertPressed::dispatch($alert);
+        SendFirebaseCloudMessage::dispatch($alert);
     }
 
     private function state(Button $button)

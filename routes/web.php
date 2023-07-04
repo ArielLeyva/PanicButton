@@ -2,13 +2,12 @@
 
 use App\Events\ButtonStateChanged;
 use App\Http\Controllers\AuthController;
-use App\Models\Alert;
 use App\Models\Button;
 use App\Models\Notification;
 use Carbon\Carbon;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Factory;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +40,7 @@ Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/state', function () {
     $buttons = Button::all();
     foreach ($buttons as $button) {
-        $current = Carbon::now()->subMinutes(11);
+        $current = Carbon::now()->subMinutes(3);
         $lastConnection = Carbon::parse($button['last_connection']);
         if ($lastConnection->lessThan($current)) {
             if ($button['state'] == 'Connected') {
@@ -59,3 +58,16 @@ Route::get('/state', function () {
         }
     }
 });
+
+Route::get('/example', function () {
+    $factory = (new Factory)->withServiceAccount(base_path() . '/config/firebase_auth_file.json');
+    $messaging = $factory->createMessaging();
+    $message = CloudMessage::fromArray([
+        'token' => 'cGl5k3K-SBWjDPZY8-4srp:APA91bFqQNdC1ImzhaiKS-omu2Fru8hbucbFWivRwPOqETAvdy2sobnMFDBtCv5p9Z0k-Ywob0sAbdC0ygRAqKymnu6zsnH7OJQul17rCQwpz2XqZyD31DrJt1Da44LQYsC-dvQRB4UA',
+        'notification' => ['title' => 'Example title', 'body' => 'Example notification content'], // optional
+        'data' => ['key' => 'value'], // optional
+    ]);
+
+    $result = $messaging->send($message);
+    return response()->json($result);
+})->name('example');

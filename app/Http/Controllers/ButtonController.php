@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Http\Controllers\Controller;
 use App\Models\Button;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class ButtonController extends Controller
 {
@@ -15,7 +14,7 @@ class ButtonController extends Controller
         return response()->json(Button::all());
     }
 
-    public function getDevicesByClient(Request $request)
+    public function getDevicesByClient()
     {
         $id = $this->getIdByToken();
         if ($id !== null) {
@@ -35,8 +34,8 @@ class ButtonController extends Controller
 
         $request->validate([
             //TODO (Mejorar esta validación)
-            'name' => ['filled', 'regex:/^[A-Za-z0-9\- ]+$/'],
-            'number' => ['required', 'regex:/^[A-Za-z0-9\-]+$/'],
+            'name' => ['filled'],
+            'number' => ['required'],
             'coordinates' => ['filled'],
             'client_id' => ['filled', 'exists:clients,id'],
             'state' => ['filled', 'in:Connected,Disconnected']

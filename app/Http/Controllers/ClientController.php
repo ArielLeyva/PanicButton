@@ -67,10 +67,15 @@ class ClientController extends Controller
             'name' => ['required', 'between:3,60'],
             'dni' => ['required', 'regex:/^[0-9]+$/'],
             'gender' => ['required', 'in:Femenino,Masculino'],
-            'state' => ['required', 'in:Activo,Inactivo']
+            'state' => ['filled', 'in:Activo,Inactivo']
         ]);
         //Crear la instancia del modelo en la base de datos
         $client = Client::find($id);
+        if ($this->isClientRequest($request)) {
+            if ($client->id != $this->getIdByToken() || $request->has('state')) {
+                return response('Unauthorized', 401);
+            }
+        }
         $address = Address::find($client->address_id);
         $address->update($request->address);
         $data = $request->except(['address', 'telephone_numbers', 'avatar', '_method']);

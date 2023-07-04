@@ -65,9 +65,9 @@ Route::get("/lksiw2assol25sdpl548/{message}", [AlertController::class, 'handle']
 //Rutas de la aplicación
 Route::post('client/login', [ClientAuthController::class, 'authenticate']);
 Route::get("/client/user", [ClientController::class, 'getClientByToken']);
+Route::put("/client/user/{id}", [ClientController::class, 'update']);
 Route::get('/client/messages', [MessageController::class, 'getClientMessages']);
 Route::post('/client/messages', [MessageController::class, 'store']);
-// Route::post('/client/devices', [ButtonController::class, 'store']);
 Route::get('/client/notifications', [NotificationController::class, 'getClientNotifications']);
 Route::get("/client/alerts", [AlertController::class, 'getAlertsByClient']);
 Route::get("/client/devices", [ButtonController::class, 'getDevicesByClient']);
