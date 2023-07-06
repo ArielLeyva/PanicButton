@@ -13,18 +13,35 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    protected function getIdByToken() {
+    protected function getIdByToken()
+    {
         $token = PersonalAccessToken::findToken(request()->bearerToken());
-        if($token) {
+        if ($token) {
             $user = $token->tokenable;
-            if($user) {
+            if ($user) {
                 return $user->id;
             }
         }
         return null;
     }
 
-    protected function isClientRequest(Request $request) {
+    protected function _getAuthClient()
+    {
+        $token = PersonalAccessToken::findToken(request()->bearerToken());
+        if ($token) {
+            $client = $token->tokenable;
+            if ($client) {
+                return $client;
+            } else {
+                return false;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    protected function isClientRequest(Request $request)
+    {
         return Str::startsWith($request->path(), 'api/client');
     }
 }

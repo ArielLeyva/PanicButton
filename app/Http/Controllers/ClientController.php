@@ -9,7 +9,6 @@ use App\Models\Client;
 use App\Models\TelephoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class ClientController extends Controller
 {
@@ -18,12 +17,12 @@ class ClientController extends Controller
         return response()->json(Client::all());
     }
 
-    public function getClientByToken(Request $request) {
-        $token = PersonalAccessToken::findToken(request()->bearerToken());
-        if($token) {
-            $user = $token->tokenable;
-            if($user) {
-                return response()->json($user);
+    public function getAuthClient()
+    {
+        $client = $this->_getAuthClient();
+        if ($client !== null) {
+            if ($client !== false) {
+                return response()->json($client);
             } else {
                 return response('No Content', 204);
             }

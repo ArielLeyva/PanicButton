@@ -14,7 +14,7 @@ class ButtonController extends Controller
         return response()->json(Button::all());
     }
 
-    public function getDevicesByClient()
+    public function getClientDevices()
     {
         $id = $this->getIdByToken();
         if ($id !== null) {

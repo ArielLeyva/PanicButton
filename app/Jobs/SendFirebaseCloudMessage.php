@@ -36,7 +36,13 @@ class SendFirebaseCloudMessage implements ShouldQueue
         $message = CloudMessage::fromArray([
             'topic' => "app_fcm_client_{$this->alert->button->client_id}",
             'notification' => ['title' => 'Alerta presionada', 'body' => "El dispositivo {$this->alert->button->name} ha detectado un movimiento"],
-            'data' => ['button_id' => $this->alert->button->id],
+            'data' => [
+                'id' => $this->alert->id,
+                'button_id' => $this->alert->button->id,
+                'name' => $this->alert->button->name,
+                'state' => $this->alert->state,
+                'created_at' => $this->alert->created_at,
+            ],
             "content_available" => true,
             "priority" => "high"
         ]);

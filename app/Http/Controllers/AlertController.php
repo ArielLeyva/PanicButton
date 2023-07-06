@@ -22,7 +22,7 @@ class AlertController extends Controller
         return response()->json($sort->values()->all());
     }
 
-    public function getAlertsByClient()
+    public function getClientAlerts()
     {
         $id = $this->getIdByToken();
         if ($id !== null) {
@@ -99,9 +99,19 @@ class AlertController extends Controller
         $button->update($updated);
     }
 
-    public function readed($id)
+    public function readed(Request $request, $id)
     {
-        Alert::find($id)->update(['state' => 'Vista']);
+        $alert = Alert::find($id);
+        //Crear la instancia del modelo en la base de datos
+        if ($request->path() == 'api/client') {
+            if ($alert->button->client_id != $this->getIdByToken()) {
+                return response('Unauthorized', 401);
+            } else {
+                $alert->update(['state' => 'Descartada']);
+            }
+        } else {
+            $alert->update(['state' => 'Vista']);
+        }
         return response('');
     }
 

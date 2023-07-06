@@ -80,6 +80,12 @@ export default {
             //Establecer la página en 0
             this.paginate(0)
         })
+
+        Request.get("api/example").then((response) => {
+            console.log(response);
+        })
+
+
         //Instanciar pusher para recibir mensajes en tiempo real (Websocket)
         const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
             cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,

@@ -59,18 +59,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
     ]);
     Route::delete('/messages', [MessageController::class, 'destroy']);
 
+    Route::get('/example', function(Request $request) {
+        $tokens = $request->user()->tokens;
+        return response()->json($tokens);
+    });
 });
 Route::get("/lksiw2assol25sdpl548/{message}", [AlertController::class, 'handle']);
 
 //Rutas de la aplicación
 Route::post('client/login', [ClientAuthController::class, 'authenticate']);
-Route::get("/client/user", [ClientController::class, 'getClientByToken']);
+Route::get('/client/sessions', [ClientAuthController::class, 'getActiveSessions']);
+Route::delete('/client/sessions/{id}', [ClientAuthController::class, 'delete']);
+Route::get("/client/user", [ClientController::class, 'getAuthClient']);
 Route::put("/client/user/{id}", [ClientController::class, 'update']);
 Route::get('/client/messages', [MessageController::class, 'getClientMessages']);
 Route::post('/client/messages', [MessageController::class, 'store']);
 Route::get('/client/notifications', [NotificationController::class, 'getClientNotifications']);
-Route::get("/client/alerts", [AlertController::class, 'getAlertsByClient']);
-Route::get("/client/devices", [ButtonController::class, 'getDevicesByClient']);
+Route::get("/client/alerts", [AlertController::class, 'getClientAlerts']);
+Route::put("/client/alerts/{id}/read", [AlertController::class, 'readed']);
+Route::get("/client/devices", [ButtonController::class, 'getClientDevices']);
 Route::post('/client/devices', [ButtonController::class, 'store']);
 Route::put('/client/devices/{id}', [ButtonController::class, 'update']);
 Route::post('/client/devices/{id}/power', [ButtonController::class, 'power']);
