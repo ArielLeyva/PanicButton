@@ -6,6 +6,7 @@ import ButtonsList from "./buttons/ButtonsList.vue"
 import Statistics from "./clients/Statistics.vue"
 import AlertsList from "./alerts/AlertsList.vue"
 import Chats from "./chat/Chats.vue"
+
 export default {
     components: { Navbar, Window, ClientsList, ButtonsList, Statistics, AlertsList, Chats },
     data() {
@@ -37,7 +38,7 @@ export default {
             /**
              * Número de mensajes sin leer
              */
-            unread: 0
+            unread: 0,
         }
     },
     methods: {
@@ -108,7 +109,8 @@ export default {
                 </div>
             </transition>
             <div class="relative">
-                <span v-if="unread > 0" class="badge bg-red-600 text-white rounded-full absolute top-5 right-0">{{ unread }}</span>
+                <span v-if="unread > 0" class="badge bg-red-600 text-white rounded-full absolute top-5 right-0">{{ unread
+                }}</span>
                 <button
                     class="bg-indigo-500 p-3 w-12 h-12 text-center text-white border-none rounded-full shadow-lg float-right"
                     @click="chatVisible = !chatVisible">

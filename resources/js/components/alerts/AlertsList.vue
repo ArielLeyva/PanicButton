@@ -81,17 +81,15 @@ export default {
             this.paginate(0)
         })
 
-        Request.get("api/example").then((response) => {
-            console.log(response);
-        })
-
-
         //Instanciar pusher para recibir mensajes en tiempo real (Websocket)
         const pusher = new Pusher(import.meta.env.VITE_PUSHER_APP_KEY, {
             cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
         })
         //Instanciar sonido de alerta recibida
         const sound = new Audio(audio)
+        //Suscribirse a Firebase Cloud Messaging
+
+
         //Suscribirse al canal de alertas
         const channel = pusher.subscribe("alert-channel")
         //Añadir oyente de alerta presionada

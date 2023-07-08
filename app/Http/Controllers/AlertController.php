@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\AlertPressed;
 use App\Events\ButtonStateChanged;
 use App\Http\Controllers\Controller;
+use App\Jobs\AlertSentNotify;
+use App\Jobs\ButtonStateUpdatedNotify;
 use App\Jobs\SendFirebaseCloudMessage;
 use App\Models\Alert;
 use App\Models\Button;
@@ -78,7 +80,8 @@ class AlertController extends Controller
             ]);
         }
         AlertPressed::dispatch($alert);
-        SendFirebaseCloudMessage::dispatch($alert);
+        // SendFirebaseCloudMessage::dispatch($alert);
+        AlertSentNotify::dispatch($alert);
     }
 
     private function state(Button $button)
@@ -94,9 +97,12 @@ class AlertController extends Controller
                 'title' => 'Dispositivo conectado',
                 'content' => "El dispositivo {$button->name} ({$button->number}) ha retomado la conexión Wi-Fi"
             ]);
+            $button->update($updated);
             ButtonStateChanged::dispatch($button->id, 'Connected');
+            ButtonStateUpdatedNotify::dispatch($button);
+        } else {
+            $button->update($updated);
         }
-        $button->update($updated);
     }
 
     public function readed(Request $request, $id)

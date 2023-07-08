@@ -31,7 +31,7 @@ class MessageRemoved implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return ['message-channel', "client-message-channel-{$this->client}"];
+        return ['message-channel'];
     }
 
     public function broadcastAs()

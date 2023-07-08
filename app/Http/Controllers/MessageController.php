@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\MessageRemoved;
 use App\Events\MessageSended;
 use App\Http\Controllers\Controller;
+use App\Jobs\MessageDeletedNotify;
+use App\Jobs\MessageSentNotify;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -89,6 +91,7 @@ class MessageController extends Controller
         }
         $message = Message::create($data);
         MessageSended::dispatch($message, $request->frontend_id);
+        MessageSentNotify::dispatch($message, $request->frontend_id);
         return response()->json($message);
     }
 
@@ -116,7 +119,6 @@ class MessageController extends Controller
     {
         //Obtener los ids del la petición
         $ids = Str::of($request->ids)->explode(',');
-        Log::alert(json_encode($ids));
         $clientId = 0;
         foreach ($ids as $id) {
             //Recuperar el modelo
@@ -133,6 +135,7 @@ class MessageController extends Controller
             }
         }
         MessageRemoved::dispatch($ids, $clientId);
+        MessageDeletedNotify::dispatch($ids, $clientId);
         return response('', 200);
     }
 }

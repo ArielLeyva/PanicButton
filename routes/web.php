@@ -2,6 +2,7 @@
 
 use App\Events\ButtonStateChanged;
 use App\Http\Controllers\AuthController;
+use App\Jobs\ButtonStateUpdatedNotify;
 use App\Models\Button;
 use App\Models\Notification;
 use Carbon\Carbon;
@@ -53,6 +54,7 @@ Route::get('/state', function () {
                     'title' => 'Dispositivo desconectado',
                     'content' => "El dispositivo " . $button['name'] . " (" . $button['number'] . ") ha perdido la conexión Wi-Fi"
                 ]);
+                ButtonStateUpdatedNotify::dispatch($item);
                 ButtonStateChanged::dispatch($button['id'], 'Disconnected');
             }
         }
