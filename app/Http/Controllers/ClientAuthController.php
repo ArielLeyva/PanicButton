@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Client;
-use Illuminate\Support\Facades\Hash;
+use Exception;
 use Illuminate\Support\Arr;
 use Laravel\Sanctum\PersonalAccessToken;
+use Laravel\Socialite\Facades\Socialite;
+use Kreait\Firebase\Factory;
 
 class ClientAuthController extends Controller
 {
@@ -20,20 +22,28 @@ class ClientAuthController extends Controller
      */
     public function authenticate(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required'],
-            'password' => ['required'],
-            'device_name' => ['required']
-        ]);
-        if (Auth::guard('client')->attempt(['email' => $credentials['email'], 'password' => $credentials['password']], true)) {
-            $client = Client::where('email', $credentials['email'])->first();
-            //TODO (Eliminar esta función para mantener la cuenta en varios dispositivos)
-            // $client->tokens()->delete();
-            //Generar token API
+        $factory = (new Factory)->withServiceAccount(base_path() . '/' . env('FIREBASE_CREDENTIALS', '/config/firebase_auth_file.json'));
+        $auth = $factory->createAuth();
+        try {
+            $verifiedIdToken = $auth->verifyIdToken($request->token);
+            $uid = $verifiedIdToken->claims()->get('sub');
+            $user = $auth->getUser($uid);
+            $client = Client::where('email', $user->email)->first();
             $token = $client->createToken($request->device_name)->plainTextToken;
             return response()->json($token);
+        } catch (Exception $e) {
+            return response('Unauthorized', 401);
         }
-        return response('Unauthorized', 401);
+    }
+
+    public function googleAutenticate(Request $request)
+    {
+        // Getting the user from socialite using token from google
+        $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
+
+        $client = Client::where('email', $user->getEmail())->first();
+        $token = $client->createToken($request->device_name)->plainTextToken;
+        return response()->json($token);
     }
 
     public function getActiveSessions()

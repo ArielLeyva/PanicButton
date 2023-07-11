@@ -48,7 +48,7 @@ class Client extends Authenticatable
         if ($this->avatar !== null) {
             return asset("src/$this->avatar");
         } else {
-            return asset("src/blank-profile.svg");
+            return asset("src/blank-profile.png");
         }
     }
 

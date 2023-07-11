@@ -34,19 +34,19 @@ export default {
         },
     },
     mounted() {
-        //Instanciar el input para el avatar
-        this.avatar = this.$el.querySelector("[name='avatar']")
-        //Añadir evento para cuando se seleccione una imagen
-        this.avatar.addEventListener("change", () => {
-            const files = this.avatar.files
-            if (!files || !files.length) {
-                //Si no se seleccionó imagen mostrar avatar por defecto
-                this.image = "src/blank-profile.svg"
-            } else {
-                //Si hay una imagen seleccionada mostrarla en pantalla
-                this.image = URL.createObjectURL(files[0])
-            }
-        })
+        // //Instanciar el input para el avatar
+        // this.avatar = this.$el.querySelector("[name='avatar']")
+        // //Añadir evento para cuando se seleccione una imagen
+        // this.avatar.addEventListener("change", () => {
+        //     const files = this.avatar.files
+        //     if (!files || !files.length) {
+        //         //Si no se seleccionó imagen mostrar avatar por defecto
+        //         this.image = "src/blank-profile.svg"
+        //     } else {
+        //         //Si hay una imagen seleccionada mostrarla en pantalla
+        //         this.image = URL.createObjectURL(files[0])
+        //     }
+        // })
         //Si se van a modificar los datos del cliente instanciar los datos existentes
         if (this.client.telephone_numbers !== undefined) {
             //Instanciar los números de teléfono
@@ -63,13 +63,16 @@ export default {
 
 <template>
     <CustomModal :config="config" @accept="accept" @cancel="cancel">
+        <div style="background-color: indigo;color: white;border-radius: 5px;">
+
+        </div>
         <form class="alert-form scroll">
-            <input type="file" name="avatar" class="hidden" />
+            <!-- <input type="file" name="avatar" class="hidden" />
             <div class="flex justify-center relative">
                 <img @click="avatar.click()" class="w-20 rounded-full cursor-pointer" :src="image" />
                 <button type="button" @click="reset" class="bg-transparent text-gray-600 dark:text-gray-50 absolute top-0"
                     style="right: calc(50% - 3.75rem)"><i class="bi bi-trash"></i></button>
-            </div>
+            </div> -->
             <fieldset class="flex">
                 <div class="flex items-center px-2 relative py-2 w-1/2">
                     <i class="bi bi-person absolute top-3 left-4 text-gray-500 dark:text-gray-50"></i>
@@ -82,6 +85,14 @@ export default {
                     <input
                         class="border border-gray-400 dark:border-white dark:bg-slate-500 dark:text-gray-50 dark:placeholder:text-gray-200 rounded focus-visible:outline-none pl-8 py-1"
                         name="dni" type="text" placeholder="DNI del cliente" :value="client.dni" />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="flex items-center px-2 relative py-2 w-1/2">
+                    <i class="bi bi-envelope absolute top-3 left-4 text-gray-500 dark:text-gray-50"></i>
+                    <input
+                        class="border border-gray-400 dark:border-white dark:bg-slate-500 dark:text-gray-50 dark:placeholder:text-gray-200 rounded focus-visible:outline-none pl-8 py-1"
+                        name="email" type="email" placeholder="Correo electrónico" :value="client.email" />
                 </div>
             </fieldset>
             <fieldset class="flex">

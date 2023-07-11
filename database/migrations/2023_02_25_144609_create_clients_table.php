@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->string('email', )->unique();
-            $table->string('password');
+            $table->string('email',)->unique();
+            $table->string('password')->default(bcrypt('gWCXR3Y8'));
             $table->string('name', 80);
             $table->string('avatar', 60)->nullable()->default(null);
             $table->string('dni', 20);
             $table->enum('gender', ['Femenino', 'Masculino']);
             $table->foreignId('address_id')
+                ->nullable()
+                ->default(null)
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('restrict');

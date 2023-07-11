@@ -9,6 +9,7 @@ use App\Models\Client;
 use App\Models\TelephoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Kreait\Firebase\Factory;
 
 class ClientController extends Controller
 {
@@ -40,21 +41,24 @@ class ClientController extends Controller
             'gender' => ['required', 'in:Femenino,Masculino'],
             'state' => ['required', 'in:Activo,Inactivo']
         ]);
-        //Crear la instancia del modelo en la base de datos
-        $address = Address::create($request->address);
+        $factory = (new Factory)->withServiceAccount(base_path() . '/' . env('FIREBASE_CREDENTIALS', '/config/firebase_auth_file.json'));
+        $auth = $factory->createAuth();
+        $firebaseUser = $auth->createUserWithEmailAndPassword($request->email, 'gWCXR3Y8');
         $data = $request->except(['address', 'telephone_numbers', 'avatar']);
-        //TODO (Modificar)
-        if ($request->hasFile('avatar')) {
-            $path = $request->file('avatar')->store('users', 'src');
-            $data['avatar'] = $path;
-        }
-        $data['address_id'] = $address->id;
         $item = Client::create($data);
         $numbers = $request->telephone_numbers;
         foreach ($numbers as $number) {
             TelephoneNumber::create(['number' => $number, 'client_id' => $item->id]);
         }
+        //Crear la instancia del modelo en la base de datos
+        $address = Address::create($request->address);
+        $item->address_id = $address->id;
+        $item->update();
         $item->refresh();
+        $auth->updateUser($firebaseUser->uid, [
+            'displayName' => $item->name,
+            'photoUrl' => $item->avatarPath,
+        ]);
         //Retornar el nuevo modelo
         return response()->json($item);
     }
