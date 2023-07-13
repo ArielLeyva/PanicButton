@@ -64,7 +64,7 @@
                                 //Actualizar nombre del filtro activo
                                 this.active = "Cliente"
                                 //Verificar si el cliente de la alerta cumple con los requisitos del filtro
-                                if (!this.Utils.filter(alert.client, param)) {
+                                if (!this.Utils.filter(alert.button.client, param)) {
                                     return false
                                 }
                                 break

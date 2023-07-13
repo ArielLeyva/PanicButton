@@ -95,6 +95,8 @@ export default class Utils {
                         }
                         break;
                 }
+            } else {
+                if (haystack["name"] == "Sin asignar") return false;
             }
         }
         return true;

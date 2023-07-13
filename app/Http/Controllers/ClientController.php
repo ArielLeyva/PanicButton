@@ -98,6 +98,26 @@ class ClientController extends Controller
         return response()->json($client);
     }
 
+    public function updateAvatar(Request $request, $id)
+    {
+        $client = Client::find($id);
+        if ($client->id != $this->getIdByToken() || $request->has('state')) {
+            return response('Unauthorized', 401);
+        } else {
+            if ($request->has('avatar')) {
+                $image = $request->input('avatar');
+                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+                $name = time() . '.png';
+                Storage::disk('src')->put("users/$name", base64_decode($image));
+                $client->avatar = "users/$name";
+                $client->update();
+                $client->refresh();
+                return response()->json($client);
+            }
+        }
+    }
+
     /**
      * Eliminar registros de la base de datos a partir del id pasado en la petición
      *
@@ -107,6 +127,7 @@ class ClientController extends Controller
     public function destroy($id)
     {
         Button::where('client_id', $id)->update(['client_id' => null]);
+
         $client = Client::find($id);
         if ($client->avatar !== null) {
             Storage::disk('src')->delete($client->avatar);

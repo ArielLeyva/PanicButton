@@ -29,8 +29,12 @@ class ClientAuthController extends Controller
             $uid = $verifiedIdToken->claims()->get('sub');
             $user = $auth->getUser($uid);
             $client = Client::where('email', $user->email)->first();
-            $token = $client->createToken($request->device_name)->plainTextToken;
-            return response()->json($token);
+            if ($client) {
+                $token = $client->createToken($request->device_name)->plainTextToken;
+                return response()->json($token);
+            } else {
+                return response('No hay ningun usuario asociado a su dirección de correo electónico', 201);
+            }
         } catch (Exception $e) {
             return response('Unauthorized', 401);
         }
@@ -42,8 +46,12 @@ class ClientAuthController extends Controller
         $user = Socialite::driver('google')->stateless()->userFromToken($request->token);
 
         $client = Client::where('email', $user->getEmail())->first();
-        $token = $client->createToken($request->device_name)->plainTextToken;
-        return response()->json($token);
+        if ($client) {
+            $token = $client->createToken($request->device_name)->plainTextToken;
+            return response()->json($token);
+        } else {
+            return response('No hay ningun usuario asociado a su dirección de correo electónico de Google', 201);
+        }
     }
 
     public function getActiveSessions()
@@ -79,11 +87,12 @@ class ClientAuthController extends Controller
         }
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $request->user()->tokens()->delete();
+        $token = PersonalAccessToken::findToken(request()->bearerToken());
+        $token->delete();
         Session::flush();
         Auth::logout();
-        return redirect('login');
+        return response('');
     }
 }

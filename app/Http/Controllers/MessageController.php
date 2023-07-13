@@ -68,7 +68,7 @@ class MessageController extends Controller
             $image = $request->input('file');
             $image = str_replace('data:image/png;base64,', '', $image);
             $image = str_replace(' ', '+', $image);
-            $name = time() . '.' . 'png';
+            $name = time() . '.png';
             Storage::disk('src')->put("messages/$name", base64_decode($image));
             $data['image'] = "messages/$name";
         }

@@ -34,7 +34,7 @@ class ButtonController extends Controller
 
         $request->validate([
             //TODO (Mejorar esta validación)
-            'name' => ['filled'],
+            'name' => ['filled', 'between:3,50'],
             'number' => ['required'],
             'coordinates' => ['filled'],
             'client_id' => ['filled', 'exists:clients,id'],
@@ -61,7 +61,7 @@ class ButtonController extends Controller
     {
         $request->validate([
             //TODO (Mejorar esta validación)
-            'name' => ['required', 'regex:/^[A-Za-z0-9\- ]+$/'],
+            'name' => ['required', 'between:3,50'],
             'number' => ['required', 'regex:/^[A-Za-z0-9\-]+$/'],
             'coordinates' => ['required']
         ]);

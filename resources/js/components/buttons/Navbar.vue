@@ -80,7 +80,6 @@ export default {
                 }
             })
             //Emitir evento
-            console.log(items)
             this.$emit("filter", items)
         },
         /**

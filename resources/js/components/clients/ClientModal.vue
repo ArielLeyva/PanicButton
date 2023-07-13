@@ -100,7 +100,7 @@ export default {
                     <span class="text-gray-500 font-bold dark:text-gray-300">Sexo</span>
                     <div class="form-check mb-1">
                         <input class="form-check-input" type="radio" name="gender" value="Femenino" id="female" checked />
-                        <label class="form-check-label dark:text-white" for="female">Femmenino</label>
+                        <label class="form-check-label dark:text-white" for="female">Femenino</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="gender" value="Masculino" id="male"

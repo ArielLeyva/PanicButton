@@ -1,5 +1,5 @@
 <script>
-    import Dropdown from "bootstrap/js/dist/dropdown"
+    import "bootstrap/js/dist/dropdown"
 
     export default {
         /**

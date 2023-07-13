@@ -67,12 +67,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get("/lksiw2assol25sdpl548/{message}", [AlertController::class, 'handle']);
 
 //Rutas de la aplicación
-Route::post('client/login', [ClientAuthController::class, 'authenticate']);
-Route::post('client/login/google', [ClientAuthController::class, 'googleAutenticate']);
+Route::post('/client/login', [ClientAuthController::class, 'authenticate']);
+Route::get('/client/logout', [ClientAuthController::class, 'logout']);
+Route::post('/client/login/google', [ClientAuthController::class, 'googleAutenticate']);
 Route::get('/client/sessions', [ClientAuthController::class, 'getActiveSessions']);
 Route::delete('/client/sessions/{id}', [ClientAuthController::class, 'destroy']);
 Route::get("/client/user", [ClientController::class, 'getAuthClient']);
 Route::put("/client/user/{id}", [ClientController::class, 'update']);
+Route::put("/client/user/{id}/avatar", [ClientController::class, 'updateAvatar']);
 Route::get('/client/messages', [MessageController::class, 'getClientMessages']);
 Route::post('/client/messages', [MessageController::class, 'store']);
 Route::get('/client/notifications', [NotificationController::class, 'getClientNotifications']);
